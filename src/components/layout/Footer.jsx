@@ -8,10 +8,10 @@ export default function Footer() {
   const LINKEDIN = import.meta.env.VITE_LINKEDIN_URL || ''
 
   return (
-    <Box as="footer" bg="gray.900" color="gray.400" borderTop="1px solid" borderColor="whiteAlpha.200" mt={10}>
-      <Container maxW="6xl" py={6}>
-        <Stack direction={{ base: 'column', md: 'row' }} align={{ base: 'start', md: 'center' }} justify="space-between" spacing={4}>
-          <Text>© {new Date().getFullYear()} Tyna Mundieta · All rights reserved.</Text>
+<Box as="footer" bg="gray.900" color="gray.400" borderTop="1px solid" borderColor="whiteAlpha.200" mt={0} h={{ base: '92px', md: '64px' }} display="flex" alignItems="center" style={{ ['--footer-h']: '64px' }}>
+      <Container maxW="8xl" py={{ base: 3, md: 0 }} px={{ base: 4, md: 6 }}>
+        <Stack direction={{ base: 'column', md: 'row' }} align={{ base: 'center', md: 'center' }} justify="space-between" spacing={4}>
+          <Text>© {new Date().getFullYear()} Tinashe Mundieta • Design & code by Tinashe • Built with React, Vite & Chakra UI</Text>
           <HStack spacing={2}>
 {import.meta.env.VITE_CV_URL && (
               <Button as={Link} href={import.meta.env.VITE_CV_URL} download size="sm" variant="outline">

@@ -19,6 +19,8 @@ import {
   StatLabel,
   StatNumber,
   Link,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import {
   ArrowForwardIcon,
@@ -27,6 +29,7 @@ import {
   CalendarIcon,
 } from "@chakra-ui/icons";
 import { motion, isValidMotionProp } from "framer-motion";
+import { NavLink } from "react-router-dom";
 import { keyframes } from "@emotion/react";
 
 const MotionBox = chakra(motion.div, {
@@ -68,6 +71,11 @@ const float = keyframes`
   100% { transform: translateY(0px) }
 `;
 
+const ringSpin = keyframes`
+  0% { transform: rotate(0deg) }
+  100% { transform: rotate(360deg) }
+`;
+
 const marquee = keyframes`
   0% { transform: translateX(0) }
   100% { transform: translateX(-50%) }
@@ -76,7 +84,13 @@ const marquee = keyframes`
 export default function Home() {
   const cardBg = useColorModeValue("whiteAlpha.200", "whiteAlpha.200");
   return (
-    <Box position="relative" overflow="hidden" color="white">
+    <Box
+      position="relative"
+      overflow="hidden"
+      color="white"
+      mb={0}
+minH={{ base: 'auto', md: 'calc(100vh - var(--header-h) - var(--footer-h))' }}
+    >
       {/* background glow */}
       <Box
         position="absolute"
@@ -88,25 +102,31 @@ export default function Home() {
       />
 
       <Container
-        maxW="6xl"
+        maxW="8xl"
         position="relative"
         zIndex={1}
-        pt={{ base: 12, md: 24 }}
-        pb={{ base: 20, md: 24 }}
+pt={{ base: 4, md: 8 }}
+pb={{ base: 6, md: 12 }}
+minH={{ base: 'auto', md: 'calc(100vh - var(--header-h) - var(--footer-h))' }}
+        display="flex"
+        flexDir="column"
+justifyContent={{ base: 'flex-start', md: 'center' }}
       >
         <Flex
-          direction={{ base: "column-reverse", md: "row" }}
+          direction={{ base: "column", md: "row" }}
           align="center"
-          gap={12}
+gap={{ base: 6, md: 10, xl: 12 }}
         >
           <MotionStack
             variants={container}
             initial="hidden"
             animate="show"
             style={{ width: "100%" }}
+            display="grid"
+            rowGap={{ base: 4, md: 5 }}
           >
             <MotionBox variants={itemUp}>
-              <HStack spacing={3}>
+              <HStack spacing={{ base: 2, md: 3 }} wrap="wrap">
                 <Badge colorScheme="cyan" variant="outline">
                   Frontend
                 </Badge>
@@ -122,8 +142,8 @@ export default function Home() {
             <MotionHeading
               variants={itemUp}
               as="h1"
-              fontSize={{ base: "4xl", md: "6xl" }}
-              lineHeight={1.1}
+              fontSize={{ base: "3xl", md: "4xl", lg: "5xl", xl: "5xl" }}
+              lineHeight={{ base: 1.15, md: 1.12, lg: 1.1 }}
               bgGradient="linear(to-r, cyan.300, purple.300)"
               bgClip="text"
               fontWeight={800}
@@ -132,67 +152,84 @@ export default function Home() {
             </MotionHeading>
 
             <MotionBox variants={itemUp}>
-              <Text fontSize={{ base: "md", md: "lg" }} color="gray.200">
+              <Text
+                fontSize={{ base: "md", md: "lg" }}
+                color="gray.200"
+                maxW={{ base: "full", md: "2xl" }}
+                noOfLines={{ base: 3, md: 2 }}
+              >
                 Building responsive, accessible, and delightful web experiences
                 with React, Vite, and Chakra UI.
               </Text>
             </MotionBox>
 
             <MotionBox variants={itemUp}>
-              <HStack spacing={4} mt={2}>
+              <HStack spacing={{ base: 3, md: 4 }} mt={2} wrap="wrap">
                 <Button
+                  as={NavLink}
+                  to="/portfolio"
                   colorScheme="cyan"
                   rightIcon={<ArrowForwardIcon />}
-                  size="md"
+                  size={{ base: "sm", md: "md" }}
                 >
                   View Work
                 </Button>
-                <Button variant="outline" colorScheme="cyan" size="md">
+                <Button
+                  as={NavLink}
+                  to="/contact"
+                  variant="outline"
+                  colorScheme="cyan"
+                  size={{ base: "sm", md: "md" }}
+                >
                   Hire Me
                 </Button>
               </HStack>
             </MotionBox>
 
-            {/* quick facts */}
-            <MotionBox variants={itemUp} mt={8}>
-              <SimpleGrid columns={{ base: 1, sm: 3 }} spacing={4}>
-                <Box
-                  p={4}
-                  bg={cardBg}
-                  borderRadius="lg"
-                  backdropFilter="blur(6px)"
-                  minW={0}
-                >
-                  <HStack>
+            {/* quick facts as compact chips */}
+<MotionBox variants={itemUp} mt={{ base: 4, md: 8 }}>
+              <Wrap spacing={{ base: 2, md: 3 }}>
+                <WrapItem>
+                  <HStack
+                    px={{ base: 3, md: 4 }}
+                    py={{ base: 2, md: 2 }}
+                    borderRadius="full"
+                    bg="whiteAlpha.100"
+                    borderWidth="1px"
+                    borderColor="whiteAlpha.200"
+                  >
                     <Icon as={CalendarIcon} color="cyan.300" />
                     <Text>Available: Full Time</Text>
                   </HStack>
-                </Box>
-                <Box
-                  p={4}
-                  bg={cardBg}
-                  borderRadius="lg"
-                  backdropFilter="blur(6px)"
-                  minW={0}
-                >
-                  <HStack>
+                </WrapItem>
+                <WrapItem>
+                  <HStack
+                    px={{ base: 3, md: 4 }}
+                    py={{ base: 2, md: 2 }}
+                    borderRadius="full"
+                    bg="whiteAlpha.100"
+                    borderWidth="1px"
+                    borderColor="whiteAlpha.200"
+                  >
                     <Icon as={AtSignIcon} color="cyan.300" />
                     <Text>Harare, Zimbabwe</Text>
                   </HStack>
-                </Box>
-                <Box
-                  p={4}
-                  bg={cardBg}
-                  borderRadius="lg"
-                  backdropFilter="blur(6px)"
-                  minW={0}
-                  overflow="hidden"
-                >
-                  <HStack maxW="100%" overflow="hidden">
+                </WrapItem>
+                <WrapItem maxW="100%">
+                  <HStack
+                    px={{ base: 3, md: 4 }}
+                    py={{ base: 2, md: 2 }}
+                    borderRadius="full"
+                    bg="whiteAlpha.100"
+                    borderWidth="1px"
+                    borderColor="whiteAlpha.200"
+                    maxW="100%"
+                    overflow="hidden"
+                  >
                     <Icon as={EmailIcon} color="cyan.300" flexShrink={0} />
                     <Link
                       href="mailto:tinashemundieta36@gmail.com"
-                      color="cyan.200"
+                      color={useColorModeValue('cyan.700','cyan.200')}
                       noOfLines={1}
                       display="block"
                       maxW="100%"
@@ -200,15 +237,18 @@ export default function Home() {
                       tinashemundieta36@gmail.com
                     </Link>
                   </HStack>
-                </Box>
-              </SimpleGrid>
+                </WrapItem>
+              </Wrap>
             </MotionBox>
 
-            {/* metrics */}
-            <MotionBox variants={itemUp} mt={8}>
-              <SimpleGrid columns={{ base: 1, sm: 3 }} spacing={4}>
+{/* metrics */}
+            <MotionBox variants={itemUp} mt={{ base: 8, md: 10 }} display={{ base: 'none', md: 'block' }}>
+              <SimpleGrid
+                columns={{ base: 1, sm: 2, md: 3 }}
+                spacing={{ base: 4, md: 5 }}
+              >
                 <Box
-                  p={6}
+                  p={{ base: 4, md: 5 }}
                   borderRadius="xl"
                   bg="whiteAlpha.100"
                   borderWidth="1px"
@@ -220,6 +260,7 @@ export default function Home() {
                       "0 0 0 1px rgba(34,211,238,0.5), 0 0 16px rgba(34,211,238,0.35)",
                     transform: "translateY(-4px)",
                   }}
+                  minH={{ base: "auto", md: "140px" }}
                 >
                   <Text
                     bgGradient="linear(to-r, cyan.300, purple.300)"
@@ -237,7 +278,7 @@ export default function Home() {
                   </Text>
                 </Box>
                 <Box
-                  p={6}
+                  p={{ base: 4, md: 5 }}
                   borderRadius="xl"
                   bg="whiteAlpha.100"
                   borderWidth="1px"
@@ -249,6 +290,7 @@ export default function Home() {
                       "0 0 0 1px rgba(34,211,238,0.5), 0 0 16px rgba(34,211,238,0.35)",
                     transform: "translateY(-4px)",
                   }}
+                  minH={{ base: "auto", md: "140px" }}
                 >
                   <Text
                     bgGradient="linear(to-r, cyan.300, purple.300)"
@@ -266,7 +308,7 @@ export default function Home() {
                   </Text>
                 </Box>
                 <Box
-                  p={6}
+                  p={{ base: 4, md: 5 }}
                   borderRadius="xl"
                   bg="whiteAlpha.100"
                   borderWidth="1px"
@@ -278,6 +320,7 @@ export default function Home() {
                       "0 0 0 1px rgba(34,211,238,0.5), 0 0 16px rgba(34,211,238,0.35)",
                     transform: "translateY(-4px)",
                   }}
+                  minH={{ base: "auto", md: "140px" }}
                 >
                   <Text
                     bgGradient="linear(to-r, cyan.300, purple.300)"
@@ -291,146 +334,155 @@ export default function Home() {
                     Happy Clients
                   </Text>
                   <Text color="gray.400" fontSize="sm">
-                    School head and committee commended the ongoing School Website for clear UX,
-                    clean code, and rapid progress.
+                    School head and committee commended the ongoing School
+                    Website for clear UX, clean code, and rapid progress.
                   </Text>
                 </Box>
               </SimpleGrid>
             </MotionBox>
 
-            {/* job intent */}
-            <MotionBox variants={itemUp} mt={6}>
-              <HStack spacing={3} wrap="wrap">
-                <Badge
-                  colorScheme="cyan"
-                  variant="subtle"
-                  borderRadius="full"
-                  px={3}
-                  py={1}
-                >
+            {/* job intent (hidden on mobile; shown on md+) */}
+            <MotionBox variants={itemUp} mt={{ base: 6, md: 8 }} display={{ base: 'none', md: 'block' }}>
+              <HStack spacing={{ base: 2, md: 3 }} wrap="wrap">
+                <Badge colorScheme="cyan" variant="subtle" borderRadius="full" px={{ base: 2, md: 3 }} py={{ base: 0.5, md: 1 }} fontSize={{ base: 'xs', md: 'sm' }}>
                   Seeking: Junior Frontend Role
                 </Badge>
-                <Badge
-                  colorScheme="purple"
-                  variant="subtle"
-                  borderRadius="full"
-                  px={3}
-                  py={1}
-                >
+                <Badge colorScheme="purple" variant="subtle" borderRadius="full" px={{ base: 2, md: 3 }} py={{ base: 0.5, md: 1 }} fontSize={{ base: 'xs', md: 'sm' }}>
                   Open to Remote & Onsite
                 </Badge>
-                <Badge
-                  colorScheme="pink"
-                  variant="subtle"
-                  borderRadius="full"
-                  px={3}
-                  py={1}
-                >
+                <Badge colorScheme="pink" variant="subtle" borderRadius="full" px={{ base: 2, md: 3 }} py={{ base: 0.5, md: 1 }} fontSize={{ base: 'xs', md: 'sm' }}>
                   Available Immediately
                 </Badge>
               </HStack>
             </MotionBox>
           </MotionStack>
 
-          <Box flexShrink={0}>
-            <MotionImage
-              src="/images/profile-pic.png"
-              alt="profile"
-              style={{ borderRadius: 16 }}
-              boxShadow="2xl"
-              maxW={{ base: "280px", md: "380px" }}
+          <Box flexShrink={0} display="flex" alignItems="center" justifyContent="center">
+            <MotionBox
+              position="relative"
+              borderRadius="full"
+              boxSize={{ base: "200px", md: "280px", lg: "320px", xl: "360px" }}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ type: "spring", stiffness: 120, damping: 12 }}
-            />
-            <Box
-              mt={4}
-              h="10px"
-              w="60%"
-              mx="auto"
-              bgGradient="linear(to-r, cyan.400, purple.400)"
-              borderRadius="full"
-              animation={`${float} 4s ease-in-out infinite`}
-              opacity={0.6}
-            />
+              whileHover={{ scale: 1.02 }}
+              _before={{
+                content: '""',
+                position: 'absolute',
+                inset: '-6px',
+                borderRadius: '9999px',
+                bg: 'radial-gradient(circle at 50% 50%, rgba(34,211,238,0.55), rgba(168,85,247,0.45) 60%, transparent 70%)',
+                filter: 'blur(8px)',
+                zIndex: 0,
+              }}
+            >
+              <MotionImage
+                src="/images/profile-pic.png"
+                alt="profile"
+                borderRadius="full"
+                w="100%"
+                h="100%"
+                objectFit="cover"
+                position="relative"
+                zIndex={1}
+                boxShadow="xl"
+                loading="lazy"
+                decoding="async"
+              />
+            </MotionBox>
+          </Box>
+
+          {/* mobile-only job intent: image appears above these tags */}
+          <Box display={{ base: 'block', md: 'none' }} mt={4}>
+            <HStack spacing={3} wrap="wrap" justify="center">
+              <Badge colorScheme="cyan" variant="subtle" borderRadius="full" px={3} py={1} fontSize="sm">
+                Seeking: Junior Frontend Role
+              </Badge>
+              <Badge colorScheme="purple" variant="subtle" borderRadius="full" px={3} py={1} fontSize="sm">
+                Open to Remote & Onsite
+              </Badge>
+              <Badge colorScheme="pink" variant="subtle" borderRadius="full" px={3} py={1} fontSize="sm">
+                Available Immediately
+              </Badge>
+            </HStack>
           </Box>
         </Flex>
-      </Container>
 
-      {/* tech marquee */}
-      <Box
-        position="absolute"
-        bottom={0}
-        left={0}
-        right={0}
-        borderTopWidth="1px"
-        borderColor="whiteAlpha.200"
-        py={3}
-        pointerEvents="none"
-        overflow="hidden"
-      >
-        <Box overflowX="hidden" overflowY="visible" whiteSpace="nowrap">
-          <HStack
-            as={MotionBox}
-            animation={`${marquee} 22s linear infinite`}
-            spacing={8}
-            px={8}
-            display="inline-flex"
-            alignItems="center"
-            lineHeight={1}
-            minW="200%"
-          >
-            {[
-              "React",
-              "Vite",
-              "Chakra UI",
-              "TypeScript",
-              "JavaScript",
-              "HTML5",
-              "CSS3",
-              "Node.js",
-              "Framer Motion",
-              "Git",
-            ].map((t) => (
-              <Badge
-                key={t}
-                colorScheme="cyan"
-                variant="subtle"
-                fontSize="md"
-                py={2}
-                px={4}
-                borderRadius="full"
-              >
-                {t}
-              </Badge>
-            ))}
-            {[
-              "React",
-              "Vite",
-              "Chakra UI",
-              "TypeScript",
-              "JavaScript",
-              "HTML5",
-              "CSS3",
-              "Node.js",
-              "Framer Motion",
-              "Git",
-            ].map((t) => (
-              <Badge
-                key={`${t}-dup`}
-                colorScheme="cyan"
-                variant="subtle"
-                fontSize="md"
-                py={2}
-                px={4}
-                borderRadius="full"
-              >
-                {t}
-              </Badge>
-            ))}
-          </HStack>
+        {/* bottom ribbon occupies remaining space without interaction */}
+        <Box
+          mt="auto"
+          borderTopWidth="1px"
+          borderColor="whiteAlpha.200"
+          h={{ base: '36px', lg: '44px' }}
+          overflow="hidden"
+          pointerEvents="none"
+          display={{ base: "none", lg: "flex" }}
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Box overflowX="hidden" whiteSpace="nowrap" w="full" h="100%" display="flex" alignItems="center">
+            <HStack
+              as={MotionBox}
+              animation={`${marquee} 22s linear infinite`}
+              spacing={6}
+              px={6}
+              display="inline-flex"
+              alignItems="center"
+              lineHeight={1}
+              minW="200%"
+            >
+              {[
+                "React",
+                "Vite",
+                "Chakra UI",
+                "TypeScript",
+                "JavaScript",
+                "HTML5",
+                "CSS3",
+                "Node.js",
+                "Framer Motion",
+                "Git",
+              ].map((t) => (
+                <Badge
+                  key={t}
+                  colorScheme="cyan"
+                  variant="subtle"
+                  fontSize="sm"
+                  py={1}
+                  px={3}
+                  borderRadius="full"
+                >
+                  {t}
+                </Badge>
+              ))}
+              {[
+                "React",
+                "Vite",
+                "Chakra UI",
+                "TypeScript",
+                "JavaScript",
+                "HTML5",
+                "CSS3",
+                "Node.js",
+                "Framer Motion",
+                "Git",
+              ].map((t) => (
+                <Badge
+                  key={`${t}-dup`}
+                  colorScheme="cyan"
+                  variant="subtle"
+                  fontSize="sm"
+                  py={1}
+                  px={3}
+                  borderRadius="full"
+                >
+                  {t}
+                </Badge>
+              ))}
+            </HStack>
+          </Box>
         </Box>
-      </Box>
+      </Container>
     </Box>
   );
 }

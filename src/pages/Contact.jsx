@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Container, Heading, Stack, FormControl, FormLabel, Input, Textarea, Button, Text, HStack, Icon, Link, chakra, shouldForwardProp } from '@chakra-ui/react'
+import { Box, Container, Heading, Stack, FormControl, FormLabel, Input, Textarea, Button, Text, HStack, Icon, Link, chakra, shouldForwardProp, useColorModeValue } from '@chakra-ui/react'
 import { EmailIcon, PhoneIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 import { motion, isValidMotionProp } from 'framer-motion'
 
@@ -22,7 +22,7 @@ export default function Contact() {
 
   return (
     <Box py={{ base: 12, md: 20 }} bg="gray.800" color="gray.100">
-      <Container maxW="4xl">
+      <Container maxW="8xl">
         <MotionBox initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
           <Heading size="xl" color="cyan.300" textAlign="center" mb={3}>Get in touch</Heading>
           <Text textAlign="center" color="gray.300" mb={8}>Prefer email or a quick call? Use the details below, or send a message via the form.</Text>
@@ -38,7 +38,7 @@ export default function Contact() {
             bg="gray.700"
           >
             <Icon as={EmailIcon} color="cyan.300" />
-            <Link href={`mailto:${EMAIL}`} color="cyan.200">{EMAIL}</Link>
+            <Link href={`mailto:${EMAIL}`} color={useColorModeValue('cyan.700','cyan.200')}>{EMAIL}</Link>
           </HStack>
           {PHONE && (
             <HStack
@@ -50,7 +50,7 @@ export default function Contact() {
               bg="gray.700"
             >
               <Icon as={PhoneIcon} color="cyan.300" />
-              <Link href={`tel:${PHONE.replace(/\s+/g,'')}`} color="cyan.200">{PHONE}</Link>
+              <Link href={`tel:${PHONE.replace(/\\s+/g,'')}`} color={useColorModeValue('cyan.700','cyan.200')}>{PHONE}</Link>
             </HStack>
           )}
           {PHONE_ALT && (
@@ -63,7 +63,7 @@ export default function Contact() {
               bg="gray.700"
             >
               <Icon as={PhoneIcon} color="cyan.300" />
-              <Link href={`tel:${PHONE_ALT.replace(/\s+/g,'')}`} color="cyan.200">{PHONE_ALT}</Link>
+              <Link href={`tel:${PHONE_ALT.replace(/\\s+/g,'')}`} color={useColorModeValue('cyan.700','cyan.200')}>{PHONE_ALT}</Link>
             </HStack>
           )}
         </HStack>

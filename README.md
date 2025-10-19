@@ -1,4 +1,4 @@
-# Tinashe Mundieta — Portfolio
+# Tinashe Mundieta Portfolio
 
 A modern, responsive personal portfolio built with React, Vite, Chakra UI, and Framer Motion. It showcases projects, certificates, services, and contact information with smooth animations and accessible, mobile‑first design.
 

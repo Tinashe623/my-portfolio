@@ -1,0 +1,6 @@
+# Allow all bots
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://tinashe623.github.io/sitemap.xml

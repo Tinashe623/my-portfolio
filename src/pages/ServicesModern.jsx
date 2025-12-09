@@ -207,9 +207,11 @@ export default function ServicesModern() {
                     w="100%"
                     mt={{ base: 1, md: 2 }}
                     fontSize={{ base: 'xs', md: 'sm' }}
+                    color="gray.200"
                     _hover={{
-                      bg: `rgba(${service.color === 'cyan' ? '34,211,238' : service.color === 'purple' ? '168,85,247' : '236,72,153'},0.15)`,
+                      bg: `rgba(${service.color === 'cyan' ? '34,211,238' : service.color === 'purple' ? '168,85,247' : '236,72,153'},0.2)`,
                       borderColor: `${service.color}.300`,
+                      color: 'white',
                     }}
                   >
                     Get Started

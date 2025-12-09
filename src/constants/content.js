@@ -25,6 +25,7 @@ export const NAV_LINKS = [
   { label: 'Services', path: '/services' },
   { label: 'Portfolio', path: '/portfolio' },
   { label: 'Certificates', path: '/certificates' },
+  { label: 'Resume', path: '/resume' },
 ]
 
 export const HERO_BADGES = [

@@ -29,16 +29,16 @@ const meshMove = keyframes`
 export default function AnimatedGradientMesh({ variant = 'default', intensity = 'medium' }) {
   const variants = {
     default: {
-      bg: 'radial-gradient(circle at 20% 30%, rgba(20, 184, 166, 0.12) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(245, 158, 11, 0.08) 0%, transparent 50%), radial-gradient(circle at 40% 80%, rgba(20, 184, 166, 0.1) 0%, transparent 50%)',
+      bg: 'radial-gradient(circle at 20% 30%, rgba(168, 85, 247, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(14, 165, 233, 0.12) 0%, transparent 50%), radial-gradient(circle at 40% 80%, rgba(217, 70, 239, 0.1) 0%, transparent 50%)',
     },
     hero: {
-      bg: 'linear-gradient(-45deg, rgba(20, 184, 166, 0.08), rgba(245, 158, 11, 0.06), rgba(20, 184, 166, 0.08), rgba(245, 158, 11, 0.06))',
+      bg: 'linear-gradient(-45deg, rgba(168, 85, 247, 0.1), rgba(14, 165, 233, 0.08), rgba(217, 70, 239, 0.1), rgba(14, 165, 233, 0.08))',
     },
     vibrant: {
-      bg: 'radial-gradient(circle at 30% 20%, rgba(20, 184, 166, 0.2) 0%, transparent 40%), radial-gradient(circle at 70% 80%, rgba(245, 158, 11, 0.15) 0%, transparent 40%), radial-gradient(circle at 50% 50%, rgba(20, 184, 166, 0.12) 0%, transparent 50%)',
+      bg: 'radial-gradient(circle at 30% 20%, rgba(168, 85, 247, 0.25) 0%, transparent 40%), radial-gradient(circle at 70% 80%, rgba(14, 165, 233, 0.18) 0%, transparent 40%), radial-gradient(circle at 50% 50%, rgba(217, 70, 239, 0.15) 0%, transparent 50%)',
     },
     subtle: {
-      bg: 'radial-gradient(circle at 50% 0%, rgba(20, 184, 166, 0.06) 0%, transparent 60%), radial-gradient(circle at 100% 100%, rgba(245, 158, 11, 0.04) 0%, transparent 60%)',
+      bg: 'radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.08) 0%, transparent 60%), radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.06) 0%, transparent 60%)',
     },
   }
 
@@ -71,7 +71,7 @@ export default function AnimatedGradientMesh({ variant = 'default', intensity = 
         w="500px"
         h="500px"
         borderRadius="full"
-        bg="radial-gradient(circle, rgba(20, 184, 166, 0.15), transparent 70%)"
+        bg="radial-gradient(circle, rgba(168, 85, 247, 0.2), transparent 70%)"
         filter={`blur(${config.blur})`}
         opacity={config.opacity}
         animation={`${meshMove} 20s ease-in-out infinite`}
@@ -86,7 +86,7 @@ export default function AnimatedGradientMesh({ variant = 'default', intensity = 
         w="400px"
         h="400px"
         borderRadius="full"
-        bg="radial-gradient(circle, rgba(245, 158, 11, 0.12), transparent 70%)"
+        bg="radial-gradient(circle, rgba(14, 165, 233, 0.15), transparent 70%)"
         filter={`blur(${config.blur})`}
         opacity={config.opacity}
         animation={`${meshMove} 25s ease-in-out infinite reverse`}
@@ -101,7 +101,7 @@ export default function AnimatedGradientMesh({ variant = 'default', intensity = 
         w="350px"
         h="350px"
         borderRadius="full"
-        bg="radial-gradient(circle, rgba(20, 184, 166, 0.1), transparent 70%)"
+        bg="radial-gradient(circle, rgba(217, 70, 239, 0.12), transparent 70%)"
         filter={`blur(${config.blur})`}
         opacity={config.opacity}
         animation={`${meshMove} 30s ease-in-out infinite`}

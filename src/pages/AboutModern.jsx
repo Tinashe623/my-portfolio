@@ -184,7 +184,20 @@ export default function AboutModern() {
                   >
                     View Work
                   </Button>
-                  <Button as={NavLink} to="/contact" size="lg" variant="glass" flex={1}>
+                  <Button
+                    as={NavLink}
+                    to="/contact"
+                    size="lg"
+                    variant="glass"
+                    flex={1}
+                    color="gray.200"
+                    _hover={{
+                      bg: 'rgba(168, 85, 247, 0.2)',
+                      borderColor: 'brand.400',
+                      color: 'white',
+                      transform: 'translateY(-2px)',
+                    }}
+                  >
                     Contact Me
                   </Button>
                 </Stack>

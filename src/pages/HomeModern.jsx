@@ -183,6 +183,13 @@ export default function HomeModern() {
                   borderRadius={{ base: 'xl', md: 'lg' }}
                   variant="glass"
                   fontWeight="700"
+                  color="gray.200"
+                  _hover={{
+                    bg: 'rgba(168, 85, 247, 0.2)',
+                    borderColor: 'brand.400',
+                    color: 'white',
+                    transform: 'translateY(-2px)',
+                  }}
                 >
                   Contact Me
                 </Button>
@@ -268,8 +275,8 @@ export default function HomeModern() {
                 }}
               >
                 <MotionImage
-                  src="/images/profile-pic.png"
-                  alt="Tinashe Mundieta - Frontend Developer"
+                  src="images/profile-pic.png"
+                  alt="Tinashe Mundieta"
                   borderRadius="full"
                   w="100%"
                   h="100%"

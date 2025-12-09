@@ -296,13 +296,13 @@ export default function PortfolioModern() {
                       size="lg"
                       flex={1}
                       bg="rgba(255, 255, 255, 0.1)"
-                      backdropFilter="blur(10px)"
                       border="1px solid rgba(255, 255, 255, 0.2)"
-                      color="white"
+                      color="gray.200"
                       leftIcon={<Icon as={FaGithub} boxSize={5} />}
                       _hover={{
-                        bg: 'rgba(255, 255, 255, 0.15)',
-                        borderColor: 'rgba(34, 211, 238, 0.5)',
+                        bg: 'rgba(168, 85, 247, 0.2)',
+                        borderColor: 'brand.400',
+                        color: 'white',
                         transform: 'translateY(-2px)',
                       }}
                       transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
@@ -486,12 +486,13 @@ export default function PortfolioModern() {
                       flex={1}
                       variant="ghost"
                       leftIcon={<Icon as={FaGithub} />}
-                      color="white"
+                      color="gray.200"
                       borderWidth="1px"
                       borderColor="rgba(255, 255, 255, 0.2)"
                       _hover={{
-                        bg: 'rgba(34, 211, 238, 0.1)',
-                        borderColor: 'rgba(34, 211, 238, 0.5)',
+                        bg: 'rgba(168, 85, 247, 0.2)',
+                        borderColor: 'brand.400',
+                        color: 'white',
                         transform: 'translateY(-2px)',
                       }}
                       transition="all 0.3s"
@@ -572,7 +573,14 @@ export default function PortfolioModern() {
                 size={{ base: 'md', md: 'lg' }}
                 w={{ base: 'full', sm: 'auto' }}
                 variant="glass"
+                color="gray.200"
                 leftIcon={<Icon as={FaGithub} />}
+                _hover={{
+                  bg: 'rgba(168, 85, 247, 0.2)',
+                  borderColor: 'brand.400',
+                  color: 'white',
+                  transform: 'translateY(-2px)',
+                }}
               >
                 View GitHub
               </Button>

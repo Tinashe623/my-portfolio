@@ -10,20 +10,20 @@ const variants = {
   default: {
     bg: 'rgba(255, 255, 255, 0.05)',
     borderColor: 'rgba(255, 255, 255, 0.1)',
-    backdropFilter: 'blur(8px) saturate(180%)',
-    hoverBackdropFilter: 'blur(6px) saturate(200%)',
+    backdropFilter: 'none',
+    hoverBackdropFilter: 'none',
   },
   strong: {
     bg: 'rgba(255, 255, 255, 0.08)',
     borderColor: 'rgba(255, 255, 255, 0.15)',
-    backdropFilter: 'blur(10px) saturate(190%)',
-    hoverBackdropFilter: 'blur(8px) saturate(210%)',
+    backdropFilter: 'none',
+    hoverBackdropFilter: 'none',
   },
   subtle: {
     bg: 'rgba(255, 255, 255, 0.03)',
     borderColor: 'rgba(255, 255, 255, 0.08)',
-    backdropFilter: 'blur(6px) saturate(160%)',
-    hoverBackdropFilter: 'blur(4px) saturate(180%)',
+    backdropFilter: 'none',
+    hoverBackdropFilter: 'none',
   },
 }
 
@@ -43,8 +43,8 @@ export default function GlassCard({ children, variant = 'default', hover3d = fal
     : {
         whileHover: {
           scale: 1.02,
-          borderColor: 'rgba(20, 184, 166, 0.4)',
-          boxShadow: '0 8px 32px rgba(20, 184, 166, 0.2), 0 0 0 1px rgba(20, 184, 166, 0.25)',
+          borderColor: 'rgba(168, 85, 247, 0.4)',
+          boxShadow: '0 8px 32px rgba(168, 85, 247, 0.2), 0 0 0 1px rgba(168, 85, 247, 0.25)',
           transition: { duration: 0.2 },
         },
       }
@@ -52,7 +52,6 @@ export default function GlassCard({ children, variant = 'default', hover3d = fal
   return (
     <MotionBox
       bg={style.bg}
-      backdropFilter={style.backdropFilter}
       borderWidth="1px"
       borderColor={style.borderColor}
       borderRadius="2xl"
@@ -61,17 +60,12 @@ export default function GlassCard({ children, variant = 'default', hover3d = fal
       position="relative"
       transition="all 0.3s ease"
       style={{
-        WebkitBackdropFilter: style.backdropFilter,
         transformStyle: hover3d ? 'preserve-3d' : 'flat',
         perspective: hover3d ? '1000px' : 'none',
         contain: 'layout style paint',
         willChange: 'transform',
       }}
       {...hover3dEffect}
-      _hover={{
-        backdropFilter: style.hoverBackdropFilter,
-        WebkitBackdropFilter: style.hoverBackdropFilter,
-      }}
       _before={{
         content: '""',
         position: 'absolute',

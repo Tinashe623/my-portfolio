@@ -25,14 +25,13 @@ export default [
       'react/prop-types': 'off',
       'react/no-unescaped-entities': 'off',
       'no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
-      'import/order': [
-        'warn',
-        {
-          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-          'newlines-between': 'always',
-          alphabetize: { order: 'asc', caseInsensitive: true },
-        },
-      ],
+
+      // Relax some rules that were causing lots of noisy warnings in VS Code
+      // while the project still builds fine with Vite.
+      // - import/no-unresolved was complaining about valid relative JSX imports
+      // - import/order was fighting with the natural React import style
+      'import/no-unresolved': 'off',
+      'import/order': 'off',
     },
     settings: { react: { version: 'detect' } },
   },

@@ -14,65 +14,26 @@ import {
   Icon,
   Link,
   VStack,
-  SimpleGrid,
   Flex,
-  Badge,
-  Divider,
   chakra,
   shouldForwardProp,
 } from '@chakra-ui/react'
-import { EmailIcon, PhoneIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 import { motion, isValidMotionProp } from 'framer-motion'
 import {
-  FaWhatsapp,
-  FaLinkedin,
-  FaGithub,
   FaPaperPlane,
   FaCheckCircle,
   FaClock,
   FaMapMarkerAlt,
 } from 'react-icons/fa'
-import AnimatedGradientMesh from '../components/effects/AnimatedGradientMesh'
+
 import GlassCard from '../components/effects/GlassCard'
 
 const MotionBox = chakra(motion.div, {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
 })
 
-const contactMethods = [
-  {
-    icon: EmailIcon,
-    label: 'Email',
-    value: 'tinashemundieta36@gmail.com',
-    href: 'mailto:tinashemundieta36@gmail.com',
-    color: 'cyan',
-  },
-  {
-    icon: FaWhatsapp,
-    label: 'WhatsApp',
-    value: 'Message me',
-    href: 'https://wa.me/',
-    color: 'green',
-  },
-  {
-    icon: FaLinkedin,
-    label: 'LinkedIn',
-    value: 'Connect',
-    href: 'https://linkedin.com',
-    color: 'blue',
-  },
-  {
-    icon: FaGithub,
-    label: 'GitHub',
-    value: '@Tinashe623',
-    href: 'https://github.com/Tinashe623',
-    color: 'gray',
-  },
-]
-
 export default function ContactModern() {
   const EMAIL = 'tinashemundieta36@gmail.com'
-  const PHONE = import.meta.env.VITE_CONTACT_PHONE || ''
 
   const [name, setName] = useState('')
   const [fromEmail, setFromEmail] = useState('')
@@ -100,7 +61,7 @@ export default function ContactModern() {
       pt={{ base: 8, md: 10, lg: 12 }}
       pb={{ base: 10, md: 12, lg: 16 }}
     >
-      <AnimatedGradientMesh variant="vibrant" intensity="high" />
+
 
       <Container maxW="7xl" position="relative" zIndex={1} px={{ base: 4, md: 6, lg: 8 }}>
         {/* Header */}

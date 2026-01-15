@@ -19,11 +19,11 @@ import {
 } from '@chakra-ui/react'
 import { motion, isValidMotionProp } from 'framer-motion'
 import { keyframes } from '@emotion/react'
-import { ExternalLinkIcon, ArrowForwardIcon } from '@chakra-ui/icons'
+import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { NavLink } from 'react-router-dom'
-import AnimatedGradientMesh from '../components/effects/AnimatedGradientMesh'
+
 import GlassCard from '../components/effects/GlassCard'
-import { FaGithub, FaExternalLinkAlt, FaUsers, FaCode } from 'react-icons/fa'
+import { FaGithub, FaExternalLinkAlt, FaUsers } from 'react-icons/fa'
 
 const MotionBox = chakra(motion.div, {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
@@ -32,16 +32,6 @@ const MotionBox = chakra(motion.div, {
 const pulse = keyframes`
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
-`
-
-const float = keyframes`
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-`
-
-const shimmer = keyframes`
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
 `
 
 // NOTE: Desktop tuning will primarily be controlled via Grid row heights and image preview heights
@@ -138,7 +128,7 @@ export default function PortfolioModern() {
       minH="calc(100vh - var(--header-h) - var(--footer-h))"
       py={{ base: 8, md: 12, lg: 16 }}
     >
-      <AnimatedGradientMesh variant="vibrant" intensity="medium" />
+
 
       <Container maxW="7xl" position="relative" zIndex={1} px={{ base: 4, md: 6, lg: 8 }}>
         {/* Header */}
@@ -211,7 +201,7 @@ export default function PortfolioModern() {
                   <Box
                     position="absolute"
                     inset={0}
-                    bgGradient="linear(to-r, rgba(17, 24, 39, 0.7), transparent 60%)"
+                    bgGradient="linear(to-r, rgba(2, 4, 16, 0.8), transparent 60%)"
                   />
                   {/* Featured Badge */}
                   <Box position="absolute" top={6} left={6}>
@@ -221,9 +211,9 @@ export default function PortfolioModern() {
                       px={4}
                       py={2}
                       borderRadius="full"
-                      bg="rgba(34, 211, 238, 0.15)"
+                      bg="rgba(99, 102, 241, 0.15)"
                       backdropFilter="blur(20px)"
-                      border="1px solid rgba(34, 211, 238, 0.4)"
+                      border="1px solid rgba(99, 102, 241, 0.4)"
                     >
                       <Text fontSize="xl">⭐</Text>
                       <Text
@@ -246,8 +236,8 @@ export default function PortfolioModern() {
                   p={{ base: 6, md: 8, lg: 12 }}
                   spacing={6}
                   flex={1}
-                  bg="rgba(17, 24, 39, 0.4)"
-                  backdropFilter="blur(10px)"
+                  bg="rgba(2, 4, 16, 0.6)"
+                  backdropFilter="blur(16px)"
                 >
                   <Heading
                     size={{ base: 'xl', md: '2xl', lg: '3xl' }}
@@ -375,9 +365,9 @@ export default function PortfolioModern() {
                     objectFit="cover"
                     w="100%"
                     h="260px"
-                    transition="transform 0.5s"
-                    _groupHover={{ transform: 'scale(1.1)' }}
-                    filter="brightness(0.85)"
+                    transition="transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)"
+                    _groupHover={{ transform: 'scale(1.08)' }}
+                    filter="brightness(0.9)"
                   />
                   <Box
                     position="absolute"

@@ -1,19 +1,19 @@
 export const HERO_STATS = [
   {
     label: 'Experience',
-    value: '2+ Years',
+    value: 'Entry Level',
     icon: 'CheckCircleIcon',
     color: 'brand',
   },
   {
     label: 'Projects',
-    value: '10+',
+    value: '5+',
     icon: 'CheckCircleIcon',
     color: 'brand',
   },
   {
     label: 'Technologies',
-    value: '15+',
+    value: '10+',
     icon: 'CheckCircleIcon',
     color: 'accent',
   },
@@ -45,7 +45,7 @@ export const FLOATING_BADGES = [
   {
     emoji: '⚛️',
     title: 'React',
-    subtitle: 'Expert',
+    subtitle: 'Focused',
     position: { top: '10%', right: '-10%' },
   },
   {

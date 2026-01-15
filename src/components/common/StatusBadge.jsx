@@ -19,6 +19,14 @@ export default function StatusBadge({ emoji, text, colorScheme = 'brand', ...pro
       borderWidth="1px"
       borderColor={`rgba(${colorRgba}, 0.3)`}
       color="white"
+      _hover={{
+        transform: 'scale(1.05)',
+        bg: `rgba(${colorRgba}, 0.25)`,
+        borderColor: `rgba(${colorRgba}, 0.6)`,
+        boxShadow: `0 0 12px rgba(${colorRgba}, 0.25)`,
+        cursor: 'default',
+      }}
+      transition="all 0.2s"
       {...props}
     >
       {emoji && `${emoji} `}

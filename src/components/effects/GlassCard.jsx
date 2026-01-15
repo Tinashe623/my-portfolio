@@ -43,8 +43,8 @@ export default function GlassCard({ children, variant = 'default', hover3d = fal
     : {
         whileHover: {
           scale: 1.02,
-          borderColor: 'rgba(168, 85, 247, 0.4)',
-          boxShadow: '0 8px 32px rgba(168, 85, 247, 0.2), 0 0 0 1px rgba(168, 85, 247, 0.25)',
+          borderColor: 'rgba(99, 102, 241, 0.4)',
+          boxShadow: '0 8px 32px rgba(99, 102, 241, 0.2), 0 0 0 1px rgba(99, 102, 241, 0.25)',
           transition: { duration: 0.2 },
         },
       }

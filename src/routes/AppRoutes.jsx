@@ -1,10 +1,12 @@
 import React, { Suspense } from 'react'
-import { Routes, Route, Outlet } from 'react-router-dom'
+import { Routes, Route, Outlet, useLocation } from 'react-router-dom'
 import { Box, Center, Spinner } from '@chakra-ui/react'
+import { AnimatePresence } from 'framer-motion'
 import Header from '../components/layout/Header.jsx'
 import Footer from '../components/layout/Footer.jsx'
 import SkipToContent from '../components/layout/SkipToContent.jsx'
 import ScrollToTop from '../components/ScrollToTop.jsx'
+import PageTransition from '../components/layout/PageTransition.jsx'
 
 const Home = React.lazy(() => import('../pages/HomeModern.jsx'))
 const About = React.lazy(() => import('../pages/AboutModern.jsx'))
@@ -51,21 +53,25 @@ function Fallback() {
 }
 
 export default function AppRoutes() {
+  const location = useLocation()
+  
   return (
     <Suspense fallback={<Fallback />}>
       <ScrollToTop />
-      <Routes>
-        <Route element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="services" element={<Services />} />
-          <Route path="portfolio" element={<Portfolio />} />
-          <Route path="certificates" element={<Certificates />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="resume" element={<Resume />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route element={<Layout />}>
+            <Route index element={<PageTransition><Home /></PageTransition>} />
+            <Route path="about" element={<PageTransition><About /></PageTransition>} />
+            <Route path="services" element={<PageTransition><Services /></PageTransition>} />
+            <Route path="portfolio" element={<PageTransition><Portfolio /></PageTransition>} />
+            <Route path="certificates" element={<PageTransition><Certificates /></PageTransition>} />
+            <Route path="contact" element={<PageTransition><Contact /></PageTransition>} />
+            <Route path="resume" element={<PageTransition><Resume /></PageTransition>} />
+            <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+          </Route>
+        </Routes>
+      </AnimatePresence>
     </Suspense>
   )
 }

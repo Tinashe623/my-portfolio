@@ -92,8 +92,8 @@ function NavLinks({ onClick }) {
 
 function MobileNav() {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const drawerBg = 'ocean.900'
-  const drawerColor = 'ocean.50'
+  const drawerBg = 'accent.900'
+  const drawerColor = 'accent.50'
   return (
     <>
       <IconButton

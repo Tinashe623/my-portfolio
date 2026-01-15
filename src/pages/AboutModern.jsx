@@ -20,7 +20,7 @@ import {
 import { CheckCircleIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import { NavLink } from 'react-router-dom'
 import { motion, isValidMotionProp } from 'framer-motion'
-import AnimatedGradientMesh from '../components/effects/AnimatedGradientMesh'
+
 import GlassCard from '../components/effects/GlassCard'
 import { FaReact, FaCode, FaPalette, FaRocket } from 'react-icons/fa'
 
@@ -65,8 +65,6 @@ export default function AboutModern() {
         },
       }}
     >
-      <AnimatedGradientMesh variant="default" intensity="medium" />
-
       <Container maxW="8xl" position="relative" zIndex={1} px={{ base: 4, md: 6, lg: 8 }}>
         {/* Header */}
         <MotionBox
@@ -85,7 +83,7 @@ export default function AboutModern() {
           >
             About Me
           </Heading>
-          <Text fontSize={{ base: 'md', md: 'lg' }} color="ocean.300" maxW="2xl" mx="auto">
+          <Text fontSize={{ base: 'md', md: 'lg' }} color="accent.300" maxW="2xl" mx="auto">
             Passionate frontend developer building modern, accessible web experiences
           </Text>
         </MotionBox>
@@ -163,7 +161,7 @@ export default function AboutModern() {
                     ].map((item, i) => (
                       <ListItem key={i} display="flex" alignItems="start">
                         <ListIcon as={CheckCircleIcon} color="brand.300" mt={1} />
-                        <Text color="ocean.300">{item}</Text>
+                        <Text color="accent.300">{item}</Text>
                       </ListItem>
                     ))}
                   </List>

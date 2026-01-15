@@ -37,7 +37,7 @@ export default function StatCard({
         >
           {value}
         </Text>
-        <Text fontSize={{ base: 'xs', md: 'sm' }} color="ocean.400">
+        <Text fontSize={{ base: 'xs', md: 'sm' }} color="accent.400">
           {label}
         </Text>
       </VStack>

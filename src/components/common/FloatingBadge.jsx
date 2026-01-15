@@ -25,7 +25,7 @@ export default function FloatingBadge({ emoji, title, subtitle, position, delay 
             <Text fontSize="xs" fontWeight="700">
               {title}
             </Text>
-            <Text fontSize="xs" color="ocean.400">
+            <Text fontSize="xs" color="accent.400">
               {subtitle}
             </Text>
           </VStack>

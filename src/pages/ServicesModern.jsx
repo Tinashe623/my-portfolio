@@ -17,7 +17,7 @@ import {
 import { CheckIcon, ViewIcon, SettingsIcon, EditIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import { motion, isValidMotionProp } from 'framer-motion'
 import { NavLink } from 'react-router-dom'
-import AnimatedGradientMesh from '../components/effects/AnimatedGradientMesh'
+
 import GlassCard from '../components/effects/GlassCard'
 
 const MotionBox = chakra(motion.div, {
@@ -81,7 +81,7 @@ export default function ServicesModern() {
         },
       }}
     >
-      <AnimatedGradientMesh variant="vibrant" intensity="medium" />
+
 
       <Container maxW="8xl" position="relative" zIndex={1} px={{ base: 4, sm: 6, md: 8 }}>
         {/* Header */}

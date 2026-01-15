@@ -20,10 +20,11 @@ export default function Footer() {
   return (
     <Box
       as="footer"
-      bg="gray.900"
+      bg="rgba(2, 4, 16, 0.8)"
+      backdropFilter="blur(20px)"
       color="gray.400"
       borderTop="1px solid"
-      borderColor="whiteAlpha.200"
+      borderColor="whiteAlpha.100"
       mt={0}
       minH={{ base: 'auto', md: '64px' }}
       py={{ base: 4, md: 0 }}
@@ -61,6 +62,14 @@ export default function Footer() {
                 size="sm"
                 colorScheme="whatsapp"
                 variant="outline"
+                _hover={{
+                  bg: 'rgba(37, 211, 102, 0.1)',
+                  color: '#25D366',
+                  borderColor: '#25D366',
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 0 15px rgba(37, 211, 102, 0.3)',
+                }}
+                transition="all 0.3s"
                 icon={<FaWhatsapp />}
               />
             )}
@@ -73,6 +82,14 @@ export default function Footer() {
                 size="sm"
                 colorScheme="facebook"
                 variant="outline"
+                _hover={{
+                  bg: 'rgba(24, 119, 242, 0.1)',
+                  color: '#1877F2',
+                  borderColor: '#1877F2',
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 0 15px rgba(24, 119, 242, 0.3)',
+                }}
+                transition="all 0.3s"
                 icon={<FaFacebook />}
               />
             )}
@@ -85,6 +102,14 @@ export default function Footer() {
                 size="sm"
                 colorScheme="linkedin"
                 variant="outline"
+                _hover={{
+                  bg: 'rgba(10, 102, 194, 0.1)',
+                  color: '#0A66C2',
+                  borderColor: '#0A66C2',
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 0 15px rgba(10, 102, 194, 0.3)',
+                }}
+                transition="all 0.3s"
                 icon={<FaLinkedin />}
               />
             )}

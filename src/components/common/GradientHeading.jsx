@@ -1,5 +1,5 @@
 import React from 'react'
-import { Heading, Text, chakra, shouldForwardProp } from '@chakra-ui/react'
+import { Text, chakra, shouldForwardProp } from '@chakra-ui/react'
 import { motion, isValidMotionProp } from 'framer-motion'
 
 const MotionHeading = chakra(motion.h1, {

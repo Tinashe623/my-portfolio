@@ -15,8 +15,9 @@ import { ArrowForwardIcon, CheckCircleIcon } from '@chakra-ui/icons'
 import { motion, isValidMotionProp } from 'framer-motion'
 import { NavLink } from 'react-router-dom'
 import { keyframes } from '@emotion/react'
-import AnimatedGradientMesh from '../components/effects/AnimatedGradientMesh'
+
 import GlassCard from '../components/effects/GlassCard'
+import AnimatedGradientMesh from '../components/effects/AnimatedGradientMesh'
 import { GradientHeading, StatCard, StatusBadge, FloatingBadge } from '../components/common'
 import { ANIMATION_VARIANTS, HERO_STATS, HERO_BADGES, FLOATING_BADGES } from '../constants'
 
@@ -49,7 +50,7 @@ export default function HomeModern() {
       alignItems="center"
     >
       {/* Animated Gradient Mesh Background */}
-      <AnimatedGradientMesh variant="hero" intensity="high" />
+      <AnimatedGradientMesh />
 
       <Container
         maxW="7xl"
@@ -108,7 +109,7 @@ export default function HomeModern() {
             <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={{ base: 6, md: 8 }}>
               <Text
                 fontSize={{ base: 'sm', sm: 'md', md: 'lg' }}
-                color="ocean.300"
+                color="accent.300"
                 lineHeight="tall"
                 maxW="2xl"
                 textAlign={{ base: 'center', lg: 'left' }}
@@ -239,7 +240,7 @@ export default function HomeModern() {
                 inset="-20px"
                 borderRadius="full"
                 border="2px solid"
-                borderColor="rgba(20, 184, 166, 0.2)"
+                borderColor="rgba(6, 182, 212, 0.2)"
                 animation={`${float} 6s ease-in-out infinite`}
                 pointerEvents="none"
                 display={{ base: 'none', sm: 'block' }}
@@ -249,7 +250,7 @@ export default function HomeModern() {
                 inset="-40px"
                 borderRadius="full"
                 border="2px solid"
-                borderColor="rgba(245, 158, 11, 0.15)"
+                borderColor="rgba(99, 102, 241, 0.15)"
                 animation={`${float} 8s ease-in-out infinite reverse`}
                 pointerEvents="none"
                 display={{ base: 'none', sm: 'block' }}
@@ -270,7 +271,7 @@ export default function HomeModern() {
                   position: 'absolute',
                   inset: 0,
                   borderRadius: 'full',
-                  bg: 'linear-gradient(135deg, rgba(20,184,166,0.2), rgba(245,158,11,0.2))',
+                  bg: 'linear-gradient(135deg, rgba(6,182,212,0.2), rgba(99,102,241,0.2))',
                   filter: 'blur(30px)',
                 }}
               >

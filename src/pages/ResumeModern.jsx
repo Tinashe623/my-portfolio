@@ -2,11 +2,9 @@ import React, { useState } from 'react'
 import {
   Box,
   Container,
-  Heading,
   Text,
   Center,
   Spinner,
-  Icon,
   VStack,
   Button,
   Flex,
@@ -15,7 +13,7 @@ import { FaFileDownload, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import { Document, Page, pdfjs } from 'react-pdf'
 import 'react-pdf/dist/Page/AnnotationLayer.css'
 import 'react-pdf/dist/Page/TextLayer.css'
-import AnimatedGradientMesh from '../components/effects/AnimatedGradientMesh'
+
 import GlassCard from '../components/effects/GlassCard'
 import { GradientHeading } from '../components/common'
 
@@ -24,7 +22,12 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 const ResumeModern = () => {
   const [numPages, setNumPages] = useState(null)
   const [pageNumber, setPageNumber] = useState(1)
-  const resumeUrl = '/Tinashe_Mundieta_cv.pdf'
+  const rawResume = import.meta.env.VITE_RESUME_PDF_URL || 'Tinashe_Mundieta_cv.pdf'
+  const base = import.meta.env.BASE_URL || '/'
+  const resumeUrl =
+    rawResume.startsWith('http') || rawResume.startsWith('/')
+      ? rawResume
+      : `${base}${rawResume}`
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages)
@@ -40,7 +43,7 @@ const ResumeModern = () => {
       minH="calc(100vh - var(--header-h) - var(--footer-h))"
       py={{ base: 8, md: 12, lg: 16 }}
     >
-      <AnimatedGradientMesh variant="vibrant" intensity="low" />
+
       <Container maxW="7xl" position="relative" zIndex={1} px={{ base: 4, md: 6, lg: 8 }}>
         <Box textAlign="center" mb={{ base: 10, md: 12, lg: 14 }}>
           <GradientHeading>My Resume</GradientHeading>
@@ -55,61 +58,106 @@ const ResumeModern = () => {
           </Text>
         </Box>
 
-        <GlassCard p={{ base: 2, sm: 4, md: 6 }} variant="strong">
-          <VStack spacing={4}>
-            <Document
-              file={resumeUrl}
-              onLoadSuccess={onDocumentLoadSuccess}
-              loading={
-                <Center>
-                  <Spinner size="xl" />
-                </Center>
-              }
-              error={
-                <Center>
-                  <Text color="red.500">Failed to load PDF file.</Text>
-                </Center>
-              }
+        <GlassCard p={{ base: 4, md: 6 }} variant="strong">
+          <VStack spacing={6} align="stretch">
+            {/* Top toolbar */}
+            <Flex
+              justify="space-between"
+              align="center"
+              w="100%"
+              pb={3}
+              borderBottom="1px solid"
+              borderColor="whiteAlpha.100"
             >
-              <Page pageNumber={pageNumber} />
-            </Document>
-            <Flex justify="center" align="center" gap="4">
+              <Box>
+                <Text
+                  fontSize="xs"
+                  textTransform="uppercase"
+                  letterSpacing="widest"
+                  color="gray.500"
+                  mb={1}
+                >
+                  PDF Viewer
+                </Text>
+                <Text fontSize="sm" fontWeight="600" color="gray.100">
+                  Resume – Tinashe Mundieta
+                </Text>
+              </Box>
+              <Button
+                as="a"
+                href={resumeUrl}
+                download
+                size="sm"
+                leftIcon={<FaFileDownload />}
+                bgGradient="linear(to-r, brand.400, accent.400)"
+                color="white"
+                _hover={{
+                  bgGradient: 'linear(to-r, brand.300, accent.300)',
+                  transform: 'translateY(-1px)',
+                }}
+              >
+                Download
+              </Button>
+            </Flex>
+
+            {/* PDF viewer */}
+            <Box
+              w="100%"
+              bg="blackAlpha.900"
+              borderRadius="xl"
+              overflow="hidden"
+              borderWidth="1px"
+              borderColor="whiteAlpha.200"
+              px={{ base: 2, md: 4 }}
+              py={{ base: 4, md: 6 }}
+            >
+              <Document
+                file={resumeUrl}
+                onLoadSuccess={onDocumentLoadSuccess}
+                loading={
+                  <Center py={10}>
+                    <Spinner size="lg" />
+                  </Center>
+                }
+                error={
+                  <Center flexDir="column" py={8}>
+                    <Text color="gray.300" fontWeight="600" mb={2}>
+                      Resume preview not available.
+                    </Text>
+                    <Text fontSize="sm" color="gray.500" textAlign="center">
+                      Please use the Download button above to open the PDF.
+                    </Text>
+                  </Center>
+                }
+              >
+                <Page pageNumber={pageNumber} />
+              </Document>
+            </Box>
+
+            {/* Controls */}
+            <Flex justify="space-between" align="center" w="100%" pt={1}>
               <Button
                 onClick={goToPrevPage}
                 disabled={pageNumber <= 1}
                 leftIcon={<FaChevronLeft />}
+                variant="ghost"
+                size="sm"
               >
-                Prev
+                Previous
               </Button>
-              <Text>
-                Page {pageNumber} of {numPages}
+              <Text fontSize="sm" color="gray.300">
+                Page {pageNumber} of {numPages || '?'}
               </Text>
               <Button
                 onClick={goToNextPage}
-                disabled={pageNumber >= numPages}
+                disabled={!numPages || pageNumber >= numPages}
                 rightIcon={<FaChevronRight />}
+                variant="ghost"
+                size="sm"
               >
                 Next
               </Button>
             </Flex>
-            <a href={resumeUrl} download>
-              <Button
-                leftIcon={<FaFileDownload />}
-                style={{
-                  padding: '1rem 2rem',
-                  borderRadius: '0.5rem',
-                  background: 'linear-gradient(135deg, #22d3ee, #a855f7)',
-                  color: 'white',
-                  border: 'none',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                }}
-              >
-                Download Resume
-              </Button>
-            </a>
           </VStack>
         </GlassCard>
       </Container>

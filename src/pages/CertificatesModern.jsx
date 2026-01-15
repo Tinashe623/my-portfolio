@@ -16,12 +16,11 @@ import {
   Wrap,
   WrapItem,
   Icon,
-  Divider,
 } from '@chakra-ui/react'
 import { motion, isValidMotionProp } from 'framer-motion'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { FaCertificate, FaAward, FaCheckCircle, FaTrophy } from 'react-icons/fa'
-import AnimatedGradientMesh from '../components/effects/AnimatedGradientMesh'
+
 import GlassCard from '../components/effects/GlassCard'
 
 const MotionBox = chakra(motion.div, {
@@ -81,7 +80,7 @@ export default function CertificatesModern() {
       pt={{ base: 8, md: 10, lg: 12 }}
       pb={{ base: 10, md: 12, lg: 16 }}
     >
-      <AnimatedGradientMesh variant="subtle" intensity="medium" />
+
 
       <Container maxW="7xl" position="relative" zIndex={1} px={{ base: 4, md: 6, lg: 8 }}>
         {/* Header */}

@@ -17,7 +17,7 @@ import { NavLink } from 'react-router-dom'
 import { keyframes } from '@emotion/react'
 
 import GlassCard from '../components/effects/GlassCard'
-import AnimatedGradientMesh from '../components/effects/AnimatedGradientMesh'
+// Removed AnimatedGradientMesh to let StarField shine
 import { GradientHeading, StatCard, StatusBadge, FloatingBadge } from '../components/common'
 import { ANIMATION_VARIANTS, HERO_STATS, HERO_BADGES, FLOATING_BADGES } from '../constants'
 
@@ -49,9 +49,6 @@ export default function HomeModern() {
       display="flex"
       alignItems="center"
     >
-      {/* Animated Gradient Mesh Background */}
-      <AnimatedGradientMesh />
-
       <Container
         maxW="7xl"
         position="relative"
@@ -62,7 +59,7 @@ export default function HomeModern() {
         <Flex
           direction={{ base: 'column', lg: 'row' }}
           align="center"
-          gap={{ base: 8, md: 10, lg: 12 }}
+          gap={{ base: 12, md: 16, lg: 20 }} // Increased gap for better spacing
           maxW="100%"
         >
           {/* Left Content */}
@@ -73,7 +70,7 @@ export default function HomeModern() {
             flex={1}
           >
             {/* Animated Badge */}
-            <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={{ base: 4, md: 6 }}>
+            <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={{ base: 6, md: 8 }}>
               <HStack
                 spacing={{ base: 2, md: 3 }}
                 wrap="wrap"
@@ -97,67 +94,55 @@ export default function HomeModern() {
                 display="block"
                 mb={2}
                 fontSize={{ base: '3xl', sm: '4xl', md: '5xl', lg: '6xl' }}
-                fontWeight="900"
+                fontWeight="800"
+                color="dark.textMuted"
                 textAlign={{ base: 'center', lg: 'left' }}
               >
                 Hi, I'm
               </Text>
-              <GradientHeading underline>Tinashe Mundieta</GradientHeading>
+              <Box textAlign={{ base: 'center', lg: 'left' }}>
+                <GradientHeading size="2xl" underline>Tinashe Mundieta</GradientHeading>
+              </Box>
             </MotionBox>
 
             {/* Description */}
-            <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={{ base: 6, md: 8 }}>
+            <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={{ base: 8, md: 10 }} mt={6}>
               <Text
-                fontSize={{ base: 'sm', sm: 'md', md: 'lg' }}
-                color="accent.300"
+                fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }} // Larger font size
+                color="dark.textMuted" // Muted text for better contrast vs heading
                 lineHeight="tall"
-                maxW="2xl"
+                maxW="3xl"
                 textAlign={{ base: 'center', lg: 'left' }}
+                fontWeight="400"
               >
                 Crafting{' '}
-                <Text as="span" fontWeight="700" color="brand.300">
-                  pixel-perfect
-                </Text>
-                ,{' '}
                 <Text as="span" fontWeight="700" color="brand.400">
-                  accessible
-                </Text>
-                , and{' '}
-                <Text as="span" fontWeight="700" color="accent.400">
-                  delightful
+                  exceptional
                 </Text>{' '}
-                web experiences with React, TypeScript, and modern tools.
+                digital experiences. I build accessible, pixel-perfect, and performant web applications using{' '}
+                <Text as="span" fontWeight="700" color="white">
+                  React
+                </Text>{' '}
+                and modern technologies.
               </Text>
             </MotionBox>
 
             {/* CTA Buttons */}
-            <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={{ base: 6, md: 10 }}>
+            <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={{ base: 10, md: 12 }}>
               <Stack
                 direction={{ base: 'column', sm: 'row' }}
-                spacing={4}
+                spacing={5}
                 justify={{ base: 'center', lg: 'flex-start' }}
               >
                 <Button
                   as={NavLink}
                   to="/portfolio"
-                  h={{ base: '64px', md: '60px' }}
+                  h={{ base: '56px', md: '64px' }}
                   px={{ base: 8, md: 10 }}
                   w={{ base: 'full', sm: 'auto' }}
-                  fontSize={{ base: 'lg', md: 'lg' }}
-                  bgGradient="linear(135deg, brand.400, brand.600)"
-                  color="white"
-                  borderRadius={{ base: 'xl', md: 'lg' }}
-                  _hover={{
-                    bgGradient: 'linear(135deg, brand.300, brand.500)',
-                    transform: 'translateY(-2px)',
-                    boxShadow: '0 8px 24px rgba(20, 184, 166, 0.35)',
-                  }}
-                  _active={{
-                    transform: 'translateY(0) scale(0.98)',
-                  }}
-                  transition="all 0.2s"
+                  fontSize={{ base: 'lg', md: 'xl' }}
+                  variant="primary"
                   rightIcon={<ArrowForwardIcon />}
-                  fontWeight="700"
                   position="relative"
                   overflow="hidden"
                   _before={{
@@ -168,7 +153,7 @@ export default function HomeModern() {
                     width: '100%',
                     height: '100%',
                     background:
-                      'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+                      'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
                     animation: `${shimmer} 3s infinite`,
                   }}
                 >
@@ -177,20 +162,14 @@ export default function HomeModern() {
                 <Button
                   as={NavLink}
                   to="/contact"
-                  h={{ base: '64px', md: '60px' }}
+                  h={{ base: '56px', md: '64px' }}
                   px={{ base: 8, md: 10 }}
-                  fontSize={{ base: 'lg', md: 'lg' }}
+                  fontSize={{ base: 'lg', md: 'xl' }}
                   w={{ base: 'full', sm: 'auto' }}
-                  borderRadius={{ base: 'xl', md: 'lg' }}
                   variant="glass"
-                  fontWeight="700"
-                  color="gray.200"
-                  _hover={{
-                    bg: 'rgba(168, 85, 247, 0.2)',
-                    borderColor: 'brand.400',
-                    color: 'white',
-                    transform: 'translateY(-2px)',
-                  }}
+                  color="white"
+                  borderWidth="1px"
+                  borderColor="whiteAlpha.300"
                 >
                   Contact Me
                 </Button>
@@ -199,7 +178,7 @@ export default function HomeModern() {
 
             {/* Quick Stats */}
             <MotionBox variants={ANIMATION_VARIANTS.itemUp}>
-              <SimpleGrid columns={3} spacing={{ base: 3, md: 4 }} maxW="xl" w="full">
+              <SimpleGrid columns={3} spacing={{ base: 4, md: 6 }} maxW="xl" w="full">
                 {HERO_STATS.map((stat, i) => (
                   <StatCard
                     key={i}
@@ -215,8 +194,8 @@ export default function HomeModern() {
 
           {/* Right Side - 3D Image */}
           <MotionBox
-            initial={{ opacity: 0, scale: 0.8, rotateY: -20 }}
-            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             flex={1}
             display="flex"
@@ -225,54 +204,47 @@ export default function HomeModern() {
           >
             <Box
               position="relative"
-              w={{ base: '200px', sm: '240px', md: '280px', lg: '380px', xl: '460px' }}
-              h={{ base: '200px', sm: '240px', md: '280px', lg: '380px', xl: '460px' }}
-              sx={{
-                '@media (min-width: 768px) and (max-height: 700px)': {
-                  w: '240px',
-                  h: '240px',
-                },
-              }}
+              w={{ base: '240px', sm: '320px', md: '380px', lg: '440px', xl: '500px' }}
+              h={{ base: '240px', sm: '320px', md: '380px', lg: '440px', xl: '500px' }}
             >
-              {/* Floating rings - Hidden on small mobile */}
+              {/* Floating rings */}
               <Box
                 position="absolute"
                 inset="-20px"
                 borderRadius="full"
-                border="2px solid"
-                borderColor="rgba(6, 182, 212, 0.2)"
-                animation={`${float} 6s ease-in-out infinite`}
+                border="1px solid"
+                borderColor="brand.500"
+                opacity={0.3}
+                animation={`${float} 10s ease-in-out infinite`}
                 pointerEvents="none"
-                display={{ base: 'none', sm: 'block' }}
               />
               <Box
                 position="absolute"
                 inset="-40px"
                 borderRadius="full"
-                border="2px solid"
-                borderColor="rgba(99, 102, 241, 0.15)"
-                animation={`${float} 8s ease-in-out infinite reverse`}
+                border="1px solid"
+                borderColor="accent.500"
+                opacity={0.2}
+                animation={`${float} 14s ease-in-out infinite reverse`}
                 pointerEvents="none"
-                display={{ base: 'none', sm: 'block' }}
               />
 
-              {/* Main image container with glass effect */}
+              {/* Main image container */}
               <GlassCard
-                variant="strong"
-                p={2}
+                p={1}
                 borderRadius="full"
                 h="100%"
                 w="100%"
                 hover3d
                 position="relative"
                 overflow="hidden"
+                borderColor="whiteAlpha.200"
                 _before={{
                   content: '""',
                   position: 'absolute',
                   inset: 0,
                   borderRadius: 'full',
-                  bg: 'linear-gradient(135deg, rgba(6,182,212,0.2), rgba(99,102,241,0.2))',
-                  filter: 'blur(30px)',
+                  bg: 'radial-gradient(circle at center, rgba(99,102,241,0.15) 0%, transparent 70%)',
                 }}
               >
                 <MotionImage
@@ -285,10 +257,12 @@ export default function HomeModern() {
                   loading="eager"
                   whileHover={{ scale: 1.05 }}
                   transition="0.3s ease"
+                  filter="contrast(1.1) brightness(1.1)"
+                  border="4px solid rgba(255,255,255,0.1)"
                 />
               </GlassCard>
 
-              {/* Floating badges - Hidden on mobile */}
+              {/* Floating badges */}
               {FLOATING_BADGES.map((badge, index) => (
                 <FloatingBadge
                   key={index}

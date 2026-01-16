@@ -141,17 +141,16 @@ export default function PortfolioModern() {
         >
           <Heading
             fontSize={{ base: '4xl', md: '5xl', lg: '6xl' }}
-            fontWeight="900"
+            fontWeight="800"
             mb={5}
-            bgGradient="linear(135deg, brand.300, accent.300)"
-            bgClip="text"
+            color="white"
             letterSpacing="tight"
           >
             Featured Work
           </Heading>
           <Text
             fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}
-            color="gray.400"
+            color="dark.textMuted"
             maxW="2xl"
             mx="auto"
             lineHeight="tall"
@@ -174,11 +173,12 @@ export default function PortfolioModern() {
               overflow="hidden"
               position="relative"
               borderWidth="1px"
-              borderColor="rgba(34, 211, 238, 0.3)"
+              borderColor="whiteAlpha.100" // Subtle default border
               _hover={{
-                borderColor: 'rgba(34, 211, 238, 0.6)',
+                borderColor: 'brand.500', // Highlight on hover
+                boxShadow: '0 0 30px rgba(99, 102, 241, 0.15)',
               }}
-              transition="all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
+              transition="all 0.4s ease"
             >
               <Flex direction={{ base: 'column', lg: 'row' }} h="100%">
                 {/* Hero Image */}
@@ -196,12 +196,12 @@ export default function PortfolioModern() {
                     w="100%"
                     h="100%"
                     transition="transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)"
-                    filter="brightness(0.9) saturate(1.1)"
+                    filter="brightness(0.9)"
                   />
                   <Box
                     position="absolute"
                     inset={0}
-                    bgGradient="linear(to-r, rgba(2, 4, 16, 0.8), transparent 60%)"
+                    bgGradient="linear(to-r, rgba(5, 5, 5, 0.8), transparent 60%)" // Matches dark.bg
                   />
                   {/* Featured Badge */}
                   <Box position="absolute" top={6} left={6}>
@@ -211,16 +211,15 @@ export default function PortfolioModern() {
                       px={4}
                       py={2}
                       borderRadius="full"
-                      bg="rgba(99, 102, 241, 0.15)"
-                      backdropFilter="blur(20px)"
-                      border="1px solid rgba(99, 102, 241, 0.4)"
+                      bg="rgba(15, 23, 42, 0.6)" // Darker slate
+                      backdropFilter="blur(12px)"
+                      border="1px solid rgba(255, 255, 255, 0.1)"
                     >
-                      <Text fontSize="xl">⭐</Text>
+                      <Text fontSize="md">⭐</Text>
                       <Text
-                        fontSize="sm"
-                        fontWeight="800"
-                        bgGradient="linear(to-r, brand.200, accent.200)"
-                        bgClip="text"
+                        fontSize="xs"
+                        fontWeight="700"
+                        color="white"
                         letterSpacing="wider"
                       >
                         FEATURED PROJECT
@@ -236,18 +235,18 @@ export default function PortfolioModern() {
                   p={{ base: 6, md: 8, lg: 12 }}
                   spacing={6}
                   flex={1}
-                  bg="rgba(2, 4, 16, 0.6)"
-                  backdropFilter="blur(16px)"
+                  bg="rgba(255, 255, 255, 0.02)"
                 >
                   <Heading
                     size={{ base: 'xl', md: '2xl', lg: '3xl' }}
                     color="white"
                     lineHeight="shorter"
+                    fontWeight="800"
                   >
                     {featuredProject.name}
                   </Heading>
 
-                  <Text color="gray.300" fontSize={{ base: 'md', md: 'lg' }} lineHeight="tall">
+                  <Text color="dark.textMuted" fontSize={{ base: 'md', md: 'lg' }} lineHeight="tall">
                     {featuredProject.desc}
                   </Text>
 
@@ -259,16 +258,9 @@ export default function PortfolioModern() {
                         px={4}
                         py={2}
                         borderRadius="lg"
-                        bg="rgba(34, 211, 238, 0.1)"
-                        backdropFilter="blur(10px)"
-                        border="1px solid rgba(34, 211, 238, 0.25)"
-                        _hover={{
-                          bg: 'rgba(34, 211, 238, 0.2)',
-                          borderColor: 'rgba(34, 211, 238, 0.5)',
-                          transform: 'translateY(-2px)',
-                        }}
-                        transition="all 0.3s"
-                        cursor="pointer"
+                        bg="whiteAlpha.50"
+                        border="1px solid"
+                        borderColor="whiteAlpha.100"
                       >
                         <Text fontSize="sm" fontWeight="600" color="brand.200" letterSpacing="wide">
                           {tag}
@@ -285,17 +277,8 @@ export default function PortfolioModern() {
                       isExternal
                       size="lg"
                       flex={1}
-                      bg="rgba(255, 255, 255, 0.1)"
-                      border="1px solid rgba(255, 255, 255, 0.2)"
-                      color="gray.200"
+                      variant="outline"
                       leftIcon={<Icon as={FaGithub} boxSize={5} />}
-                      _hover={{
-                        bg: 'rgba(168, 85, 247, 0.2)',
-                        borderColor: 'brand.400',
-                        color: 'white',
-                        transform: 'translateY(-2px)',
-                      }}
-                      transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                     >
                       View Code
                     </Button>
@@ -306,14 +289,8 @@ export default function PortfolioModern() {
                         isExternal
                         size="lg"
                         flex={1}
-                        bgGradient="linear(to-r, cyan.500, purple.500)"
-                        color="white"
+                        variant="primary"
                         leftIcon={<Icon as={FaExternalLinkAlt} boxSize={4} />}
-                        _hover={{
-                          bgGradient: 'linear(to-r, cyan.400, purple.400)',
-                          transform: 'translateY(-2px)',
-                        }}
-                        transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                       >
                         Live Demo
                       </Button>
@@ -348,13 +325,13 @@ export default function PortfolioModern() {
                 borderWidth="1px"
                 borderColor={
                   hoveredProject === project.name
-                    ? 'rgba(34, 211, 238, 0.5)'
-                    : 'rgba(255, 255, 255, 0.1)'
+                    ? 'whiteAlpha.400'
+                    : 'whiteAlpha.50'
                 }
-                transition="all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
+                transition="all 0.3s ease"
                 _hover={{
-                  borderColor: 'rgba(34, 211, 238, 0.6)',
-                  transform: 'translateY(-8px)',
+                  borderColor: 'whiteAlpha.400',
+                  transform: 'translateY(-6px)',
                 }}
               >
                 {/* Project Image with Overlay */}
@@ -364,15 +341,16 @@ export default function PortfolioModern() {
                     alt={project.name}
                     objectFit="cover"
                     w="100%"
-                    h="260px"
-                    transition="transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)"
-                    _groupHover={{ transform: 'scale(1.08)' }}
+                    h="240px"
+                    transition="transform 0.5s ease"
+                    _groupHover={{ transform: 'scale(1.05)' }}
                     filter="brightness(0.9)"
                   />
                   <Box
                     position="absolute"
                     inset={0}
-                    bgGradient="linear(to-t, rgba(17, 24, 39, 0.95), rgba(17, 24, 39, 0.3))"
+                    bgGradient="linear(to-t, #050505 0%, transparent 50%)" // Matches dark.bg/premium slate
+                    opacity={0.8}
                   />
 
                   {/* Badges */}
@@ -391,13 +369,10 @@ export default function PortfolioModern() {
                           px={3}
                           py={1}
                           borderRadius="md"
-                          bg="rgba(168, 85, 247, 0.15)"
-                          backdropFilter="blur(10px)"
-                          border="1px solid rgba(168, 85, 247, 0.4)"
-                          color="purple.200"
+                          bg="purple.900"
+                          color="purple.100"
                           fontSize="xs"
                           fontWeight="700"
-                          letterSpacing="wider"
                         >
                           <HStack spacing={1.5}>
                             <Icon as={FaUsers} boxSize={3} />
@@ -405,19 +380,22 @@ export default function PortfolioModern() {
                           </HStack>
                         </Badge>
                       )}
+                      {/* NEW: Show Tech Stack on Image for quick scan */}
+                       <HStack spacing={1}>
+                          {project.tags.slice(0, 2).map(t => (
+                              <Badge key={t} bg="blackAlpha.600" color="whiteAlpha.900" fontSize="2xs">{t}</Badge>
+                          ))}
+                       </HStack>
                     </VStack>
                     {project.inProgress && (
                       <Badge
                         px={3}
                         py={1}
                         borderRadius="md"
-                        bg="rgba(251, 191, 36, 0.15)"
-                        backdropFilter="blur(10px)"
-                        border="1px solid rgba(251, 191, 36, 0.4)"
-                        color="yellow.200"
+                        bg="yellow.900"
+                        color="yellow.100"
                         fontSize="xs"
                         fontWeight="700"
-                        letterSpacing="wider"
                         animation={`${pulse} 2s infinite`}
                       >
                         IN PROGRESS
@@ -428,7 +406,7 @@ export default function PortfolioModern() {
 
                 {/* Card Content */}
                 <VStack align="start" p={6} spacing={4} flex={1}>
-                  <Heading size="md" color="white" lineHeight="shorter">
+                  <Heading size="md" color="white" lineHeight="shorter" fontWeight="700">
                     {project.name}
                   </Heading>
 
@@ -439,53 +417,20 @@ export default function PortfolioModern() {
                     </Text>
                   )}
 
-                  <Text color="gray.400" fontSize="sm" lineHeight="tall" flex={1}>
+                  <Text color="dark.textMuted" fontSize="sm" lineHeight="tall" flex={1}>
                     {project.desc}
                   </Text>
 
-                  {/* Tech Tags */}
-                  <Flex wrap="wrap" gap={2}>
-                    {project.tags.map((tag) => (
-                      <Box
-                        key={tag}
-                        px={3}
-                        py={1}
-                        borderRadius="md"
-                        bg="rgba(34, 211, 238, 0.1)"
-                        border="1px solid rgba(34, 211, 238, 0.2)"
-                        _hover={{
-                          bg: 'rgba(34, 211, 238, 0.2)',
-                          borderColor: 'rgba(34, 211, 238, 0.4)',
-                        }}
-                        transition="all 0.2s"
-                      >
-                        <Text fontSize="xs" fontWeight="600" color="brand.200">
-                          {tag}
-                        </Text>
-                      </Box>
-                    ))}
-                  </Flex>
-
                   {/* Action Buttons */}
-                  <HStack spacing={3} w="100%">
+                  <HStack spacing={3} w="100%" pt={2}>
                     <Button
                       as={Link}
                       href={project.url}
                       isExternal
                       size="sm"
                       flex={1}
-                      variant="ghost"
+                      variant="outline"
                       leftIcon={<Icon as={FaGithub} />}
-                      color="gray.200"
-                      borderWidth="1px"
-                      borderColor="rgba(255, 255, 255, 0.2)"
-                      _hover={{
-                        bg: 'rgba(168, 85, 247, 0.2)',
-                        borderColor: 'brand.400',
-                        color: 'white',
-                        transform: 'translateY(-2px)',
-                      }}
-                      transition="all 0.3s"
                     >
                       Code
                     </Button>
@@ -496,14 +441,10 @@ export default function PortfolioModern() {
                         isExternal
                         size="sm"
                         flex={1}
-                        bgGradient="linear(to-r, cyan.500, purple.500)"
-                        color="white"
+                        variant="ghost" // Primary accent for Live Demo
+                        color="brand.300"
+                        _hover={{ bg: 'whiteAlpha.100', color: 'brand.200' }}
                         leftIcon={<Icon as={FaExternalLinkAlt} />}
-                        _hover={{
-                          bgGradient: 'linear(to-r, cyan.400, purple.400)',
-                          transform: 'translateY(-2px)',
-                        }}
-                        transition="all 0.3s"
                       >
                         Live
                       </Button>
@@ -522,11 +463,11 @@ export default function PortfolioModern() {
           transition={{ duration: 0.5, delay: 0.6 }}
         >
           <GlassCard p={{ base: 6, sm: 8, md: 12 }} textAlign="center" variant="strong">
-            <Heading size={{ base: 'md', md: 'lg' }} mb={{ base: 3, md: 4 }}>
+            <Heading size={{ base: 'md', md: 'lg' }} mb={{ base: 3, md: 4 }} color="white">
               Have a project in mind?
             </Heading>
             <Text
-              color="gray.300"
+              color="dark.textMuted"
               mb={{ base: 5, md: 6 }}
               maxW="xl"
               mx="auto"
@@ -545,13 +486,8 @@ export default function PortfolioModern() {
               <Button
                 as={NavLink}
                 to="/contact"
-                size={{ base: 'md', md: 'lg' }}
-                w={{ base: 'full', sm: 'auto' }}
-                bg="linear-gradient(135deg, #22d3ee, #a855f7)"
-                color="white"
-                _hover={{
-                  transform: 'translateY(-2px)',
-                }}
+                size="lg"
+                variant="primary"
                 rightIcon={<ArrowForwardIcon />}
               >
                 Get In Touch
@@ -560,17 +496,9 @@ export default function PortfolioModern() {
                 as={Link}
                 href="https://github.com/Tinashe623"
                 isExternal
-                size={{ base: 'md', md: 'lg' }}
-                w={{ base: 'full', sm: 'auto' }}
+                size="lg"
                 variant="glass"
-                color="gray.200"
                 leftIcon={<Icon as={FaGithub} />}
-                _hover={{
-                  bg: 'rgba(168, 85, 247, 0.2)',
-                  borderColor: 'brand.400',
-                  color: 'white',
-                  transform: 'translateY(-2px)',
-                }}
               >
                 View GitHub
               </Button>

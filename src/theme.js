@@ -6,7 +6,7 @@ const config = {
   useSystemColorMode: false,
 }
 
-// Modern "Deep Midnight" Palette
+// Premium Slate Palette
 const colors = {
   brand: {
     50: '#eef2ff',
@@ -14,28 +14,31 @@ const colors = {
     200: '#c7d2fe',
     300: '#a5b4fc',
     400: '#818cf8',
-    500: '#6366f1', // Electric Indigo
+    500: '#6366f1', // Primary Indigo
     600: '#4f46e5',
     700: '#4338ca',
     800: '#3730a3',
     900: '#312e81',
   },
   accent: {
-    50: '#ecfeff',
-    100: '#cffafe',
-    200: '#a5f3fc',
-    300: '#67e8f9',
-    400: '#22d3ee', // Neon Cyan
-    500: '#06b6d4',
-    600: '#0891b2',
-    700: '#0e7490',
-    800: '#155e75',
-    900: '#164e63',
+    50: '#f0fdfa',
+    100: '#ccfbf1',
+    200: '#99f6e4',
+    300: '#5eead4',
+    400: '#2dd4bf', // Teal/Cyan pop
+    500: '#14b8a6',
+    600: '#0d9488',
+    700: '#0f766e',
+    800: '#115e59',
+    900: '#134e4a',
   },
   dark: {
-    bg: '#020410',       // Deepest midnight blue, almost black
-    card: 'rgba(20, 20, 35, 0.6)', 
-    border: 'rgba(99, 102, 241, 0.1)',
+    bg: '#050505',       // Pure black/slate base
+    bgSecondary: '#0a0a0a',
+    card: 'rgba(18, 18, 18, 0.7)', 
+    border: 'rgba(255, 255, 255, 0.08)',
+    text: '#e2e8f0', // Slate 200
+    textMuted: '#94a3b8', // Slate 400
   }
 }
 
@@ -43,19 +46,25 @@ const styles = {
   global: (props) => ({
     html: {
       scrollBehavior: 'smooth',
+      height: '100%',
     },
     body: {
       bg: modes.bg(props),
-      color: 'whiteAlpha.900',
+      color: 'dark.text',
       fontFamily: 'body',
       overflowX: 'hidden',
+      backgroundImage: mode(
+        'none',
+        'radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%), radial-gradient(circle at 100% 0%, rgba(20, 184, 166, 0.05) 0%, transparent 30%)'
+      )(props),
+      backgroundAttachment: 'fixed',
     },
     '::selection': {
       bg: 'brand.500',
       color: 'white',
     },
     '::-webkit-scrollbar': {
-      width: '8px',
+      width: '6px',
     },
     '::-webkit-scrollbar-track': {
       bg: 'transparent',
@@ -66,13 +75,15 @@ const styles = {
       _hover: {
         bg: 'whiteAlpha.300',
       },
+      _active: {
+        bg: 'whiteAlpha.400',
+      },
     },
   }),
 }
 
-// Helper to switch modes (though we enforce dark mode mostly, good to have)
 const modes = {
-  bg: (props) => mode('white', '#020410')(props),
+  bg: (props) => mode('white', 'dark.bg')(props),
 }
 
 const fonts = {
@@ -84,72 +95,85 @@ const components = {
   Button: {
     baseStyle: {
       fontWeight: '600',
-      borderRadius: 'xl',
+      borderRadius: 'lg',
+      _focusVisible: {
+        boxShadow: 'outline',
+      },
     },
     variants: {
       primary: {
-        bg: 'brand.500',
+        bg: 'brand.600',
         color: 'white',
+        fontSize: 'sm',
+        h: '10',
+        px: '6',
         _hover: {
-          bg: 'brand.600',
-          transform: 'translateY(-2px)',
-          boxShadow: '0 0 20px rgba(99, 102, 241, 0.5)', 
+          bg: 'brand.500',
+          transform: 'translateY(-1px)',
+          boxShadow: '0 4px 12px rgba(79, 70, 229, 0.4)', 
+        },
+        _active: {
+          transform: 'translateY(0)',
+          bg: 'brand.700',
         },
         transition: 'all 0.2s',
       },
-      gradient: {
-        bgGradient: 'linear(to-r, brand.500, accent.500)',
-        color: 'white',
-        _hover: {
-          bgGradient: 'linear(to-r, brand.600, accent.600)',
-          transform: 'translateY(-2px)',
-          boxShadow: '0 0 25px rgba(6, 182, 212, 0.4)',
-        },
-        transition: 'all 0.3s',
-      },
-      glass: {
-        bg: 'whiteAlpha.100',
-        backdropFilter: 'blur(10px)',
-        border: '1px solid',
+      outline: {
+        borderWidth: '1px',
         borderColor: 'whiteAlpha.200',
         color: 'white',
         _hover: {
-          bg: 'whiteAlpha.200',
-          borderColor: 'brand.400',
+          bg: 'whiteAlpha.100',
+          borderColor: 'whiteAlpha.400',
         },
       },
-      // Keep existing variants if needed or map them
-      solid: {
-         // Mapping solid to primary style as default fallback
-        bg: 'brand.500',
+      ghost: {
+        color: 'whiteAlpha.800',
+        _hover: {
+          bg: 'whiteAlpha.100',
+          color: 'white',
+        },
+      },
+      glass: {
+        bg: 'rgba(255, 255, 255, 0.03)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid',
+        borderColor: 'whiteAlpha.100',
         color: 'white',
-        _hover: { bg: 'brand.600' }
-      }
-    },
-    defaultProps: {
-      colorScheme: 'brand',
+        _hover: {
+          bg: 'rgba(255, 255, 255, 0.08)',
+          borderColor: 'whiteAlpha.300',
+        },
+      },
     },
   },
   Heading: {
     baseStyle: {
       letterSpacing: '-0.02em',
+      color: 'white',
+    },
+  },
+  Text: {
+    baseStyle: {
+      color: 'dark.textMuted',
+      lineHeight: 'tall',
     },
   },
   Container: {
     baseStyle: {
       maxW: '7xl',
-      px: { base: 4, md: 8 },
+      px: { base: 6, md: 8 },
     },
   },
   Card: {
     baseStyle: {
       container: {
         bg: 'dark.card',
-        backdropFilter: 'blur(16px)',
+        backdropFilter: 'blur(12px)',
         borderWidth: '1px',
         borderColor: 'dark.border',
         borderRadius: '2xl',
-        boxShadow: 'xl',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
       },
     },
   },

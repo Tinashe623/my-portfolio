@@ -113,11 +113,8 @@ function MobileNav() {
               ))}
               <Box pt={8}>
                  <Button
-                  as="a"
-                  href={
-                    import.meta.env.VITE_CV_URL || '/Tinashe_Mundieta_cv.docx'
-                  }
-                  download
+                  as={NavLink}
+                  to="/resume?print=true"
                   size="lg"
                   w="full"
                   variant="primary"
@@ -189,16 +186,15 @@ export default function Header() {
 
           <HStack spacing={4} display={{ base: 'none', md: 'flex' }}>
             <Button
-              as="a"
-              href={cvUrl}
-              download
+              as={NavLink}
+              to="/resume?print=true"
               variant="ghost"
               size="sm"
               leftIcon={<DownloadIcon />}
               color="dark.textMuted"
               _hover={{ color: 'white', bg: 'whiteAlpha.100' }}
             >
-              CV
+              Download CV
             </Button>
             <Button
               as={NavLink}

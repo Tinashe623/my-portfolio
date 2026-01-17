@@ -8,7 +8,7 @@ export default function Footer() {
   // Social Links Configuration
   const socials = [
     { label: 'LinkedIn', icon: FaLinkedin, href: 'https://www.linkedin.com/in/tinashe-mundieta-041715302/' },
-    { label: 'GitHub', icon: FaGithub, href: 'https://github.com/Tinashe623' }, // Update with real link if available
+    { label: 'GitHub', icon: FaGithub, href: 'https://github.com/Tinashe623' }, 
     { label: 'WhatsApp', icon: FaWhatsapp, href: 'https://wa.me/263779941427' },
     { label: 'Facebook', icon: FaFacebook, href: import.meta.env.VITE_FACEBOOK_URL },
   ].filter(s => s.href)

@@ -1,96 +1,115 @@
-# Tinashe Mundieta Portfolio
+# 🚀 Tinashe Mundieta | Modern Portfolio
 
-A modern, responsive personal portfolio built with React, Vite, Chakra UI, and Framer Motion. It showcases projects, certificates, services, and contact information with smooth animations and accessible, mobile‑first design.
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Chakra UI](https://img.shields.io/badge/Chakra%20UI-2.8-319795?logo=chakraui&logoColor=white)](https://chakra-ui.com/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-## ✨ Highlights
+A high-performance, aesthetically driven personal portfolio designed to showcase projects, skills, and certifications. Built with a focus on **User Experience (UX)**, **Accessibility (a11y)**, and **Modern Engineering** practices.
 
-- Single‑page app with routes: Home, About, Services, Portfolio, Certificates, Contact
-- Responsive layout polished for small screens (no horizontal scroll)
-- Clean dark UI, animated hero image frame, and subtle hover effects
-- Portfolio highlight + curated projects with GitHub/Live links
-- Certificates with filters and modal preview + verify links
-- Contact section with email and phone chips; mailto form
-- Environment‑based config (CV URL, phone numbers, socials)
+🔗 **Live Demo:** [tinashe-portfolio.netlify.app](https://tinashe-portfolio.netlify.app/)
 
-## 🔧 Tech Stack
+---
 
-- React 18 + Vite 5
-- Chakra UI 2 (component system + theme)
-- Framer Motion 11 (micro‑interactions)
-- React Router 7
+## ✨ Key Features
 
-## 🚀 Quick Start
+- **💎 Premium Design:** Glassmorphism effects, dark-mode first aesthetic, and smooth micro-interactions via Framer Motion.
+- **📱 Mobile-First:** Fully responsive layout optimized for all devices, ensuring professional display even on the smallest screens.
+- **⚡ Performance Optimized:** Built on Vite for lightning-fast HMR and optimized production bundles.
+- **♿ Accessibility:** Semantic HTML, ARIA attributes, and keyboard-friendly navigation.
+- **📄 Interactive Resume:** Built-in resume viewer and professional service showcase.
+- **🎓 Certificate Management:** Curated list of certifications with modal verification links.
 
-```bash
-# 1) Install
-npm install
+---
 
-# 2) Run dev server
-npm run dev
+## 🛠️ Tech Stack
 
-# 3) Production build
-npm run build
+### Core
+- **React 18** - UI Component logic
+- **Vite** - Build tool & dev server
+- **React Router 7** - Declarative routing
+- **Framer Motion** - Production-ready animations
 
-# 4) Preview the production build
-npm run preview
-```
+### Styling & UI
+- **Chakra UI** - Modular component system
+- **Vanilla CSS** - Custom design tokens
+- **React Icons** - Comprehensive icon set
 
-## ⚙️ Environment Variables
+---
 
-Copy `.env.example` to `.env` and customize as needed.
+## 🚀 Getting Started
 
-- `VITE_CONTACT_PHONE` — primary phone number
-- `VITE_CONTACT_PHONE_ALT` — alternate phone number
-- `VITE_WHATSAPP_PHONE` — WhatsApp number (digits only, e.g. 263771234567)
-- `VITE_FACEBOOK_URL`, `VITE_LINKEDIN_URL` — social links
-- `VITE_CV_URL` — path/URL to your CV (e.g. `/Tinashe_Mundieta_cv.docx`)
-- `VITE_SCHOOL_WEBSITE_DEMO` — optional live demo link for the featured project
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
 
-> Tip: Files inside `public/` are served at the site root. For example, `public/Tinashe_Mundieta_cv.docx` is available at `/Tinashe_Mundieta_cv.docx`.
+### Installation
 
-## 🗂️ Project Structure (key files)
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Tinashe623/my-portfolio.git
+   cd my-portfolio
+   ```
 
-```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up Environment Variables**
+   Create a `.env` file in the root directory:
+   ```bash
+   VITE_CONTACT_PHONE="+263..."
+   VITE_WHATSAPP_PHONE="263..."
+  
+   # See .env.example for all options
+   ```
+
+4. **Run for development**
+   ```bash
+   npm run dev
+   ```
+
+5. **Build for production**
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 🗂️ Project Structure
+
+```text
 src/
-  components/layout/
-    Header.jsx       # Sticky header + mobile drawer
-    Footer.jsx       # Footer with social/cv buttons
-  pages/
-    Home.jsx         # Hero, quick facts, animated ribbon
-    About.jsx        # Bio, skills, mobile‑first image
-    Services.jsx     # Service cards with icons
-    Portfolio.jsx    # Highlight + curated projects
-    Certificates.jsx # Filters + modal verify
-    Contact.jsx      # Email/phone chips + mailto form
-  routes/
-    AppRoutes.jsx    # App routing + layout shell
-  theme.js           # Chakra theme overrides
+├── components/
+│   ├── layout/      # Header, Footer, and Navigation
+│   ├── effects/     # Animations and Glassmorphism
+│   └── common/      # Reusable UI components
+├── pages/           # Main view components
+├── assets/          # Static images and styles
+├── routes/          # Navigation logic
+└── theme.js         # Global Chakra UI overrides
 ```
 
-## 🧩 Content Management
+---
 
-- Projects: edit `src/pages/Portfolio.jsx` (`extraProjects` array and highlight section)
-- Certificates: edit the `certs` array in `src/pages/Certificates.jsx`
-- Phones / social / CV URL: update `.env`
+## 🛡️ Engineering Quality
 
-## 🛡️ Accessibility & Performance
+- **SEO Ready:** Meta tags, Open Graph (OG), and Twitter Cards implemented for social sharing.
+- **Clean Code:** Component-based architecture with separated concerns.
+- **Type-safe-ish:** Modern JavaScript patterns with a focus on readability and maintainability.
 
-- Keyboard‑focusable controls and visible focus rings
-- High‑contrast link colors (auto‑adjust for light/dark contexts)
-- Responsive typography and spacing; reduced motion on small screens
-- Images use lazy loading and proper object fit
+---
 
-## 📦 Deploying
+## 🤝 Contact & Professional Links
 
-Any static host works (GitHub Pages, Netlify, Vercel, etc.).
+- **LinkedIn:** [Tinashe Mundieta](https://www.linkedin.com/in/tinashe-mundieta-041715302/)
+- **GitHub:** [@Tinashe623](https://github.com/Tinashe623)
 
-- Build with `npm run build` → deploy the `dist/` folder
-- GitHub Pages (static): configure your hosting to serve from `dist/` or use an action to build & publish
+---
 
-## 🔗 Live Demo
+## 📄 License
 
-Add your live URL here once deployed (e.g. `https://tinashe623.github.io/my-portfolio/`).
+This project is open-source and available under the **MIT License**. Feel free to use the code as a reference for your own portfolio!
 
-## © License / Usage
-
-Content © Tinashe Mundieta. Code is shared for portfolio purposes; feel free to reference structure and patterns.
+*Built with ❤️ by Tinashe Mundieta*

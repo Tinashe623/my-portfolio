@@ -76,11 +76,17 @@ export default function Footer() {
           >
             <Text>© {currentYear} Tinashe Mundieta. All rights reserved.</Text>
             
-            <HStack spacing={6}>
-              <Link href="#" _hover={{ color: 'white' }}>Privacy</Link>
-              <Link href="#" _hover={{ color: 'white' }}>Terms</Link>
-              <Text>Built with React & Chakra UI</Text>
-            </HStack>
+            <Stack 
+              direction={{ base: 'column', sm: 'row' }} 
+              spacing={{ base: 2, sm: 6 }}
+              align="center"
+            >
+              <HStack spacing={6}>
+                <Link href="#" _hover={{ color: 'white' }}>Privacy</Link>
+                <Link href="#" _hover={{ color: 'white' }}>Terms</Link>
+              </HStack>
+              <Text textAlign="center">Built with React & Chakra UI</Text>
+            </Stack>
           </Flex>
         </Stack>
       </Container>

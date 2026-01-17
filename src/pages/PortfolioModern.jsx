@@ -37,14 +37,14 @@ const pulse = keyframes`
 //  Desktop tuning will primarily be controlled via Grid row heights and image preview heights
 const projects = [
   {
-    name: 'School Website',
-    desc: 'Full-featured school website with modern UI, responsive design, and clean architecture.',
-    url: 'https://github.com/Tinashe623/school-website',
-    homepage: null,
-    tags: ['React', 'Vite', 'Chakra UI'],
+    name: 'G.M.P Electrical',
+    desc: 'Modern marketing platform for solar and electrical services featuring real-time quote generation and service showcase.',
+    url: 'https://github.com/Tinashe623/gmp-electrical-solutions',
+    homepage: 'https://gmp-electrical.netlify.app/',
+    tags: ['React', 'Solar', 'Vite', 'Chakra UI'],
     featured: true,
     image:
-      'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200&h=800&fit=crop&q=80',
+      '/images/projects/gmp-preview.png',
     gridArea: { base: 'auto', md: '1 / 1 / 3 / 3' },
   },
   {
@@ -52,7 +52,7 @@ const projects = [
     desc: 'Modern web application for Saeku. Developed frontend components, user interfaces, and integrated with backend services.',
     url: 'https://github.com/farscorp/saeku-web-frontend',
     homepage: null,
-    tags: ['React', 'TypeScript', 'Frontend'],
+    tags: ['React', 'Charkra', 'Frontend'],
     collaborative: true,
     role: 'Frontend Developer',
     team: 'Farscorp Team',
@@ -75,7 +75,7 @@ const projects = [
   {
     name: 'Netflix Clone',
     desc: 'Netflix-style UI with hero section, content rows, and responsive cards.',
-    url: 'https://github.com/Tinashe623/netflix-clone',
+    url: 'https://github.com/Tinashe623/netfix-clone-rs',
     homepage: null,
     tags: ['React', 'CSS3', 'UI/UX'],
     inProgress: true,
@@ -86,33 +86,40 @@ const projects = [
   {
     name: 'Todo App',
     desc: 'React Todo app with hooks, clean UI, and full CRUD functionality.',
-    url: 'https://github.com/Tinashe623/react-todo-app',
-    homepage: null,
+    url: 'https://github.com/Tinashe623/Todo-App',
+    homepage: 'https://premium-todo-app.netlify.app/',
     tags: ['React', 'Hooks', 'State'],
     image:
-      'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=1200&h=800&fit=crop&q=80',
+      '/images/projects/todo-preview.png',
     gridArea: { base: 'auto', md: '2 / 3 / 3 / 4' },
   },
   {
     name: 'Temperature Converter',
     desc: 'Instant temperature conversion with clean interface and validation.',
     url: 'https://github.com/Tinashe623/temperature-conversion-program',
-    homepage: null,
+    homepage: 'https://tempflow-app.netlify.app/',
     tags: ['JavaScript', 'DOM'],
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop&q=80',
+    image: '/images/projects/temp-preview.png',
     gridArea: { base: 'auto', md: '2 / 4 / 3 / 5' },
   },
   {
-    name: 'Amazon UI',
-    desc: 'Amazon-inspired storefront with navigation, product grid, and responsive patterns.',
-    url: 'https://github.com/Tinashe623/amazon-project',
-    homepage: null,
-    tags: ['HTML', 'CSS', 'Layout'],
-    inProgress: true,
+    name: 'Digital Clock (Lumina Time)',
+    desc: 'Premium Glassmorphism Digital Suite with clock, date, greetings, and precision stopwatch.',
+    url: 'https://github.com/Tinashe623/Digital_clock',
+    homepage: 'https://premium-digital-suite.netlify.app/',
+    tags: ['HTML5', 'CSS3', 'JavaScript'],
+    image: '/images/projects/clock-preview.png',
+    gridArea: { base: 'auto', md: '4 / 3 / 5 / 5' },
+  },
+  {
+    name: 'Personal Portfolio',
+    desc: 'Modern, aesthetically driven professional portfolio showcasing projects and skills with premium glassmorphism design.',
+    url: 'https://github.com/Tinashe623/my-portfolio',
+    homepage: 'https://tinashe-portfolio.netlify.app',
+    tags: ['React', 'Vite', 'Chakra UI', 'Framer Motion'],
     image:
-      'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1200&h=800&fit=crop&q=80',
-    // Move to its own row on desktop to avoid overlap and inconsistent background blending
-    gridArea: { base: 'auto', md: '4 / 1 / 5 / 3' },
+      'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=800&fit=crop&q=80',
+    gridArea: { base: 'auto', md: '5 / 1 / 6 / 3' },
   },
 ]
 

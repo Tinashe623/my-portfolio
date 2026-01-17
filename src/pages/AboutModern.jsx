@@ -171,12 +171,19 @@ export default function AboutModern() {
                   <Button
                     as={NavLink}
                     to="/portfolio"
-                    size="lg"
+                    variant="primary"
+                    h={{ base: '56px', md: '64px' }}
+                    minH={{ base: '56px', md: '64px' }}
+                    px={{ base: 8, md: 10 }}
+                    py={{ base: 4, md: 6 }}
+                    w={{ base: 'full', sm: 'auto' }}
+                    fontSize={{ base: 'lg', md: 'xl' }}
                     bg="linear-gradient(135deg, #22d3ee, #a855f7)"
                     color="white"
                     flex={1}
                     _hover={{
                       transform: 'translateY(-2px)',
+                      boxShadow: '0 8px 20px rgba(34, 211, 238, 0.4)',
                     }}
                     rightIcon={<ArrowForwardIcon />}
                   >
@@ -185,8 +192,13 @@ export default function AboutModern() {
                   <Button
                     as={NavLink}
                     to="/contact"
-                    size="lg"
                     variant="glass"
+                    h={{ base: '56px', md: '64px' }}
+                    minH={{ base: '56px', md: '64px' }}
+                    px={{ base: 8, md: 10 }}
+                    py={{ base: 4, md: 6 }}
+                    w={{ base: 'full', sm: 'auto' }}
+                    fontSize={{ base: 'lg', md: 'xl' }}
                     flex={1}
                     color="gray.200"
                     _hover={{

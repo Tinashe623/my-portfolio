@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://tinashe623.github.io/sitemap.xml
+Sitemap: https://tinashe-portfolio.netlify.app/sitemap.xml

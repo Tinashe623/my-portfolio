@@ -34,7 +34,7 @@ const pulse = keyframes`
   50% { opacity: 0.5; }
 `
 
-// NOTE: Desktop tuning will primarily be controlled via Grid row heights and image preview heights
+//  Desktop tuning will primarily be controlled via Grid row heights and image preview heights
 const projects = [
   {
     name: 'School Website',

@@ -221,7 +221,7 @@ export default function ContactModern() {
                     📧 Email
                   </Link>
                   <Link
-                    href="https://linkedin.com"
+                    href="https://www.linkedin.com/in/tinashe-mundieta-041715302/"
                     isExternal
                     color="brand.300"
                     fontSize="sm"
@@ -241,7 +241,7 @@ export default function ContactModern() {
                     🐙 GitHub
                   </Link>
                   <Link
-                    href="https://wa.me/"
+                    href="https://wa.me/263779941427"
                     isExternal
                     color="brand.300"
                     fontSize="sm"

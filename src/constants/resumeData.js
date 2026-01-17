@@ -10,7 +10,7 @@ export const RESUME_DATA = {
     links: [
       { label: 'Portfolio', icon: FaGlobe, url: 'https://tinashe-portfolio.netlify.app' },
       { label: 'GitHub', icon: FaGithub, url: 'https://github.com/Tinashe623' },
-      { label: 'LinkedIn', icon: FaLinkedin, url: import.meta.env.VITE_LINKEDIN_URL },
+      { label: 'LinkedIn', icon: FaLinkedin, url: 'https://www.linkedin.com/in/tinashe-mundieta-041715302/' },
     ],
   },
   summary:

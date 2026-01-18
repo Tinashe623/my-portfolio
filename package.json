@@ -11,7 +11,7 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "test:watch": "vitest",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",

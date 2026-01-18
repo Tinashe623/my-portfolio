@@ -60,7 +60,7 @@ function NavLinks({ onClick }) {
 
 function MobileNav() {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  
+
   return (
     <>
       <IconButton
@@ -112,7 +112,7 @@ function MobileNav() {
                 </CNavLink>
               ))}
               <Box pt={8}>
-                 <Button
+                <Button
                   as={NavLink}
                   to="/resume?print=true"
                   size="lg"
@@ -145,7 +145,7 @@ function MobileNav() {
 
 export default function Header() {
   const [scrolled, setScrolled] = React.useState(false)
-  const cvUrl = import.meta.env.VITE_CV_URL || '/Tinashe_Mundieta_cv.docx'
+
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
@@ -209,7 +209,7 @@ export default function Header() {
           </HStack>
 
           <HStack display={{ base: 'flex', md: 'none' }}>
-             <MobileNav />
+            <MobileNav />
           </HStack>
         </Flex>
       </Container>

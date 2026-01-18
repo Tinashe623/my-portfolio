@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Container, Text, HStack, Link, IconButton, Stack, Flex, Divider } from '@chakra-ui/react'
-import { FaWhatsapp, FaFacebook, FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa'
+import { FaWhatsapp, FaFacebook, FaLinkedin, FaGithub } from 'react-icons/fa'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -8,7 +8,7 @@ export default function Footer() {
   // Social Links Configuration
   const socials = [
     { label: 'LinkedIn', icon: FaLinkedin, href: 'https://www.linkedin.com/in/tinashe-mundieta-041715302/' },
-    { label: 'GitHub', icon: FaGithub, href: 'https://github.com/Tinashe623' }, 
+    { label: 'GitHub', icon: FaGithub, href: 'https://github.com/Tinashe623' },
     { label: 'WhatsApp', icon: FaWhatsapp, href: 'https://wa.me/263779941427' },
     { label: 'Facebook', icon: FaFacebook, href: import.meta.env.VITE_FACEBOOK_URL },
   ].filter(s => s.href)
@@ -35,7 +35,7 @@ export default function Footer() {
                 Tinashe<Text as="span" color="brand.500">.</Text>
               </Text>
               <Text color="dark.textMuted" maxW="sm">
-                Building digital experiences with passion and precision. 
+                Building digital experiences with passion and precision.
                 Let's create something specific together.
               </Text>
             </Box>
@@ -75,9 +75,9 @@ export default function Footer() {
             color="dark.textMuted"
           >
             <Text>© {currentYear} Tinashe Mundieta. All rights reserved.</Text>
-            
-            <Stack 
-              direction={{ base: 'column', sm: 'row' }} 
+
+            <Stack
+              direction={{ base: 'column', sm: 'row' }}
               spacing={{ base: 2, sm: 6 }}
               align="center"
             >

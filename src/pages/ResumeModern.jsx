@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Container,
@@ -12,14 +12,14 @@ import {
   List,
   ListItem,
   ListIcon,
-  Badge,
+
 } from '@chakra-ui/react'
-import { FaDownload, FaExternalLinkAlt, FaCheckCircle, FaMapMarkerAlt, FaEnvelope, FaPhone, FaGlobe, FaGithub } from 'react-icons/fa'
+import { FaDownload, FaExternalLinkAlt, FaCheckCircle, FaMapMarkerAlt, FaEnvelope, FaPhone } from 'react-icons/fa'
 import { NavLink, useSearchParams } from 'react-router-dom'
 import html2pdf from 'html2pdf.js'
 import { RESUME_DATA } from '../constants/resumeData'
 
-import GlassCard from '../components/effects/GlassCard'
+
 import { GradientHeading } from '../components/common'
 
 const ResumeModern = () => {
@@ -29,14 +29,14 @@ const ResumeModern = () => {
   const handleDownloadPDF = async () => {
     setIsGenerating(true)
     const element = document.getElementById('resume-content')
-    
+
     // Opt-in for high quality render
     const opt = {
-      margin:       0,
-      filename:     'Tinashe_Mundieta_Resume.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2, useCORS: true },
-      jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+      margin: 0,
+      filename: 'Tinashe_Mundieta_Resume.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
     }
 
     try {
@@ -69,16 +69,16 @@ const ResumeModern = () => {
           'header, footer, .no-print': { display: 'none !important' },
           body: { bg: 'white !important', color: 'black !important' },
           '.resume-paper': {
-             boxShadow: 'none !important', 
-             maxW: '100% !important', 
-             p: '0 !important',
-             m: '0 !important' 
+            boxShadow: 'none !important',
+            maxW: '100% !important',
+            p: '0 !important',
+            m: '0 !important'
           },
         },
       }}
     >
       <Container maxW="7xl" position="relative" zIndex={1} px={{ base: 4, md: 6, lg: 8 }}>
-        
+
         {/* Page Header */}
         <Box textAlign="center" mb={{ base: 10, md: 12 }}>
           <GradientHeading>Digital Resume</GradientHeading>
@@ -92,7 +92,7 @@ const ResumeModern = () => {
           >
             A live, accessible version of my professional profile.
           </Text>
-          
+
           <HStack justify="center" mt={6} spacing={4}>
             <Button
               leftIcon={<FaDownload />}
@@ -138,38 +138,38 @@ const ResumeModern = () => {
                 </Text>
               </Box>
 
-              <Flex 
-                wrap="wrap" 
-                gap={4} 
-                fontSize="xs" 
+              <Flex
+                wrap="wrap"
+                gap={4}
+                fontSize="xs"
                 color="gray.600"
                 w="100%"
                 fontWeight="500"
               >
-                  <HStack spacing={2} align="center">
-                     <Box as="span" w="6px" h="6px" borderRadius="full" bg="brand.500" />
-                     <Text as="a" href={RESUME_DATA.header.links[0].url} target="_blank" rel="noopener noreferrer" _hover={{ color: 'brand.600' }} fontWeight="500" color="gray.700">
-                      tinashe-portfolio.netlify.app
-                    </Text>
-                  </HStack>
-                  <HStack spacing={2} align="center">
-                     <Box as="span" w="6px" h="6px" borderRadius="full" bg="brand.500" />
-                     <Text as="a" href={RESUME_DATA.header.links[1].url} target="_blank" rel="noopener noreferrer" _hover={{ color: 'brand.600' }} fontWeight="500" color="gray.700">
-                      github.com/Tinashe623
-                    </Text>
-                  </HStack>
-                  <HStack>
-                    <Icon as={FaEnvelope} color="accent.500" />
-                    <Text>{RESUME_DATA.header.email}</Text>
-                  </HStack>
-                  <HStack>
-                     <Icon as={FaPhone} color="accent.500" />
-                     <Text>{RESUME_DATA.header.phone}</Text>
-                  </HStack>
-                  <HStack>
-                    <Icon as={FaMapMarkerAlt} color="accent.500" />
-                    <Text>{RESUME_DATA.header.location}</Text>
-                  </HStack>
+                <HStack spacing={2} align="center">
+                  <Box as="span" w="6px" h="6px" borderRadius="full" bg="brand.500" />
+                  <Text as="a" href={RESUME_DATA.header.links[0].url} target="_blank" rel="noopener noreferrer" _hover={{ color: 'brand.600' }} fontWeight="500" color="gray.700">
+                    tinashe-portfolio.netlify.app
+                  </Text>
+                </HStack>
+                <HStack spacing={2} align="center">
+                  <Box as="span" w="6px" h="6px" borderRadius="full" bg="brand.500" />
+                  <Text as="a" href={RESUME_DATA.header.links[1].url} target="_blank" rel="noopener noreferrer" _hover={{ color: 'brand.600' }} fontWeight="500" color="gray.700">
+                    github.com/Tinashe623
+                  </Text>
+                </HStack>
+                <HStack>
+                  <Icon as={FaEnvelope} color="accent.500" />
+                  <Text>{RESUME_DATA.header.email}</Text>
+                </HStack>
+                <HStack>
+                  <Icon as={FaPhone} color="accent.500" />
+                  <Text>{RESUME_DATA.header.phone}</Text>
+                </HStack>
+                <HStack>
+                  <Icon as={FaMapMarkerAlt} color="accent.500" />
+                  <Text>{RESUME_DATA.header.location}</Text>
+                </HStack>
               </Flex>
             </VStack>
 
@@ -185,7 +185,7 @@ const ResumeModern = () => {
 
             {/* Technical Skills - Grid Layout for Compactness */}
             <Box mb={4}>
-               <Heading as="h3" size="sm" mb={3} color="gray.900" textTransform="uppercase" letterSpacing="wider" borderLeft="3px solid" borderColor="brand.500" pl={2}>
+              <Heading as="h3" size="sm" mb={3} color="gray.900" textTransform="uppercase" letterSpacing="wider" borderLeft="3px solid" borderColor="brand.500" pl={2}>
                 Technical Skills
               </Heading>
               <List spacing={1} fontSize="sm">
@@ -199,34 +199,34 @@ const ResumeModern = () => {
             </Box>
 
             {/* Education & Certifications */}
-             <Box mb={4}>
-               <Heading as="h3" size="sm" mb={3} color="gray.900" textTransform="uppercase" letterSpacing="wider" borderLeft="3px solid" borderColor="brand.500" pl={2}>
+            <Box mb={4}>
+              <Heading as="h3" size="sm" mb={3} color="gray.900" textTransform="uppercase" letterSpacing="wider" borderLeft="3px solid" borderColor="brand.500" pl={2}>
                 Education & Certifications
               </Heading>
               <VStack align="stretch" spacing={4}>
                 {RESUME_DATA.education.map((edu, index) => (
                   <Box key={index}>
-                     <Flex justify="space-between" align="center" mb={1}>
-                       <Text fontWeight="700" fontSize="sm" color="gray.800">{edu.degree}</Text>
-                       <span 
-                          style={{
-                             fontSize: '0.75rem',
-                             padding: '2px 8px',
-                             backgroundColor: '#F7FAFC',
-                             color: '#1A202C',
-                             border: '1px solid #E2E8F0',
-                             borderRadius: '4px',
-                             fontWeight: '600',
-                             display: 'flex',
-                             alignItems: 'center',
-                             justifyContent: 'center',
-                             lineHeight: '1',
-                             minWidth: '60px',
-                             textAlign: 'center'
-                          }}
-                       >
-                          {edu.year}
-                       </span>
+                    <Flex justify="space-between" align="center" mb={1}>
+                      <Text fontWeight="700" fontSize="sm" color="gray.800">{edu.degree}</Text>
+                      <span
+                        style={{
+                          fontSize: '0.75rem',
+                          padding: '2px 8px',
+                          backgroundColor: '#F7FAFC',
+                          color: '#1A202C',
+                          border: '1px solid #E2E8F0',
+                          borderRadius: '4px',
+                          fontWeight: '600',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          lineHeight: '1',
+                          minWidth: '60px',
+                          textAlign: 'center'
+                        }}
+                      >
+                        {edu.year}
+                      </span>
                     </Flex>
                     <Text color="brand.600" fontWeight="600" fontSize="xs" mb={1}>{edu.institution}</Text>
                     <Text color="gray.700" fontSize="xs">{edu.details}</Text>
@@ -237,13 +237,13 @@ const ResumeModern = () => {
 
             {/* Selected Projects (Text Only for PDF) */}
             <Box mb={4} p={4} borderRadius="md" bg="gray.50" border="1px solid" borderColor="gray.200">
-               <Heading as="h3" size="sm" mb={2} color="gray.800" textTransform="uppercase" letterSpacing="wider" display="flex" alignItems="center" gap={2}>
+              <Heading as="h3" size="sm" mb={2} color="gray.800" textTransform="uppercase" letterSpacing="wider" display="flex" alignItems="center" gap={2}>
                 Selected Projects
               </Heading>
               <Text fontSize="sm" color="gray.700" mb={3} lineHeight="relaxed">
                 {RESUME_DATA.projects.note}
               </Text>
-              
+
               {/* This button is hidden during PDF generation via data-html2canvas-ignore */}
               <Button
                 as={NavLink}
@@ -255,64 +255,64 @@ const ResumeModern = () => {
                 _hover={{ bg: 'brand.700' }}
                 size="sm"
                 shadow="sm"
-                data-html2canvas-ignore="true" 
+                data-html2canvas-ignore="true"
               >
                 {RESUME_DATA.projects.action}
               </Button>
-               {/* Fallback text for PDF */}
-               <Text fontSize="xs" color="gray.500" fontStyle="italic" mt={1} display="none" className="pdf-only-text">
-                 Visit <Text as="span" color="brand.600" fontWeight="600">tinashe-portfolio.netlify.app/portfolio</Text> for full details.
-               </Text>
+              {/* Fallback text for PDF */}
+              <Text fontSize="xs" color="gray.500" fontStyle="italic" mt={1} display="none" className="pdf-only-text">
+                Visit <Text as="span" color="brand.600" fontWeight="600">tinashe-portfolio.netlify.app/portfolio</Text> for full details.
+              </Text>
             </Box>
 
             {/* Soft Skills & Availability */}
             <Flex direction={{ base: 'column', md: 'row' }} gap={6}>
-               <Box flex={1}>
-                 <Heading as="h3" size="sm" mb={3} color="gray.900" textTransform="uppercase" letterSpacing="wider" borderLeft="3px solid" borderColor="brand.500" pl={2}>
+              <Box flex={1}>
+                <Heading as="h3" size="sm" mb={3} color="gray.900" textTransform="uppercase" letterSpacing="wider" borderLeft="3px solid" borderColor="brand.500" pl={2}>
                   Soft Skills
                 </Heading>
                 <Flex wrap="wrap" gap={2}>
                   {RESUME_DATA.skills.soft.map((skill, index) => (
-                     <span 
-                        key={index} 
-                        style={{
-                           padding: '4px 8px',
-                           backgroundColor: '#F7FAFC',
-                           color: '#1A202C',
-                           border: '1px solid #E2E8F0',
-                           borderRadius: '4px',
-                           fontSize: '0.75rem',
-                           fontWeight: '600',
-                           display: 'inline-block',
-                           marginRight: '8px', 
-                           marginBottom: '8px',
-                           lineHeight: '1.4',
-                           textAlign: 'center'
-                        }}
-                     >
-                       {skill}
-                     </span>
+                    <span
+                      key={index}
+                      style={{
+                        padding: '4px 8px',
+                        backgroundColor: '#F7FAFC',
+                        color: '#1A202C',
+                        border: '1px solid #E2E8F0',
+                        borderRadius: '4px',
+                        fontSize: '0.75rem',
+                        fontWeight: '600',
+                        display: 'inline-block',
+                        marginRight: '8px',
+                        marginBottom: '8px',
+                        lineHeight: '1.4',
+                        textAlign: 'center'
+                      }}
+                    >
+                      {skill}
+                    </span>
                   ))}
                 </Flex>
-               </Box>
-               
-               <Box flex={1}>
-                  <Heading as="h3" size="sm" mb={2} color="gray.900" textTransform="uppercase" letterSpacing="wider" borderLeft="3px solid" borderColor="brand.500" pl={2}>
+              </Box>
+
+              <Box flex={1}>
+                <Heading as="h3" size="sm" mb={2} color="gray.900" textTransform="uppercase" letterSpacing="wider" borderLeft="3px solid" borderColor="brand.500" pl={2}>
                   Availability
                 </Heading>
                 <Text color="gray.800" fontSize="sm" fontWeight="500">
                   {RESUME_DATA.availability}
                 </Text>
-               </Box>
+              </Box>
             </Flex>
 
           </Box>
-          
+
           {/* Bottom accent bar */}
           <Box h="6px" bgGradient="linear(to-r, accent.500, brand.600)" w="100%" position="absolute" bottom={0} left={0} />
         </Box>
       </Container>
-      
+
       {/* Styles for PDF generation visibility toggles */}
       <style>
         {`

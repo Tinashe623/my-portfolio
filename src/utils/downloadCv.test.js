@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { downloadCvFromElement } from './downloadCv';
 
 // Mock the entire html2pdf module or its dynamic import result

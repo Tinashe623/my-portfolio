@@ -1,11 +1,11 @@
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaGlobe } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaGlobe } from 'react-icons/fa'
 
 export const RESUME_DATA = {
   header: {
     name: 'Tinashe Mundieta',
     title: 'Front-End Web Developer',
     location: 'Harare, Zimbabwe',
-    email: 'tinashemundieta36@gmail.com',  
+    email: 'tinashemundieta36@gmail.com',
     phone: '+263 714 224 383 / +263 779 941 427',
     links: [
       { label: 'Portfolio', icon: FaGlobe, url: 'https://tinashe-portfolio.netlify.app' },

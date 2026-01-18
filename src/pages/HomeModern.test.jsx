@@ -1,8 +1,7 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
 import { render } from '../test-utils';
 import HomeModern from './HomeModern';
-import { describe, it, expect } from 'vitest';
+import { describe, it } from 'vitest';
 
 describe('HomeModern Page', () => {
     it('renders without crashing', () => {

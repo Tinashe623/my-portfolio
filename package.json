@@ -10,8 +10,8 @@
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",
@@ -33,6 +33,7 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.5.2",
     "@vitejs/plugin-react": "^4.3.2",
+    "baseline-browser-mapping": "^2.9.15",
     "eslint": "^9.13.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",

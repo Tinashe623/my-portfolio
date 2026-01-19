@@ -40,7 +40,7 @@ const projects = [
     name: 'G.M.P Electrical',
     desc: 'Modern marketing platform for solar and electrical services featuring real-time quote generation and service showcase.',
     url: 'https://github.com/Tinashe623/gmp-electrical-solutions',
-    homepage: 'https://gmp-electrical.netlify.app/',
+    homepage: 'https://gmp-electrical-solutions.vercel.app/',
     tags: ['React', 'Solar', 'Vite', 'Chakra UI'],
     featured: true,
     image:
@@ -97,7 +97,7 @@ const projects = [
     name: 'Temperature Converter',
     desc: 'Instant temperature conversion with clean interface and validation.',
     url: 'https://github.com/Tinashe623/temperature-conversion-program',
-    homepage: 'https://tempflow-app.netlify.app/',
+    homepage: 'https://tinashe-temp-converter.vercel.app/',
     tags: ['JavaScript', 'DOM'],
     image: '/images/projects/temp-preview.png',
     gridArea: { base: 'auto', md: '2 / 4 / 3 / 5' },

@@ -115,7 +115,7 @@ const projects = [
     name: 'Personal Portfolio',
     desc: 'Modern, aesthetically driven professional portfolio showcasing projects and skills with premium glassmorphism design.',
     url: 'https://github.com/Tinashe623/my-portfolio',
-    homepage: 'https://tinashe-portfolio.netlify.app',
+    homepage: 'https://tinashe-mundieta.vercel.app',
     tags: ['React', 'Vite', 'Chakra UI', 'Framer Motion'],
     image:
       'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=800&fit=crop&q=80',
@@ -388,11 +388,11 @@ export default function PortfolioModern() {
                         </Badge>
                       )}
                       {/* NEW: Show Tech Stack on Image for quick scan */}
-                       <HStack spacing={1}>
-                          {project.tags.slice(0, 2).map(t => (
-                              <Badge key={t} bg="blackAlpha.600" color="whiteAlpha.900" fontSize="2xs">{t}</Badge>
-                          ))}
-                       </HStack>
+                      <HStack spacing={1}>
+                        {project.tags.slice(0, 2).map(t => (
+                          <Badge key={t} bg="blackAlpha.600" color="whiteAlpha.900" fontSize="2xs">{t}</Badge>
+                        ))}
+                      </HStack>
                     </VStack>
                     {project.inProgress && (
                       <Badge

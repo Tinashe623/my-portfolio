@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://tinashe-portfolio.netlify.app/sitemap.xml
+Sitemap: https://tinashe-mundieta.vercel.app/sitemap.xml

@@ -7,7 +7,7 @@
 
 A high-performance, aesthetically driven personal portfolio designed to showcase projects, skills, and certifications. Built with a focus on **User Experience (UX)**, **Accessibility (a11y)**, and **Modern Engineering** practices.
 
-🔗 **Live Demo:** [tinashe-portfolio.netlify.app](https://tinashe-portfolio.netlify.app/)
+🔗 **Live Demo:** [tinashe-mundieta.vercel.app](https://tinashe-mundieta.vercel.app/)
 
 ---
 

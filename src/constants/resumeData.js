@@ -8,7 +8,7 @@ export const RESUME_DATA = {
     email: 'tinashemundieta36@gmail.com',
     phone: '+263 714 224 383 / +263 779 941 427',
     links: [
-      { label: 'Portfolio', icon: FaGlobe, url: 'https://tinashe-portfolio.netlify.app' },
+      { label: 'Portfolio', icon: FaGlobe, url: 'https://tinashe-mundieta.vercel.app' },
       { label: 'GitHub', icon: FaGithub, url: 'https://github.com/Tinashe623' },
       { label: 'LinkedIn', icon: FaLinkedin, url: 'https://www.linkedin.com/in/tinashe-mundieta-041715302/' },
     ],

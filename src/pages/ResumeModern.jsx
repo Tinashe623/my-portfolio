@@ -149,7 +149,7 @@ const ResumeModern = () => {
                 <HStack spacing={2} align="center">
                   <Box as="span" w="6px" h="6px" borderRadius="full" bg="brand.500" />
                   <Text as="a" href={RESUME_DATA.header.links[0].url} target="_blank" rel="noopener noreferrer" _hover={{ color: 'brand.600' }} fontWeight="500" color="gray.700">
-                    tinashe-portfolio.netlify.app
+                    tinashe-mundieta.vercel.app
                   </Text>
                 </HStack>
                 <HStack spacing={2} align="center">
@@ -261,7 +261,7 @@ const ResumeModern = () => {
               </Button>
               {/* Fallback text for PDF */}
               <Text fontSize="xs" color="gray.500" fontStyle="italic" mt={1} display="none" className="pdf-only-text">
-                Visit <Text as="span" color="brand.600" fontWeight="600">tinashe-portfolio.netlify.app/portfolio</Text> for full details.
+                Visit <Text as="span" color="brand.600" fontWeight="600">tinashe-mundieta.vercel.app/portfolio</Text> for full details.
               </Text>
             </Box>
 

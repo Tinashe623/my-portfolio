@@ -87,7 +87,7 @@ const projects = [
     name: 'Todo App',
     desc: 'React Todo app with hooks, clean UI, and full CRUD functionality.',
     url: 'https://github.com/Tinashe623/Todo-App',
-    homepage: 'https://premium-todo-app.netlify.app/',
+    homepage: 'https://tinashe-todo-app.vercel.app/',
     tags: ['React', 'Hooks', 'State'],
     image:
       '/images/projects/todo-preview.png',

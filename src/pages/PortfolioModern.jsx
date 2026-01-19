@@ -443,17 +443,19 @@ export default function PortfolioModern() {
                     </Button>
                     {project.homepage && (
                       <Button
-                        as={Link}
-                        href={project.homepage}
-                        isExternal
+                        as={project.homepage === '#' ? 'button' : Link}
+                        href={project.homepage === '#' ? undefined : project.homepage}
+                        isExternal={project.homepage !== '#'}
                         size="sm"
                         flex={1}
-                        variant="ghost" // Primary accent for Live Demo
-                        color="brand.300"
-                        _hover={{ bg: 'whiteAlpha.100', color: 'brand.200' }}
-                        leftIcon={<Icon as={FaExternalLinkAlt} />}
+                        variant={project.homepage === '#' ? 'solid' : 'ghost'}
+                        color={project.homepage === '#' ? 'whiteAlpha.600' : 'brand.300'}
+                        bg={project.homepage === '#' ? 'whiteAlpha.200' : 'transparent'}
+                        _hover={project.homepage === '#' ? {} : { bg: 'whiteAlpha.100', color: 'brand.200' }}
+                        cursor={project.homepage === '#' ? 'not-allowed' : 'pointer'}
+                        leftIcon={project.homepage !== '#' ? <Icon as={FaExternalLinkAlt} /> : null}
                       >
-                        Live
+                        {project.homepage === '#' ? 'Coming Soon' : 'Live'}
                       </Button>
                     )}
                   </HStack>

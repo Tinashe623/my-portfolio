@@ -17,7 +17,7 @@ export const RESUME_DATA = {
     'Motivated and detail-oriented Front-End Web Developer with hands-on experience in building responsive, user-friendly interfaces using React, Vite, and Chakra UI. Skilled in translating design concepts into functional web applications with clean, maintainable code. Certified in HTML, CSS, JavaScript, and Front-End Development from W3Schools. Passionate about crafting seamless web experiences and eager to contribute to innovative projects.',
   skills: {
     technical: [
-      'Frontend: React.js, Vite, Chakra UI, HTML5, CSS3, JavaScript (ES6+), Tailwind CSS',
+      'Frontend: React.js, Vite, Chakra UI, HTML5, CSS3, JavaScript (ES6+), TypeScript, Tailwind CSS',
       'Version Control: Git, GitHub',
       'Tools: VS Code, npm, Chrome DevTools, Jira',
       'Core Concepts: Responsive Design, SEO Basics, Web Accessibility (WCAG), UI Optimization',

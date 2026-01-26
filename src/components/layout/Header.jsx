@@ -18,7 +18,7 @@ import {
   Spacer,
   chakra,
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon, DownloadIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { NavLink } from 'react-router-dom'
 import { NAV_LINKS } from '../../constants'
 
@@ -114,22 +114,10 @@ function MobileNav() {
               <Box pt={8}>
                 <Button
                   as={NavLink}
-                  to="/resume?print=true"
-                  size="lg"
-                  w="full"
-                  variant="primary"
-                  leftIcon={<DownloadIcon />}
-                  onClick={onClose}
-                  mb={4}
-                >
-                  Download CV
-                </Button>
-                <Button
-                  as={NavLink}
                   to="/contact"
                   size="lg"
                   w="full"
-                  variant="outline"
+                  variant="primary"
                   onClick={onClose}
                 >
                   Contact Me
@@ -185,17 +173,6 @@ export default function Header() {
           <NavLinks />
 
           <HStack spacing={4} display={{ base: 'none', md: 'flex' }}>
-            <Button
-              as={NavLink}
-              to="/resume?print=true"
-              variant="ghost"
-              size="sm"
-              leftIcon={<DownloadIcon />}
-              color="dark.textMuted"
-              _hover={{ color: 'white', bg: 'whiteAlpha.100' }}
-            >
-              Download CV
-            </Button>
             <Button
               as={NavLink}
               to="/contact"

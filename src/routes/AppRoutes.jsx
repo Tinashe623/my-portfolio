@@ -15,7 +15,7 @@ const Services = React.lazy(() => import('../pages/ServicesModern.jsx'))
 const Portfolio = React.lazy(() => import('../pages/PortfolioModern.jsx'))
 const Certificates = React.lazy(() => import('../pages/CertificatesModern.jsx'))
 const Contact = React.lazy(() => import('../pages/ContactModern.jsx'))
-const Resume = React.lazy(() => import('../pages/ResumeModern.jsx'))
+const Resume = React.lazy(() => import('../pages/ResumePdf.jsx'))
 const NotFound = React.lazy(() => import('../pages/NotFound.jsx'))
 
 function Layout() {

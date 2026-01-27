@@ -65,7 +65,7 @@ export const PROJECTS = [
     name: 'Digital Clock (Lumina Time)',
     desc: 'Premium Glassmorphism Digital Suite with clock, date, greetings, and precision stopwatch.',
     url: 'https://github.com/Tinashe623/Digital_clock',
-    homepage: '#', // Temporarily disabled: https://tinashe-digital-clock.vercel.app/
+    homepage: 'https://digital-clock-nine-taupe.vercel.app/',
     tags: ['HTML5', 'CSS3', 'JavaScript'],
     image: '/images/projects/clock-preview.png',
     gridArea: { base: 'auto', md: '4 / 3 / 5 / 5' },

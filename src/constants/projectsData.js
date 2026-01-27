@@ -4,7 +4,7 @@ export const PROJECTS = [
     desc: 'Modern marketing platform for solar and electrical services featuring real-time quote generation and service showcase.',
     url: 'https://github.com/Tinashe623/gmp-electrical-solutions',
     homepage: 'https://gmp-electrical-solutions.vercel.app/',
-    tags: ['React', 'Solar', 'Vite', 'Chakra UI'],
+    tags: ['React', 'Vite', 'Chakra UI'],
     featured: true,
     image: '/images/projects/gmp-preview.png',
     gridArea: { base: 'auto', md: '1 / 1 / 3 / 3' },

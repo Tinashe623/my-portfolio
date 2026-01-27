@@ -57,9 +57,11 @@ export default function HomeModern() {
         px={{ base: 4, md: 6, lg: 8 }}
       >
         <Flex
-          direction={{ base: 'column', lg: 'row' }}
+          // Keep the hero stacked through tablet / small laptop widths.
+          // (Matches the header behavior: treat these sizes as "mobile".)
+          direction={{ base: 'column', xl: 'row' }}
           align="center"
-          gap={{ base: 12, md: 16, lg: 20 }} // Increased gap for better spacing
+          gap={{ base: 12, md: 14, xl: 20 }} // Increased gap for better spacing
           maxW="100%"
         >
           {/* Left Content */}
@@ -74,7 +76,7 @@ export default function HomeModern() {
               <HStack
                 spacing={{ base: 2, md: 3 }}
                 wrap="wrap"
-                justify={{ base: 'center', lg: 'flex-start' }}
+                justify={{ base: 'center', xl: 'flex-start' }}
               >
                 {HERO_BADGES.map((badge, index) => (
                   <StatusBadge
@@ -96,11 +98,11 @@ export default function HomeModern() {
                 fontSize={{ base: '3xl', sm: '4xl', md: '5xl', lg: '6xl' }}
                 fontWeight="800"
                 color="dark.textMuted"
-                textAlign={{ base: 'center', lg: 'left' }}
+                textAlign={{ base: 'center', xl: 'left' }}
               >
                 Hi, I'm
               </Text>
-              <Box textAlign={{ base: 'center', lg: 'left' }}>
+              <Box textAlign={{ base: 'center', xl: 'left' }}>
                 <GradientHeading size="2xl" underline>Tinashe Mundieta</GradientHeading>
               </Box>
             </MotionBox>
@@ -112,7 +114,7 @@ export default function HomeModern() {
                 color="dark.textMuted" // Muted text for better contrast vs heading
                 lineHeight="tall"
                 maxW="3xl"
-                textAlign={{ base: 'center', lg: 'left' }}
+                textAlign={{ base: 'center', xl: 'left' }}
                 fontWeight="400"
               >
                 Crafting{' '}
@@ -132,7 +134,7 @@ export default function HomeModern() {
               <Stack
                 direction={{ base: 'column', sm: 'row' }}
                 spacing={5}
-                justify={{ base: 'center', lg: 'flex-start' }}
+                justify={{ base: 'center', xl: 'flex-start' }}
               >
                 <Button
                   as={NavLink}
@@ -204,8 +206,11 @@ export default function HomeModern() {
           >
             <Box
               position="relative"
-              w={{ base: '240px', sm: '320px', md: '380px', lg: '440px', xl: '500px' }}
-              h={{ base: '240px', sm: '320px', md: '380px', lg: '440px', xl: '500px' }}
+              // Use smaller fixed sizes on tablet/small-laptop widths to avoid crowding/overflow.
+              w={{ base: '240px', sm: '320px', md: '360px', lg: '400px', xl: '440px', '2xl': '500px' }}
+              h={{ base: '240px', sm: '320px', md: '360px', lg: '400px', xl: '440px', '2xl': '500px' }}
+              maxW="min(90vw, 500px)"
+              maxH="min(90vw, 500px)"
             >
               {/* Floating rings */}
               <Box

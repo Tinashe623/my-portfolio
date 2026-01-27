@@ -26,7 +26,7 @@ const CNavLink = chakra(NavLink)
 
 function NavLinks({ onClick }) {
   return (
-    <HStack as="nav" spacing={2} display={{ base: 'none', md: 'flex' }}>
+    <HStack as="nav" spacing={2} display={{ base: 'none', lg: 'flex' }}>
       {NAV_LINKS.map(({ label, path }) => (
         <CNavLink
           key={path}
@@ -66,7 +66,7 @@ function MobileNav() {
       <IconButton
         aria-label="Open navigation menu"
         icon={<HamburgerIcon boxSize={5} />}
-        display={{ base: 'inline-flex', md: 'none' }}
+        display={{ base: 'inline-flex', lg: 'none' }}
         onClick={onOpen}
         variant="ghost"
         color="white"
@@ -172,7 +172,7 @@ export default function Header() {
 
           <NavLinks />
 
-          <HStack spacing={4} display={{ base: 'none', md: 'flex' }}>
+          <HStack spacing={4} display={{ base: 'none', lg: 'flex' }}>
             <Button
               as={NavLink}
               to="/contact"
@@ -185,7 +185,7 @@ export default function Header() {
             </Button>
           </HStack>
 
-          <HStack display={{ base: 'flex', md: 'none' }}>
+          <HStack display={{ base: 'flex', lg: 'none' }}>
             <MobileNav />
           </HStack>
         </Flex>

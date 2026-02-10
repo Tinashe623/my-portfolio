@@ -78,7 +78,9 @@ function MobileNav() {
         <DrawerContent bg="dark.bgSecondary">
           <DrawerHeader borderBottomWidth="1px" borderColor="whiteAlpha.100" py={6}>
             <Flex align="center">
-              <Heading size="md" color="white" fontWeight="800">Menu</Heading>
+              <Heading size="md" color="white" fontWeight="800">
+                Menu
+              </Heading>
               <Spacer />
               <IconButton
                 aria-label="Close navigation menu"
@@ -134,7 +136,6 @@ function MobileNav() {
 export default function Header() {
   const [scrolled, setScrolled] = React.useState(false)
 
-
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
     window.addEventListener('scroll', onScroll)
@@ -167,20 +168,16 @@ export default function Header() {
             _hover={{ opacity: 0.8 }}
             transition="opacity 0.2s"
           >
-            Tinashe<Text as="span" color="brand.500">.</Text>
+            Tinashe
+            <Text as="span" color="brand.500">
+              .
+            </Text>
           </Heading>
 
           <NavLinks />
 
           <HStack spacing={4} display={{ base: 'none', lg: 'flex' }}>
-            <Button
-              as={NavLink}
-              to="/contact"
-              variant="primary"
-              size="sm"
-              fontSize="xs"
-              px={6}
-            >
+            <Button as={NavLink} to="/contact" variant="primary" size="sm" fontSize="xs" px={6}>
               Let's Talk
             </Button>
           </HStack>

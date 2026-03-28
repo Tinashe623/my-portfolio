@@ -1,5 +1,14 @@
 export const PROJECTS = [
   {
+    name: 'Tarie Cakes',
+    desc: 'A full-featured bakery storefront for browsing artisan cakes, placing custom orders with personalized flavor and design options, and managing a shopping cart — all wrapped in a warm, inviting UI with smooth animations.',
+    url: 'https://github.com/Tinashe623/Cake-store-project',
+    homepage: 'https://tarie-cakes.vercel.app',
+    tags: ['React', 'TypeScript', 'Chakra UI', 'Vite', 'Framer Motion'],
+    image: '/images/projects/tarie-cakes-preview.png',
+    gridArea: { base: 'auto', md: '1 / 1 / 2 / 3' },
+  },
+  {
     name: 'G.M.P Electrical',
     desc: 'Modern marketing platform for solar and electrical services featuring real-time quote generation and service showcase.',
     url: 'https://github.com/Tinashe623/gmp-electrical-solutions',
@@ -18,7 +27,8 @@ export const PROJECTS = [
     collaborative: true,
     role: 'Frontend Developer',
     team: 'Farscorp Team',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop&q=80',
+    image:
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop&q=80',
     gridArea: { base: 'auto', md: '3 / 1 / 4 / 3' },
   },
   {
@@ -40,7 +50,8 @@ export const PROJECTS = [
     homepage: null,
     tags: ['React', 'CSS3', 'UI/UX'],
     inProgress: true,
-    image: 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=1200&h=800&fit=crop&q=80',
+    image:
+      'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=1200&h=800&fit=crop&q=80',
     gridArea: { base: 'auto', md: '1 / 3 / 2 / 5' },
   },
   {
@@ -76,7 +87,8 @@ export const PROJECTS = [
     url: 'https://github.com/Tinashe623/my-portfolio',
     homepage: 'https://tinashe-mundieta.vercel.app',
     tags: ['React', 'Vite', 'Chakra UI', 'Framer Motion'],
-    image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=800&fit=crop&q=80',
+    image:
+      'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&h=800&fit=crop&q=80',
     gridArea: { base: 'auto', md: '5 / 1 / 6 / 3' },
   },
 ]

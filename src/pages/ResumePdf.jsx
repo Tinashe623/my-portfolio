@@ -1,3 +1,4 @@
+import React from 'react'
 import { Box, Container, Text, VStack, HStack, Button } from '@chakra-ui/react'
 import { DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 

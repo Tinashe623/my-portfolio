@@ -1,4 +1,3 @@
-import React from 'react'
 import { Box, Container, Text, VStack, HStack, Button } from '@chakra-ui/react'
 import { DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 
@@ -19,7 +18,13 @@ export default function ResumePdf() {
       <Container maxW="7xl" position="relative" zIndex={1} px={{ base: 4, md: 6, lg: 8 }}>
         <Box textAlign="center" mb={{ base: 8, md: 10 }}>
           <GradientHeading>Tinashe_mundieta_resume</GradientHeading>
-          <Text fontSize={{ base: 'md', md: 'lg' }} color="dark.textMuted" maxW="2xl" mx="auto" mt={4}>
+          <Text
+            fontSize={{ base: 'md', md: 'lg' }}
+            color="dark.textMuted"
+            maxW="2xl"
+            mx="auto"
+            mt={4}
+          >
             Download or preview my resume.
           </Text>
 

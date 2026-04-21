@@ -175,7 +175,7 @@ export default function HomeModern() {
               {/* Main Heading */}
               <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={2}>
                 <Text
-                  fontSize={{ base: '2xl', sm: '3xl', md: '4xl', lg: '5xl' }}
+                  fontSize={{ base: 'xl', sm: '2xl', md: '3xl', lg: '4xl' }}
                   fontWeight="800"
                   color="white"
                   lineHeight="shorter"
@@ -187,7 +187,7 @@ export default function HomeModern() {
               <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={4}>
                 <Heading
                   as="h1"
-                  size="3xl"
+                  fontSize={{ base: '2xl', sm: '3xl', md: '4xl', lg: '4xl' }}
                   fontWeight="900"
                   bgGradient="linear(to-r, brand.400, accent.400)"
                   bgClip="text"
@@ -199,10 +199,10 @@ export default function HomeModern() {
               </MotionBox>
 
               {/* Typing Animation Role */}
-              <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={6}>
+              <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={4}>
                 <HStack spacing={2}>
                   <Text
-                    fontSize={{ base: 'xl', sm: '2xl', md: '3xl' }}
+                    fontSize={{ base: 'md', sm: '2xl', md: '3xl' }}
                     fontWeight="600"
                     color="gray.300"
                   >
@@ -213,8 +213,8 @@ export default function HomeModern() {
                     <Box
                       as="span"
                       display="inline-block"
-                      w="3px"
-                      h={{ base: '24px', md: '32px' }}
+                      w="2px"
+                      h={{ base: '18px', sm: '22px', md: '28px' }}
                       bg="brand.400"
                       ml={1}
                       animate={{ opacity: [1, 0, 1] }}
@@ -225,9 +225,9 @@ export default function HomeModern() {
               </MotionBox>
 
               {/* Description */}
-              <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={8}>
+              <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={6}>
                 <Text
-                  fontSize={{ base: 'md', md: 'lg' }}
+                  fontSize={{ base: 'sm', md: 'md' }}
                   color="gray.400"
                   lineHeight="tall"
                   maxW="lg"
@@ -244,51 +244,11 @@ export default function HomeModern() {
                 </Text>
               </MotionBox>
 
-              {/* CTA Buttons */}
-              <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={10}>
-                <HStack spacing={4} wrap="wrap">
-                  <Button
-                    as={NavLink}
-                    to="/portfolio"
-                    size="lg"
-                    px={8}
-                    fontSize="md"
-                    fontWeight="700"
-                    bgGradient="linear(to-r, brand.500, accent.500)"
-                    color="white"
-                    _hover={{
-                      bgGradient: 'linear(to-r, brand.600, accent.600)',
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 10px 40px rgba(99, 102, 241, 0.4)',
-                    }}
-                    transition="all 0.3s"
-                    rightIcon={<ArrowForwardIcon />}
-                  >
-                    View Projects
-                  </Button>
-                  <Button
-                    as={NavLink}
-                    to="/contact"
-                    size="lg"
-                    px={8}
-                    fontSize="md"
-                    fontWeight="600"
-                    variant="outline"
-                    borderColor="whiteAlpha.300"
-                    color="white"
-                    _hover={{
-                      bg: 'whiteAlpha.100',
-                      borderColor: 'brand.400',
-                    }}
-                  >
-                    Get In Touch
-                  </Button>
-                </HStack>
-              </MotionBox>
+              {/* CTA Buttons - removed from hero, consolidated to bottom CTA */}
 
               {/* Premium Stats */}
               <MotionBox variants={ANIMATION_VARIANTS.itemUp}>
-                <SimpleGrid columns={3} spacing={{ base: 3, md: 4 }}>
+                <SimpleGrid columns={3} spacing={{ base: 2, md: 3 }}>
                   {HERO_STATS.map((stat, i) => (
                     <Box
                       key={i}
@@ -401,8 +361,8 @@ export default function HomeModern() {
                   <MotionImage
                     src="images/profile-pic.png"
                     alt="Tinashe Mundieta"
-                    w={{ base: '280px', sm: '320px', md: '380px', lg: '420px' }}
-                    h={{ base: '280px', sm: '320px', md: '380px', lg: '420px' }}
+                    w={{ base: '220px', sm: '280px', md: '340px', lg: '380px' }}
+                    h={{ base: '220px', sm: '280px', md: '340px', lg: '380px' }}
                     objectFit="cover"
                     whileHover={{ scale: 1.05 }}
                     transition="0.4s ease"
@@ -682,7 +642,7 @@ export default function HomeModern() {
             </Text>
           </MotionBox>
 
-          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 6, md: 8 }}>
+          <SimpleGrid columns={{ base: 1, lg: 3 }} spacing={{ base: 5, md: 6 }}>
             {TESTIMONIALS.map((testimonial, i) => (
               <MotionBox
                 key={testimonial.name}
@@ -692,7 +652,7 @@ export default function HomeModern() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
               >
                 <Box
-                  p={7}
+                  p={{ base: 5, md: 7 }}
                   borderRadius="2xl"
                   bg="linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))"
                   border="1px solid"
@@ -709,11 +669,11 @@ export default function HomeModern() {
                     <Icon as={FaQuoteRight} boxSize={16} color="accent.300" />
                   </Box>
                   <VStack align="start" spacing={4} position="relative">
-                    <Text color="gray.300" fontSize="md" lineHeight="tall" fontStyle="italic">
+                    <Text color="gray.300" fontSize="sm" lineHeight="tall" fontStyle="italic">
                       "{testimonial.quote}"
                     </Text>
-                    <HStack spacing={4} pt={2}>
-                      <Avatar src={testimonial.avatar} name={testimonial.name} size="md" />
+                    <HStack spacing={3} pt={2}>
+                      <Avatar src={testimonial.avatar} name={testimonial.name} size="sm" />
                       <VStack align="start" spacing={0}>
                         <Text fontWeight="700" color="white" fontSize="sm">
                           {testimonial.name}
@@ -968,17 +928,17 @@ export default function HomeModern() {
                     collaborate?
                   </Text>
                 </Heading>
-                <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.400" maxW="lg">
+                <Text fontSize={{ base: 'sm', md: 'lg' }} color="gray.400" maxW="lg">
                   Whether you need a website, IT support, or have a project in mind - let's discuss
                   how I can help bring your vision to life.
                 </Text>
-                <HStack spacing={4} pt={2}>
+                <Stack direction={{ base: 'column', sm: 'row' }} spacing={3} pt={2}>
                   <Button
                     as={NavLink}
                     to="/contact"
                     size="lg"
-                    px={8}
-                    fontSize="md"
+                    px={{ base: 6, sm: 8 }}
+                    fontSize="sm"
                     fontWeight="700"
                     bgGradient="linear(to-r, brand.500, accent.500)"
                     color="white"
@@ -988,6 +948,7 @@ export default function HomeModern() {
                       boxShadow: '0 10px 40px rgba(99, 102, 241, 0.4)',
                     }}
                     transition="all 0.3s"
+                    w={{ base: 'full', sm: 'auto' }}
                   >
                     Get In Touch
                   </Button>
@@ -995,8 +956,8 @@ export default function HomeModern() {
                     as={NavLink}
                     to="/portfolio"
                     size="lg"
-                    px={8}
-                    fontSize="md"
+                    px={{ base: 6, sm: 8 }}
+                    fontSize="sm"
                     fontWeight="600"
                     variant="outline"
                     borderColor="whiteAlpha.300"
@@ -1005,10 +966,11 @@ export default function HomeModern() {
                       bg: 'whiteAlpha.100',
                       borderColor: 'brand.400',
                     }}
+                    w={{ base: 'full', sm: 'auto' }}
                   >
                     View Projects
                   </Button>
-                </HStack>
+                </Stack>
               </VStack>
             </Box>
           </MotionBox>

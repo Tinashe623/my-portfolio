@@ -103,7 +103,9 @@ export default function HomeModern() {
                 Hi, I'm
               </Text>
               <Box textAlign={{ base: 'center', xl: 'left' }}>
-                <GradientHeading size="2xl" underline>Tinashe Mundieta</GradientHeading>
+                <GradientHeading size="2xl" underline>
+                  Tinashe Mundieta
+                </GradientHeading>
               </Box>
             </MotionBox>
 
@@ -121,7 +123,8 @@ export default function HomeModern() {
                 <Text as="span" fontWeight="700" color="brand.400">
                   exceptional
                 </Text>{' '}
-                digital experiences. I build accessible, pixel-perfect, and performant web applications using{' '}
+                digital experiences. I build accessible, pixel-perfect, and performant web
+                applications using{' '}
                 <Text as="span" fontWeight="700" color="white">
                   React
                 </Text>{' '}
@@ -207,8 +210,22 @@ export default function HomeModern() {
             <Box
               position="relative"
               // Use smaller fixed sizes on tablet/small-laptop widths to avoid crowding/overflow.
-              w={{ base: '240px', sm: '320px', md: '360px', lg: '400px', xl: '440px', '2xl': '500px' }}
-              h={{ base: '240px', sm: '320px', md: '360px', lg: '400px', xl: '440px', '2xl': '500px' }}
+              w={{
+                base: '180px',
+                sm: '240px',
+                md: '280px',
+                lg: '320px',
+                xl: '340px',
+                '2xl': '380px',
+              }}
+              h={{
+                base: '180px',
+                sm: '240px',
+                md: '280px',
+                lg: '320px',
+                xl: '340px',
+                '2xl': '380px',
+              }}
               maxW="min(90vw, 500px)"
               maxH="min(90vw, 500px)"
             >

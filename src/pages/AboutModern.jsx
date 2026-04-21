@@ -22,7 +22,8 @@ import { NavLink } from 'react-router-dom'
 import { motion, isValidMotionProp } from 'framer-motion'
 
 import GlassCard from '../components/effects/GlassCard'
-import { FaReact, FaCode, FaPalette, FaRocket } from 'react-icons/fa'
+import { FaReact, FaCode, FaPalette, FaRocket, FaLinux, FaWindows } from 'react-icons/fa'
+import { FiSettings } from 'react-icons/fi'
 
 const MotionBox = chakra(motion.div, {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
@@ -37,6 +38,9 @@ const skills = [
   { name: 'Modern CSS', icon: FaPalette, color: 'brand.400' },
   { name: 'Clean Code', icon: FaCode, color: 'accent.400' },
   { name: 'Fast Builds', icon: FaRocket, color: 'brand.300' },
+  { name: 'Windows Admin', icon: FaWindows, color: 'blue.400' },
+  { name: 'Linux Systems', icon: FaLinux, color: 'orange.400' },
+  { name: 'System Maintain', icon: FiSettings, color: 'green.400' },
 ]
 
 const techStack = [
@@ -50,6 +54,9 @@ const techStack = [
   'CSS3',
   'Git',
   'REST APIs',
+  'Windows',
+  'Linux',
+  'System Admin',
 ]
 
 export default function AboutModern() {
@@ -84,7 +91,7 @@ export default function AboutModern() {
             About Me
           </Heading>
           <Text fontSize={{ base: 'md', md: 'lg' }} color="accent.300" maxW="2xl" mx="auto">
-            Passionate frontend developer building modern, accessible web experiences
+            Frontend developer with system administration expertise
           </Text>
         </MotionBox>
 
@@ -140,9 +147,17 @@ export default function AboutModern() {
             <GlassCard variant="default" p={{ base: 6, md: 8 }}>
               <VStack align="start" spacing={6}>
                 <Text fontSize={{ base: 'md', md: 'lg' }} lineHeight="tall" color="gray.200">
-                  Junior Frontend Engineer focused on the{' '}
+                  Frontend Engineer focused on the{' '}
                   <Text as="span" fontWeight="700" color="brand.300">
                     React ecosystem
+                  </Text>
+                  , with additional expertise in{' '}
+                  <Text as="span" fontWeight="700" color="blue.300">
+                    system administration
+                  </Text>{' '}
+                  and{' '}
+                  <Text as="span" fontWeight="700" color="blue.300">
+                    OS maintenance
                   </Text>
                   . I build responsive, accessible interfaces with attention to performance,
                   readability, and a great user experience.
@@ -157,6 +172,8 @@ export default function AboutModern() {
                       'Component-driven UIs with React + Chakra UI',
                       'API integration (REST/JSON), form handling, and state management',
                       'Accessibility-first mindset and mobile-first layouts',
+                      'System maintenance and OS administration (Windows & Linux)',
+                      'Hardware upgrades, troubleshooting, and performance optimization',
                       'Collaborative workflows with Git and clear communication',
                     ].map((item, i) => (
                       <ListItem key={i} display="flex" alignItems="start">
@@ -224,9 +241,9 @@ export default function AboutModern() {
           mb={{ base: 10, md: 10, lg: 12 }}
         >
           <Heading size="lg" mb={{ base: 6, md: 6, lg: 8 }} textAlign="center" color="gray.100">
-            Core Strengths
+            Skills & Expertise
           </Heading>
-          <SimpleGrid columns={{ base: 2, md: 4 }} spacing={6}>
+          <SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 7 }} spacing={5}>
             {skills.map((skill, i) => (
               <GlassCard
                 key={skill.name}

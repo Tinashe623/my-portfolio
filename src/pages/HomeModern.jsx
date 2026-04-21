@@ -29,6 +29,7 @@ import {
   FaBolt,
   FaCheck,
   FaQuoteRight,
+  FaServer,
 } from 'react-icons/fa'
 
 const iconMap = {
@@ -727,6 +728,290 @@ export default function HomeModern() {
               </MotionBox>
             ))}
           </SimpleGrid>
+        </Container>
+      </Box>
+
+      {/* Services Preview Section */}
+      <Box py={{ base: 20, md: 24, lg: 28 }} bg="rgba(5, 5, 5, 0.3)">
+        <Container maxW="7xl" px={{ base: 4, md: 6, lg: 8 }}>
+          <MotionBox
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            textAlign="center"
+            mb={{ base: 14, md: 16 }}
+          >
+            <Badge
+              px={4}
+              py={1}
+              borderRadius="full"
+              bg="rgba(34, 211, 238, 0.15)"
+              color="cyan.300"
+              fontSize="xs"
+              fontWeight="600"
+              letterSpacing="wide"
+              mb={4}
+            >
+              WHAT I OFFER
+            </Badge>
+            <Heading
+              fontSize={{ base: '3xl', sm: '4xl', md: '5xl' }}
+              fontWeight="800"
+              mb={4}
+              color="white"
+            >
+              Services{' '}
+              <Text as="span" bgGradient="linear(135deg, brand.400, accent.400)" bgClip="text">
+                I Provide
+              </Text>
+            </Heading>
+            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.400" maxW="2xl" mx="auto">
+              Delivering comprehensive digital solutions tailored to your needs
+            </Text>
+          </MotionBox>
+
+          <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} spacing={6}>
+            {[
+              {
+                title: 'Web Development',
+                desc: 'Modern, responsive websites and web applications built with React and cutting-edge technologies.',
+                icon: FaCode,
+                color: 'brand',
+              },
+              {
+                title: 'UI/UX Design',
+                desc: 'Pixel-perfect, accessible user interfaces with smooth animations and intuitive interactions.',
+                icon: FaRocket,
+                color: 'accent',
+              },
+              {
+                title: 'System Administration',
+                desc: 'Windows & Linux server management, maintenance, upgrades, and technical support.',
+                icon: FaServer,
+                color: 'green',
+              },
+            ].map((service, i) => (
+              <MotionBox
+                key={service.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+              >
+                <Box
+                  p={7}
+                  borderRadius="2xl"
+                  bg="rgba(255,255,255,0.02)"
+                  border="1px solid"
+                  borderColor="whiteAlpha.100"
+                  _hover={{
+                    borderColor: `${service.color}.400`,
+                    bg: 'rgba(255,255,255,0.04)',
+                    transform: 'translateY(-4px)',
+                  }}
+                  transition="all 0.3s ease"
+                  cursor="default"
+                >
+                  <HStack align="start" spacing={4}>
+                    <Box
+                      p={3}
+                      borderRadius="xl"
+                      bg={`${service.color}.900`}
+                      color={`${service.color}.300`}
+                    >
+                      <Icon as={service.icon} boxSize={5} />
+                    </Box>
+                    <VStack align="start" spacing={2} flex={1}>
+                      <Heading size="md" color="white" fontWeight="700">
+                        {service.title}
+                      </Heading>
+                      <Text color="gray.400" fontSize="sm" lineHeight="tall">
+                        {service.desc}
+                      </Text>
+                    </VStack>
+                  </HStack>
+                </Box>
+              </MotionBox>
+            ))}
+          </SimpleGrid>
+
+          <MotionBox
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            mt={10}
+            textAlign="center"
+          >
+            <Button
+              as={NavLink}
+              to="/services"
+              size="lg"
+              variant="outline"
+              borderColor="whiteAlpha.300"
+              color="white"
+              _hover={{
+                bg: 'whiteAlpha.100',
+                borderColor: 'brand.400',
+              }}
+              rightIcon={<ArrowForwardIcon />}
+            >
+              View All Services
+            </Button>
+          </MotionBox>
+        </Container>
+      </Box>
+
+      {/* Trusted By / Brands Section */}
+      <Box py={{ base: 14, md: 16 }}>
+        <Container maxW="7xl" px={{ base: 4, md: 6, lg: 8 }}>
+          <MotionBox
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            textAlign="center"
+            mb={8}
+          >
+            <Text
+              fontSize="sm"
+              color="gray.500"
+              fontWeight="600"
+              letterSpacing="wider"
+              textTransform="uppercase"
+            >
+              Trusted by businesses
+            </Text>
+          </MotionBox>
+          <SimpleGrid columns={{ base: 2, sm: 3, md: 6 }} spacing={{ base: 6, md: 8 }}>
+            {[
+              'GMP Electrical',
+              'Tarie Cakes',
+              'Saeku',
+              'St James School',
+              'Reigns Hydraulics',
+              'Exquisite',
+            ].map((brand, i) => (
+              <MotionBox
+                key={brand}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+              >
+                <Box
+                  py={4}
+                  px={2}
+                  textAlign="center"
+                  borderRadius="lg"
+                  bg="rgba(255,255,255,0.02)"
+                  border="1px solid"
+                  borderColor="whiteAlpha.50"
+                  _hover={{
+                    borderColor: 'brand.400',
+                    bg: 'rgba(255,255,255,0.04)',
+                  }}
+                  transition="all 0.3s"
+                >
+                  <Text
+                    fontSize={{ base: 'sm', md: 'md' }}
+                    fontWeight="700"
+                    color="gray.300"
+                    letterSpacing="wide"
+                  >
+                    {brand}
+                  </Text>
+                </Box>
+              </MotionBox>
+            ))}
+          </SimpleGrid>
+        </Container>
+      </Box>
+
+      {/* Final CTA Section */}
+      <Box py={{ base: 20, md: 24, lg: 28 }}>
+        <Container maxW="4xl" px={{ base: 4, md: 6, lg: 8 }}>
+          <MotionBox
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <Box
+              p={{ base: 8, md: 12 }}
+              borderRadius="3xl"
+              bg="linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1))"
+              border="1px solid"
+              borderColor="whiteAlpha.200"
+              position="relative"
+              overflow="hidden"
+              textAlign="center"
+            >
+              <Box
+                position="absolute"
+                top="-50%"
+                left="-50%"
+                w="200%"
+                h="200%"
+                bg="radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 50%)"
+                pointerEvents="none"
+              />
+              <VStack spacing={6} position="relative" zIndex={1}>
+                <Heading
+                  fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}
+                  fontWeight="800"
+                  color="white"
+                >
+                  Ready to{' '}
+                  <Text as="span" bgGradient="linear(135deg, brand.400, accent.400)" bgClip="text">
+                    collaborate?
+                  </Text>
+                </Heading>
+                <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.400" maxW="lg">
+                  Whether you need a website, IT support, or have a project in mind - let's discuss
+                  how I can help bring your vision to life.
+                </Text>
+                <HStack spacing={4} pt={2}>
+                  <Button
+                    as={NavLink}
+                    to="/contact"
+                    size="lg"
+                    px={8}
+                    fontSize="md"
+                    fontWeight="700"
+                    bgGradient="linear(to-r, brand.500, accent.500)"
+                    color="white"
+                    _hover={{
+                      bgGradient: 'linear(to-r, brand.600, accent.600)',
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 10px 40px rgba(99, 102, 241, 0.4)',
+                    }}
+                    transition="all 0.3s"
+                  >
+                    Get In Touch
+                  </Button>
+                  <Button
+                    as={NavLink}
+                    to="/portfolio"
+                    size="lg"
+                    px={8}
+                    fontSize="md"
+                    fontWeight="600"
+                    variant="outline"
+                    borderColor="whiteAlpha.300"
+                    color="white"
+                    _hover={{
+                      bg: 'whiteAlpha.100',
+                      borderColor: 'brand.400',
+                    }}
+                  >
+                    View Projects
+                  </Button>
+                </HStack>
+              </VStack>
+            </Box>
+          </MotionBox>
         </Container>
       </Box>
     </Box>

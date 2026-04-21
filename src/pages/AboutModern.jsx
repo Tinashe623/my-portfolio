@@ -39,6 +39,12 @@ import {
   FaBriefcase,
   FaStar,
   FaLayerGroup,
+  FaHtml5,
+  FaCss3,
+  FaJs,
+  FaNodeJs,
+  FaGitAlt,
+  FaDatabase,
 } from 'react-icons/fa'
 import { FiSettings } from 'react-icons/fi'
 
@@ -139,19 +145,18 @@ const skills = [
 ]
 
 const techStack = [
-  'React',
-  'TypeScript',
-  'JavaScript',
-  'Vite',
-  'Chakra UI',
-  'Framer Motion',
-  'HTML5',
-  'CSS3',
-  'Git',
-  'REST APIs',
-  'Windows',
-  'Linux',
-  'System Admin',
+  { name: 'React', icon: FaReact, color: '#61DAFB' },
+  { name: 'TypeScript', icon: FaCode, color: '#3178C6' },
+  { name: 'JavaScript', icon: FaJs, color: '#F7DF1E' },
+  { name: 'Vite', icon: FaRocket, color: '#646CFF' },
+  { name: 'Chakra UI', icon: FaPalette, color: '#319795' },
+  { name: 'Framer Motion', icon: FaRocket, color: '#E06C75' },
+  { name: 'HTML5', icon: FaHtml5, color: '#E34F26' },
+  { name: 'CSS3', icon: FaCss3, color: '#1572B6' },
+  { name: 'Git', icon: FaGitAlt, color: '#F05032' },
+  { name: 'REST API', icon: FaDatabase, color: '#00A86B' },
+  { name: 'Windows', icon: FaWindows, color: '#0078D4' },
+  { name: 'Linux', icon: FaLinux, color: '#FCC624' },
 ]
 
 const missionVision = {
@@ -286,8 +291,8 @@ export default function AboutModern() {
                 variant="strong"
                 p={2}
                 borderRadius="3xl"
-                w={{ base: '260px', md: '300px', lg: '340px' }}
-                h={{ base: '260px', md: '300px', lg: '340px' }}
+                w={{ base: '220px', sm: '260px', md: '300px', lg: '340px' }}
+                h={{ base: '220px', sm: '260px', md: '300px', lg: '340px' }}
                 hover3d
               >
                 <MotionImage
@@ -354,7 +359,7 @@ export default function AboutModern() {
                   </Stack>
                 </Box>
 
-                <HStack spacing={4} pt={2} w="100%">
+                <Stack direction={{ base: 'column', sm: 'row' }} spacing={4} pt={2} w="100%">
                   <Button
                     as={NavLink}
                     to="/portfolio"
@@ -370,7 +375,7 @@ export default function AboutModern() {
                     }}
                     transition="all 0.3s"
                     rightIcon={<ArrowForwardIcon />}
-                    flex={1}
+                    w={{ base: 'full', sm: 'auto' }}
                   >
                     View Work
                   </Button>
@@ -387,11 +392,11 @@ export default function AboutModern() {
                       bg: 'whiteAlpha.100',
                       borderColor: 'brand.400',
                     }}
-                    flex={1}
+                    w={{ base: 'full', sm: 'auto' }}
                   >
                     Contact Me
                   </Button>
-                </HStack>
+                </Stack>
               </VStack>
             </Box>
           </MotionBox>
@@ -554,7 +559,7 @@ export default function AboutModern() {
             </Heading>
           </Box>
 
-          <SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 7 }} spacing={4}>
+          <SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 7 }} spacing={{ base: 3, sm: 4 }}>
             {skills.map((skill, i) => (
               <MotionBox
                 key={skill.name}
@@ -564,7 +569,7 @@ export default function AboutModern() {
                 transition={{ duration: 0.4, delay: i * 0.05 }}
               >
                 <Box
-                  p={5}
+                  p={{ base: 4, sm: 5 }}
                   borderRadius="xl"
                   bg="rgba(255,255,255,0.02)"
                   border="1px solid"
@@ -578,8 +583,8 @@ export default function AboutModern() {
                   transition="all 0.3s"
                 >
                   <VStack spacing={2}>
-                    <Icon as={skill.icon} boxSize={8} color={skill.color} />
-                    <Text fontWeight="600" fontSize="xs" color="gray.300">
+                    <Icon as={skill.icon} boxSize={{ base: 6, sm: 7, md: 8 }} color={skill.color} />
+                    <Text fontWeight="600" fontSize={{ base: '2xs', sm: 'xs' }} color="gray.300">
                       {skill.name}
                     </Text>
                   </VStack>
@@ -597,7 +602,7 @@ export default function AboutModern() {
           transition={{ duration: 0.6 }}
           mb={{ base: 14, md: 16 }}
         >
-          <SimpleGrid columns={{ base: 2, md: 4 }} spacing={4}>
+          <SimpleGrid columns={{ base: 2, sm: 4 }} spacing={{ base: 3, sm: 4 }}>
             {stats.map((stat, i) => (
               <MotionBox
                 key={stat.label}
@@ -607,7 +612,7 @@ export default function AboutModern() {
                 transition={{ duration: 0.4, delay: i * 0.1 }}
               >
                 <Box
-                  p={5}
+                  p={{ base: 4, sm: 5 }}
                   borderRadius="xl"
                   bg="rgba(255,255,255,0.02)"
                   border="1px solid"
@@ -620,7 +625,7 @@ export default function AboutModern() {
                   transition="all 0.3s"
                 >
                   <Text
-                    fontSize={{ base: '2xl', md: '3xl' }}
+                    fontSize={{ base: 'xl', sm: '2xl', md: '3xl' }}
                     fontWeight="800"
                     bgGradient={`linear(to-r, ${stat.color}.400, ${stat.color}.200)`}
                     bgClip="text"
@@ -628,7 +633,7 @@ export default function AboutModern() {
                     <AnimatedNumber end={stat.value} suffix={stat.suffix} />
                   </Text>
                   <Text
-                    fontSize="xs"
+                    fontSize={{ base: '2xs', sm: 'xs' }}
                     color="gray.500"
                     fontWeight="600"
                     textTransform="uppercase"
@@ -675,25 +680,25 @@ export default function AboutModern() {
 
           <Box
             position="relative"
-            pl={{ base: 4, md: 8 }}
+            pl={{ base: 6, md: 8 }}
             borderLeft="2px solid"
             borderColor="whiteAlpha.200"
           >
             {careerTimeline.map((item, i) => (
               <MotionBox
-                key={item.year}
+                key={`${item.year}-${i}`}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.15 }}
-                mb={6}
+                mb={{ base: 4, sm: 6 }}
               >
-                <HStack align="start" spacing={4}>
+                <HStack align="start" spacing={3}>
                   <Box
                     position="absolute"
-                    left="-9px"
-                    w={4}
-                    h={4}
+                    left="-7px"
+                    w={3}
+                    h={3}
                     borderRadius="full"
                     bg={
                       item.color === 'brand'
@@ -706,12 +711,12 @@ export default function AboutModern() {
                               ? 'green.500'
                               : 'purple.500'
                     }
-                    border="4px solid"
+                    border="3px solid"
                     borderColor="dark.bg"
                   />
-                  <Box ml={6}>
+                  <Box ml={{ base: 4, sm: 5 }}>
                     <Text
-                      fontSize="xs"
+                      fontSize="2xs"
                       color={
                         item.color === 'brand'
                           ? 'brand.400'
@@ -727,10 +732,10 @@ export default function AboutModern() {
                     >
                       {item.year}
                     </Text>
-                    <Heading size="sm" color="white" fontWeight="700" mb={1}>
+                    <Heading size="xs" color="white" fontWeight="700" mb={1}>
                       {item.title}
                     </Heading>
-                    <Text fontSize="sm" color="gray.400">
+                    <Text fontSize="xs" color="gray.400" lineHeight="short">
                       {item.desc}
                     </Text>
                   </Box>
@@ -758,37 +763,41 @@ export default function AboutModern() {
             <Heading size="md" mb={{ base: 5, md: 6 }} color="white" fontWeight="700">
               Technology Stack
             </Heading>
-            <Flex wrap="wrap" gap={3} justify="center">
+            <SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 6 }} spacing={3}>
               {techStack.map((tech, i) => (
                 <MotionBox
-                  key={tech}
-                  initial={{ opacity: 0, scale: 0.8 }}
+                  key={tech.name}
+                  initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.3, delay: i * 0.05 }}
-                  whileHover={{ scale: 1.1, y: -2 }}
                 >
                   <Box
-                    px={4}
-                    py={2}
-                    borderRadius="full"
-                    bg="rgba(99, 102, 241, 0.1)"
+                    p={3}
+                    borderRadius="lg"
+                    bg="rgba(255,255,255,0.02)"
                     border="1px solid"
-                    borderColor="rgba(99, 102, 241, 0.3)"
-                    fontSize="sm"
-                    fontWeight="600"
-                    color="brand.300"
+                    borderColor="whiteAlpha.100"
+                    textAlign="center"
                     _hover={{
-                      bg: 'rgba(99, 102, 241, 0.2)',
-                      borderColor: 'brand.400',
+                      borderColor: tech.color,
+                      bg: 'rgba(255,255,255,0.05)',
+                      transform: 'translateY(-4px)',
                     }}
                     transition="all 0.3s"
                   >
-                    {tech}
+                    <VStack spacing={1}>
+                      <Box color={tech.color}>
+                        <Icon as={tech.icon} boxSize={{ base: 5, sm: 6 }} />
+                      </Box>
+                      <Text fontSize="2xs" fontWeight="600" color="gray.300">
+                        {tech.name}
+                      </Text>
+                    </VStack>
                   </Box>
                 </MotionBox>
               ))}
-            </Flex>
+            </SimpleGrid>
           </Box>
         </MotionBox>
       </Container>

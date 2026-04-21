@@ -1,19 +1,19 @@
 export const HERO_STATS = [
   {
     label: 'Experience',
-    value: 'Entry Level',
+    value: '1+ Year',
     icon: 'CheckCircleIcon',
     color: 'brand',
   },
   {
     label: 'Projects',
-    value: '5+',
+    value: '10+',
     icon: 'CheckCircleIcon',
     color: 'brand',
   },
   {
-    label: 'Technologies',
-    value: '10+',
+    label: 'Skills',
+    value: '15+',
     icon: 'CheckCircleIcon',
     color: 'accent',
   },

@@ -34,7 +34,7 @@ const certs = [
     date: 'April 3, 2024',
     url: 'https://verify.w3schools.com/1OOV2NTADY',
     tags: ['HTML5'],
-    color: 'orange',
+    color: 'brand',
   },
   {
     title: 'Frontend Development',
@@ -42,7 +42,7 @@ const certs = [
     date: 'October 19, 2024',
     url: 'https://verify.w3schools.com/1PAT7UCLEL',
     tags: ['Frontend'],
-    color: 'cyan',
+    color: 'accent',
   },
   {
     title: 'CSS',
@@ -50,7 +50,7 @@ const certs = [
     date: 'April 27, 2024',
     url: 'https://verify.w3schools.com/1ORGOIOLIT',
     tags: ['CSS3'],
-    color: 'purple',
+    color: 'brand',
   },
   {
     title: 'JavaScript',
@@ -58,7 +58,7 @@ const certs = [
     date: 'October 19, 2024',
     url: 'https://verify.w3schools.com/1PAT7PQY0O',
     tags: ['JavaScript'],
-    color: 'yellow',
+    color: 'accent',
   },
 ]
 
@@ -79,8 +79,19 @@ export default function CertificatesModern() {
       minH="calc(100vh - var(--header-h) - var(--footer-h))"
       pt={{ base: 8, md: 10, lg: 12 }}
       pb={{ base: 10, md: 12, lg: 16 }}
+      bg="dark.bg"
     >
-
+      {/* Subtle background gradient */}
+      <Box
+        position="absolute"
+        top="0"
+        left="0"
+        right="0"
+        bottom="0"
+        opacity={0.5}
+        bgGradient="radial(ellipse at 30% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%), radial(ellipse at 70% 100%, rgba(6, 182, 212, 0.06) 0%, transparent 50%)"
+        pointerEvents="none"
+      />
 
       <Container maxW="7xl" position="relative" zIndex={1} px={{ base: 4, md: 6, lg: 8 }}>
         {/* Header */}
@@ -123,9 +134,9 @@ export default function CertificatesModern() {
               p={5}
               textAlign="center"
               borderWidth="1px"
-              borderColor="rgba(34, 211, 238, 0.2)"
+              borderColor="rgba(99, 102, 241, 0.2)"
             >
-              <Icon as={FaCertificate} boxSize={7} color="cyan.400" mb={2} />
+              <Icon as={FaCertificate} boxSize={7} color="brand.400" mb={2} />
               <Heading size="lg" color="white" mb={1}>
                 {certs.length}
               </Heading>
@@ -137,9 +148,9 @@ export default function CertificatesModern() {
               p={5}
               textAlign="center"
               borderWidth="1px"
-              borderColor="rgba(168, 85, 247, 0.2)"
+              borderColor="rgba(6, 182, 212, 0.2)"
             >
-              <Icon as={FaCheckCircle} boxSize={7} color="purple.400" mb={2} />
+              <Icon as={FaCheckCircle} boxSize={7} color="accent.400" mb={2} />
               <Heading size="lg" color="white" mb={1}>
                 100%
               </Heading>
@@ -151,9 +162,9 @@ export default function CertificatesModern() {
               p={5}
               textAlign="center"
               borderWidth="1px"
-              borderColor="rgba(236, 72, 153, 0.2)"
+              borderColor="rgba(99, 102, 241, 0.2)"
             >
-              <Icon as={FaTrophy} boxSize={7} color="pink.400" mb={2} />
+              <Icon as={FaTrophy} boxSize={7} color="brand.400" mb={2} />
               <Heading size="lg" color="white" mb={1}>
                 W3Schools
               </Heading>
@@ -165,9 +176,9 @@ export default function CertificatesModern() {
               p={5}
               textAlign="center"
               borderWidth="1px"
-              borderColor="rgba(251, 146, 60, 0.2)"
+              borderColor="rgba(6, 182, 212, 0.2)"
             >
-              <Icon as={FaAward} boxSize={7} color="orange.400" mb={2} />
+              <Icon as={FaAward} boxSize={7} color="accent.400" mb={2} />
               <Heading size="lg" color="white" mb={1}>
                 2024
               </Heading>
@@ -205,22 +216,15 @@ export default function CertificatesModern() {
                   size="md"
                   px={6}
                   onClick={() => setFilter(tag)}
-                  bg={
-                    filter === tag
-                      ? 'linear-gradient(135deg, #22d3ee, #a855f7)'
-                      : 'rgba(255, 255, 255, 0.05)'
-                  }
+                  bg={filter === tag ? 'brand.600' : 'rgba(255, 255, 255, 0.05)'}
                   color="white"
                   borderWidth="1px"
-                  borderColor={filter === tag ? 'transparent' : 'rgba(255, 255, 255, 0.1)'}
+                  borderColor={filter === tag ? 'brand.400' : 'whiteAlpha.100'}
                   borderRadius="full"
                   fontWeight="600"
                   _hover={{
-                    bg:
-                      filter === tag
-                        ? 'linear-gradient(135deg, #22d3ee, #a855f7)'
-                        : 'rgba(34, 211, 238, 0.1)',
-                    borderColor: filter === tag ? 'transparent' : 'rgba(34, 211, 238, 0.4)',
+                    bg: filter === tag ? 'brand.500' : 'rgba(99, 102, 241, 0.1)',
+                    borderColor: filter === tag ? 'brand.300' : 'brand.400',
                     transform: 'translateY(-2px)',
                   }}
                   transition="all 0.3s"
@@ -250,11 +254,12 @@ export default function CertificatesModern() {
                 h="100%"
                 overflow="hidden"
                 borderWidth="1px"
-                borderColor="rgba(255, 255, 255, 0.1)"
+                borderColor="whiteAlpha.100"
                 position="relative"
                 _hover={{
-                  borderColor: 'rgba(34, 211, 238, 0.5)',
+                  borderColor: 'brand.400',
                   transform: 'translateY(-4px)',
+                  boxShadow: '0 20px 40px rgba(99, 102, 241, 0.15)',
                 }}
                 transition="all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
                 role="group"
@@ -262,32 +267,32 @@ export default function CertificatesModern() {
                 {/* Certificate Header Background */}
                 <Box
                   position="relative"
-                  bg={`linear-gradient(135deg, rgba(${cert.color === 'cyan' ? '34,211,238' : cert.color === 'purple' ? '168,85,247' : cert.color === 'orange' ? '251,146,60' : '234,179,8'},0.1), rgba(${cert.color === 'cyan' ? '34,211,238' : cert.color === 'purple' ? '168,85,247' : cert.color === 'orange' ? '251,146,60' : '234,179,8'},0.05))`}
+                  bg="linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(6, 182, 212, 0.04))"
                   p={6}
                   borderBottom="1px solid"
-                  borderColor="rgba(255, 255, 255, 0.1)"
+                  borderColor="whiteAlpha.100"
                 >
                   <Flex justify="space-between" align="start" mb={4}>
                     <Box
                       p={3}
                       borderRadius="lg"
-                      bg={`rgba(${cert.color === 'cyan' ? '34,211,238' : cert.color === 'purple' ? '168,85,247' : cert.color === 'orange' ? '251,146,60' : '234,179,8'},0.2)`}
-                      backdropFilter="blur(10px)"
+                      bg="brand.900"
                       border="1px solid"
-                      borderColor={`rgba(${cert.color === 'cyan' ? '34,211,238' : cert.color === 'purple' ? '168,85,247' : cert.color === 'orange' ? '251,146,60' : '234,179,8'},0.3)`}
+                      borderColor="brand.400"
                       transition="all 0.3s"
                       _groupHover={{
                         transform: 'rotate(-5deg) scale(1.1)',
+                        boxShadow: '0 0 20px rgba(99, 102, 241, 0.4)',
                       }}
                     >
-                      <Icon as={FaCertificate} boxSize={6} color={`${cert.color}.300`} />
+                      <Icon as={FaCertificate} boxSize={6} color="brand.300" />
                     </Box>
                     <Badge
                       px={3}
                       py={1}
                       borderRadius="full"
-                      bg={`rgba(${cert.color === 'cyan' ? '34,211,238' : cert.color === 'purple' ? '168,85,247' : cert.color === 'orange' ? '251,146,60' : '234,179,8'},0.15)`}
-                      color={`${cert.color}.200`}
+                      bg="brand.900"
+                      color="brand.200"
                       fontSize="xs"
                       fontWeight="700"
                       letterSpacing="wide"
@@ -301,7 +306,7 @@ export default function CertificatesModern() {
                   </Heading>
 
                   <HStack spacing={2} color="gray.400" fontSize="sm">
-                    <Icon as={FaCheckCircle} boxSize={4} color={`${cert.color}.400`} />
+                    <Icon as={FaCheckCircle} boxSize={4} color="accent.400" />
                     <Text>Issued {cert.date}</Text>
                   </HStack>
                 </Box>
@@ -316,11 +321,11 @@ export default function CertificatesModern() {
                         px={3}
                         py={1}
                         borderRadius="md"
-                        bg="rgba(34, 211, 238, 0.1)"
-                        border="1px solid rgba(34, 211, 238, 0.2)"
+                        bg="rgba(99, 102, 241, 0.1)"
+                        border="1px solid rgba(99, 102, 241, 0.2)"
                         _hover={{
-                          bg: 'rgba(34, 211, 238, 0.2)',
-                          borderColor: 'rgba(34, 211, 238, 0.4)',
+                          bg: 'rgba(99, 102, 241, 0.2)',
+                          borderColor: 'rgba(99, 102, 241, 0.4)',
                         }}
                         transition="all 0.2s"
                       >

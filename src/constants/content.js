@@ -99,13 +99,13 @@ export const TESTIMONIALS = [
   },
   {
     name: 'Mr Chigumira',
-    role: 'head St james Zongoro Primary School',
+    role: 'Head,james Zongoro Primary School',
     quote:
       'Professional work on our school website. Parents love how easy it is to access information. Highly recommended!',
   },
   {
     name: 'MR Tongogara Chiwashira',
-    role: 'CEOReigns Hydraulics',
+    role: 'CEO, igns Hydraulics',
 
     quote:
       'Our company website looks modern and professional. Tinashe understood our industrial needs perfectly.',

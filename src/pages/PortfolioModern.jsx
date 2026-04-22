@@ -49,8 +49,19 @@ export default function PortfolioModern() {
       overflow="hidden"
       minH="calc(100vh - var(--header-h) - var(--footer-h))"
       py={{ base: 8, md: 12, lg: 16 }}
+      bg="dark.bg"
     >
-
+      {/* Subtle background gradient */}
+      <Box
+        position="absolute"
+        top="0"
+        left="0"
+        right="0"
+        bottom="0"
+        opacity={0.5}
+        bgGradient="radial(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%)"
+        pointerEvents="none"
+      />
 
       <Container maxW="7xl" position="relative" zIndex={1} px={{ base: 4, md: 6, lg: 8 }}>
         {/* Header */}
@@ -138,12 +149,7 @@ export default function PortfolioModern() {
                       border="1px solid rgba(255, 255, 255, 0.1)"
                     >
                       <Text fontSize="md">⭐</Text>
-                      <Text
-                        fontSize="xs"
-                        fontWeight="700"
-                        color="white"
-                        letterSpacing="wider"
-                      >
+                      <Text fontSize="xs" fontWeight="700" color="white" letterSpacing="wider">
                         FEATURED PROJECT
                       </Text>
                     </Flex>
@@ -168,7 +174,11 @@ export default function PortfolioModern() {
                     {featuredProject.name}
                   </Heading>
 
-                  <Text color="dark.textMuted" fontSize={{ base: 'md', md: 'lg' }} lineHeight="tall">
+                  <Text
+                    color="dark.textMuted"
+                    fontSize={{ base: 'md', md: 'lg' }}
+                    lineHeight="tall"
+                  >
                     {featuredProject.desc}
                   </Text>
 
@@ -245,15 +255,12 @@ export default function PortfolioModern() {
                 overflow="hidden"
                 position="relative"
                 borderWidth="1px"
-                borderColor={
-                  hoveredProject === project.name
-                    ? 'whiteAlpha.400'
-                    : 'whiteAlpha.50'
-                }
+                borderColor={hoveredProject === project.name ? 'whiteAlpha.400' : 'whiteAlpha.50'}
                 transition="all 0.3s ease"
                 _hover={{
-                  borderColor: 'whiteAlpha.400',
+                  borderColor: 'brand.400',
                   transform: 'translateY(-6px)',
+                  boxShadow: '0 20px 40px rgba(99, 102, 241, 0.15)',
                 }}
               >
                 {/* Project Image with Overlay */}
@@ -304,8 +311,10 @@ export default function PortfolioModern() {
                       )}
                       {/* NEW: Show Tech Stack on Image for quick scan */}
                       <HStack spacing={1}>
-                        {project.tags.slice(0, 2).map(t => (
-                          <Badge key={t} bg="blackAlpha.600" color="whiteAlpha.900" fontSize="2xs">{t}</Badge>
+                        {project.tags.slice(0, 2).map((t) => (
+                          <Badge key={t} bg="blackAlpha.600" color="whiteAlpha.900" fontSize="2xs">
+                            {t}
+                          </Badge>
                         ))}
                       </HStack>
                     </VStack>
@@ -366,7 +375,11 @@ export default function PortfolioModern() {
                         variant={project.homepage === '#' ? 'solid' : 'ghost'}
                         color={project.homepage === '#' ? 'whiteAlpha.600' : 'brand.300'}
                         bg={project.homepage === '#' ? 'whiteAlpha.200' : 'transparent'}
-                        _hover={project.homepage === '#' ? {} : { bg: 'whiteAlpha.100', color: 'brand.200' }}
+                        _hover={
+                          project.homepage === '#'
+                            ? {}
+                            : { bg: 'whiteAlpha.100', color: 'brand.200' }
+                        }
                         cursor={project.homepage === '#' ? 'not-allowed' : 'pointer'}
                         leftIcon={project.homepage !== '#' ? <Icon as={FaExternalLinkAlt} /> : null}
                       >
@@ -411,7 +424,16 @@ export default function PortfolioModern() {
                 as={NavLink}
                 to="/contact"
                 size="lg"
-                variant="primary"
+                px={8}
+                fontWeight="700"
+                bgGradient="linear(to-r, brand.500, accent.500)"
+                color="white"
+                _hover={{
+                  bgGradient: 'linear(to-r, brand.600, accent.600)',
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 10px 30px rgba(99, 102, 241, 0.3)',
+                }}
+                transition="all 0.3s"
                 rightIcon={<ArrowForwardIcon />}
               >
                 Get In Touch

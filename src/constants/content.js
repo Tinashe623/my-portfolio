@@ -91,26 +91,22 @@ export const WHY_CHOOSE_US = [
 
 export const TESTIMONIALS = [
   {
-    name: 'Takunda Mugabe',
+    name: 'Mr George Mundieta',
     role: 'Business Owner, GMP Electrical',
-    avatar:
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&q=80',
+
     quote:
       'Tinashe delivered our electrical services platform on time with exceptional attention to detail. The real-time quote feature works flawlessly.',
   },
   {
-    name: 'Memory Chikwaka',
-    role: 'Administrator, St James Zongoro Primary',
-    avatar:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&q=80',
+    name: 'Mr Chigumira',
+    role: 'head St james Zongoro Primary School',
     quote:
       'Professional work on our school website. Parents love how easy it is to access information. Highly recommended!',
   },
   {
-    name: 'Blessing Dube',
-    role: 'Manager, Reigns Hydraulics',
-    avatar:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&q=80',
+    name: 'MR Tongogara Chiwashira',
+    role: 'CEOReigns Hydraulics',
+
     quote:
       'Our company website looks modern and professional. Tinashe understood our industrial needs perfectly.',
   },

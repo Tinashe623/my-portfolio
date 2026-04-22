@@ -111,8 +111,12 @@ export default function HomeModern() {
       {/* Background Effects */}
       <Box
         position="absolute"
-        inset={0}
-        bg="radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.15), transparent)"
+        top="0"
+        left="0"
+        right="0"
+        bottom="0"
+        opacity={0.5}
+        bgGradient="radial(ellipse at 30% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 50%), radial(ellipse at 70% 100%, rgba(6, 182, 212, 0.08) 0%, transparent 50%)"
         pointerEvents="none"
       />
       <Box

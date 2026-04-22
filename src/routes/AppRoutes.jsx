@@ -32,7 +32,7 @@ function Layout() {
       style={{ ['--header-h']: '64px', ['--footer-h']: '64px' }}
     >
       <SkipToContent />
-      <StarField />
+      <ParticleNetwork />
       <Header />
       <Box
         as="main"

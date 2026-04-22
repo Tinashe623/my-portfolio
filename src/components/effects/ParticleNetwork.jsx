@@ -20,29 +20,22 @@ const ParticleNetwork = () => {
     window.addEventListener('resize', setCanvasSize)
 
     const particles = []
-    const particleCount = Math.min(80, Math.floor((window.innerWidth * window.innerHeight) / 15000))
-    const connectionDistance = 140
-    const Colors = {
-      bg: '#0f172a',
-      particle: '#6366f1',
-      particleGlow: '#818cf8',
-      line: 'rgba(99, 102, 241, 0.15)',
-      lineClose: 'rgba(6, 182, 212, 0.25)',
-    }
+    const particleCount = Math.min(50, Math.floor((window.innerWidth * window.innerHeight) / 20000))
+    const connectionDistance = 120
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        radius: 1.5 + Math.random() * 1.5,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        radius: 1 + Math.random(),
       })
     }
 
     let animationFrame
     const animate = () => {
-      ctx.fillStyle = Colors.bg
+      ctx.fillStyle = '#0f172a'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       particles.forEach((p, i) => {
@@ -61,12 +54,9 @@ const ParticleNetwork = () => {
           const dist = Math.sqrt(dx * dx + dy * dy)
 
           if (dist < connectionDistance) {
-            const opacity = 1 - dist / connectionDistance
-            ctx.strokeStyle =
-              dist < 70
-                ? `rgba(6, 182, 212, ${opacity * 0.3})`
-                : `rgba(99, 102, 241, ${opacity * 0.12})`
-            ctx.lineWidth = dist < 70 ? 1 : 0.5
+            const opacity = (1 - dist / connectionDistance) * 0.15
+            ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`
+            ctx.lineWidth = 0.5
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
@@ -74,15 +64,7 @@ const ParticleNetwork = () => {
           }
         })
 
-        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 3)
-        gradient.addColorStop(0, Colors.particleGlow)
-        gradient.addColorStop(1, 'transparent')
-        ctx.fillStyle = gradient
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.radius * 3, 0, Math.PI * 2)
-        ctx.fill()
-
-        ctx.fillStyle = Colors.particle
+        ctx.fillStyle = 'rgba(129, 140, 248, 0.6)'
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
         ctx.fill()
@@ -110,9 +92,6 @@ const ParticleNetwork = () => {
       height="100%"
       zIndex={-1}
       pointerEvents="none"
-      style={{
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 35%, #0f172a 70%, #134e4a 100%)',
-      }}
     />
   )
 }

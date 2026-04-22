@@ -27,7 +27,7 @@ const iconMap = {
 
 export default function WhyChooseUsSection() {
   return (
-    <Box py={{ base: 20, md: 24, lg: 28 }} position="relative">
+    <Box pt={{ base: 8, md: 12 }} pb={{ base: 8, md: 12 }} position="relative">
       <Container maxW="7xl" px={{ base: 4, md: 6, lg: 8 }}>
         <MotionBox
           initial={{ opacity: 0, y: 20 }}
@@ -122,24 +122,15 @@ export default function WhyChooseUsSection() {
       </Container>
 
       {/* Divider */}
-      <Box h="150px" position="relative" overflow="hidden">
+      <Box h="30px" position="relative" overflow="hidden">
         <Box
           position="absolute"
           top="50%"
           left="50%"
           transform="translate(-50%, -50%)"
-          w="100%"
+          w="30%"
           h="1px"
-          bg="linear-gradient(90deg, transparent 0%, rgba(99,102,241,0.3) 50%, transparent 100%)"
-        />
-        <Box
-          position="absolute"
-          top="50%"
-          left="50%"
-          transform="translate(-50%, -50%)"
-          w="300px"
-          h="1px"
-          bg="linear-gradient(90deg, transparent, rgba(168,85,247,0.5), transparent)"
+          bg="linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent)"
         />
       </Box>
     </Box>

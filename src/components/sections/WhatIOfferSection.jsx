@@ -41,7 +41,7 @@ const services = [
 
 export default function WhatIOfferSection() {
   return (
-    <Box py={{ base: 20, md: 24, lg: 28 }} bg="rgba(5, 5, 5, 0.3)">
+    <Box pt={{ base: 8, md: 12 }} pb={{ base: 16, md: 20 }} bg="rgba(5, 5, 5, 0.3)">
       <Container maxW="7xl" px={{ base: 4, md: 6, lg: 8 }}>
         <MotionBox
           initial={{ opacity: 0, y: 20 }}

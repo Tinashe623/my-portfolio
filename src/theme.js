@@ -33,13 +33,13 @@ const colors = {
     900: '#134e4a',
   },
   dark: {
-    bg: '#050505',       // Pure black/slate base
-    bgSecondary: '#0a0a0a',
-    card: 'rgba(18, 18, 18, 0.7)', 
+    bg: '#0f172a', // Deep slate base (matches new gradient)
+    bgSecondary: '#1e1b4b',
+    card: 'rgba(18, 18, 18, 0.7)',
     border: 'rgba(255, 255, 255, 0.08)',
     text: '#e2e8f0', // Slate 200
     textMuted: '#94a3b8', // Slate 400
-  }
+  },
 }
 
 const styles = {
@@ -55,7 +55,7 @@ const styles = {
       overflowX: 'hidden',
       backgroundImage: mode(
         'none',
-        'radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%), radial-gradient(circle at 100% 0%, rgba(20, 184, 166, 0.05) 0%, transparent 30%)'
+        'radial-gradient(ellipse at 20% 0%, rgba(124, 58, 237, 0.15) 0%, transparent 50%), radial-gradient(ellipse at 80% 100%, rgba(6, 182, 212, 0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(30, 27, 75, 0.4) 0%, transparent 70%)',
       )(props),
       backgroundAttachment: 'fixed',
     },
@@ -110,7 +110,7 @@ const components = {
         _hover: {
           bg: 'brand.500',
           transform: 'translateY(-1px)',
-          boxShadow: '0 4px 12px rgba(79, 70, 229, 0.4)', 
+          boxShadow: '0 4px 12px rgba(79, 70, 229, 0.4)',
         },
         _active: {
           transform: 'translateY(0)',

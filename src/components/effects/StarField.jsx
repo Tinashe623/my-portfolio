@@ -35,7 +35,7 @@ const StarField = () => {
     let animationFrame
     const animate = () => {
       // Trail effect color - matched to Premium Slate theme (Deep darkest blue/slate)
-      ctx.fillStyle = 'rgba(5, 5, 10, 0.3)' 
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.25)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       const centerX = canvas.width / 2
@@ -56,7 +56,7 @@ const StarField = () => {
 
         // Opacity based on depth
         const opacity = Math.min(1, (maxDepth - star.z) / maxDepth)
-        
+
         ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`
         ctx.beginPath()
         ctx.arc(x, y, star.size * scale, 0, Math.PI * 2)
@@ -85,8 +85,8 @@ const StarField = () => {
       height="100%"
       zIndex={-1}
       pointerEvents="none"
-      style={{ 
-        background: 'linear-gradient(to bottom, #020205, #0a0a0f)' // Deep Slate Gradient
+      style={{
+        background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 35%, #0f172a 70%, #134e4a 100%)',
       }}
     />
   )

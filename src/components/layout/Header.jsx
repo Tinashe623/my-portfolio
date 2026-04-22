@@ -45,10 +45,10 @@ function NavLinks({ onClick }) {
             bg: 'whiteAlpha.100',
           }}
           _activeLink={{
-            color: 'white',
-            bg: 'whiteAlpha.100',
+            color: 'brand.300',
+            bg: 'rgba(99, 102, 241, 0.15)',
             fontWeight: '600',
-            boxShadow: '0 0 0 1px rgba(255,255,255,0.1)',
+            boxShadow: '0 0 12px rgba(99, 102, 241, 0.3)',
           }}
         >
           {label}
@@ -76,7 +76,12 @@ function MobileNav() {
       <Drawer placement="right" onClose={onClose} isOpen={isOpen} size="full">
         <DrawerOverlay />
         <DrawerContent bg="dark.bgSecondary">
-          <DrawerHeader borderBottomWidth="1px" borderColor="whiteAlpha.100" py={6}>
+          <DrawerHeader
+            borderBottomWidth="1px"
+            borderColor="whiteAlpha.100"
+            bgGradient="linear(to-r, rgba(99,102,241,0.1), transparent)"
+            py={6}
+          >
             <Flex align="center">
               <Heading size="md" color="white" fontWeight="800">
                 Menu
@@ -150,10 +155,24 @@ export default function Header() {
       w="full"
       zIndex={100}
       transition="all 0.3s ease"
-      bg={scrolled ? 'rgba(5, 5, 5, 0.8)' : 'transparent'}
+      bg={scrolled ? 'rgba(15, 23, 42, 0.85)' : 'transparent'}
       backdropFilter={scrolled ? 'blur(16px)' : 'none'}
       borderBottom="1px solid"
       borderColor={scrolled ? 'whiteAlpha.100' : 'transparent'}
+      _before={
+        scrolled
+          ? {
+              content: '""',
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: '1px',
+              bgGradient: 'linear(to-r, brand.500, accent.400)',
+              opacity: 0.3,
+            }
+          : {}
+      }
       py={scrolled ? 3 : 5}
     >
       <Container maxW="7xl" px={{ base: 6, md: 8 }}>

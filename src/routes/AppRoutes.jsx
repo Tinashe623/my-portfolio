@@ -7,7 +7,7 @@ import Footer from '../components/layout/Footer.jsx'
 import SkipToContent from '../components/layout/SkipToContent.jsx'
 import ScrollToTop from '../components/ScrollToTop.jsx'
 import PageTransition from '../components/layout/PageTransition.jsx'
-import StarField from '../components/effects/StarField.jsx'
+import ParticleNetwork from '../components/effects/ParticleNetwork.jsx'
 
 const Home = React.lazy(() => import('../pages/HomeModern.jsx'))
 const About = React.lazy(() => import('../pages/AboutModern.jsx'))
@@ -31,8 +31,8 @@ function Layout() {
       position="relative"
       style={{ ['--header-h']: '64px', ['--footer-h']: '64px' }}
     >
-      <StarField />
       <SkipToContent />
+      <StarField />
       <Header />
       <Box
         as="main"
@@ -56,7 +56,13 @@ function Layout() {
 function Fallback() {
   return (
     <Center h="100vh" bg="dark.bg">
-      <Spinner thickness="3px" speed="0.65s" emptyColor="whiteAlpha.200" color="brand.500" size="xl" />
+      <Spinner
+        thickness="3px"
+        speed="0.65s"
+        emptyColor="whiteAlpha.200"
+        color="brand.500"
+        size="xl"
+      />
     </Center>
   )
 }
@@ -67,14 +73,70 @@ export default function AppRoutes() {
       <ScrollToTop />
       <Routes>
         <Route element={<Layout />}>
-          <Route index element={<PageTransition><Home /></PageTransition>} />
-          <Route path="about" element={<PageTransition><About /></PageTransition>} />
-          <Route path="services" element={<PageTransition><Services /></PageTransition>} />
-          <Route path="portfolio" element={<PageTransition><Portfolio /></PageTransition>} />
-          <Route path="certificates" element={<PageTransition><Certificates /></PageTransition>} />
-          <Route path="contact" element={<PageTransition><Contact /></PageTransition>} />
-          <Route path="resume" element={<PageTransition><Resume /></PageTransition>} />
-          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+          <Route
+            index
+            element={
+              <PageTransition>
+                <Home />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="about"
+            element={
+              <PageTransition>
+                <About />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="services"
+            element={
+              <PageTransition>
+                <Services />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="portfolio"
+            element={
+              <PageTransition>
+                <Portfolio />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="certificates"
+            element={
+              <PageTransition>
+                <Certificates />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="contact"
+            element={
+              <PageTransition>
+                <Contact />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="resume"
+            element={
+              <PageTransition>
+                <Resume />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <PageTransition>
+                <NotFound />
+              </PageTransition>
+            }
+          />
         </Route>
       </Routes>
     </Suspense>

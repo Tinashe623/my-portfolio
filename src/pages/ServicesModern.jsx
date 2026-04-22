@@ -14,9 +14,10 @@ import {
   chakra,
   shouldForwardProp,
 } from '@chakra-ui/react'
-import { CheckIcon, ViewIcon, SettingsIcon, EditIcon, ArrowForwardIcon } from '@chakra-ui/icons'
+import { CheckIcon, SettingsIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import { motion, isValidMotionProp } from 'framer-motion'
 import { NavLink } from 'react-router-dom'
+import { FaReact, FaCode, FaServer, FaRocket, FaDatabase } from 'react-icons/fa'
 
 import GlassCard from '../components/effects/GlassCard'
 
@@ -27,42 +28,81 @@ const MotionBox = chakra(motion.div, {
 const services = [
   {
     title: 'Frontend Development',
-    desc: 'Build modern, responsive web applications using React, Vite, and Chakra UI with focus on performance and accessibility.',
-    icon: SettingsIcon,
+    desc: 'Build modern, responsive web applications using React with focus on performance, accessibility, and clean component architecture.',
+    icon: FaReact,
     features: [
       'Component-driven architecture',
-      'Responsive design',
+      'Responsive mobile-first layouts',
       'Performance optimization',
-      'Cross-browser compatibility',
+      'Accessibility (WCAG) compliance',
     ],
-    tech: 'React • Chakra UI • Vite • JavaScript',
-    color: 'cyan',
+    tech: 'React • Vite • Chakra UI • TypeScript',
+    color: 'brand',
   },
   {
     title: 'UI/UX Implementation',
     desc: 'Transform designs into pixel-perfect, interactive interfaces with smooth animations and intuitive user experiences.',
-    icon: ViewIcon,
+    icon: FaCode,
     features: [
       'Design-to-code conversion',
       'Interactive animations',
       'Mobile-first approach',
-      'Accessibility compliance',
+      'Cross-browser compatibility',
     ],
     tech: 'CSS3 • Framer Motion • HTML5 • ARIA',
-    color: 'purple',
+    color: 'accent',
+  },
+  {
+    title: 'API Integration',
+    desc: 'Connect your frontend to REST APIs with proper state management, error handling, and data flow.',
+    icon: FaDatabase,
+    features: [
+      'REST API integration',
+      'State management',
+      'Form handling & validation',
+      'Error handling',
+    ],
+    tech: 'REST • JSON • React Query • Hooks',
+    color: 'brand',
+  },
+  {
+    title: 'System Administration',
+    desc: 'Windows & Linux server management, hardware maintenance, troubleshooting, and IT support services.',
+    icon: FaServer,
+    features: [
+      'Windows Server administration',
+      'Linux systems management',
+      'Hardware maintenance',
+      'IT troubleshooting & support',
+    ],
+    tech: 'Windows • Linux • Hardware • Networking',
+    color: 'accent',
   },
   {
     title: 'Website Maintenance',
-    desc: 'Keep your web presence fresh with content updates, bug fixes, performance improvements, and feature enhancements.',
-    icon: EditIcon,
+    desc: 'Keep your web presence fresh with content updates, bug fixes, performance monitoring, and security patches.',
+    icon: SettingsIcon,
     features: [
-      'Content management',
-      'Bug fixes & updates',
+      'Content updates',
+      'Bug fixes & patches',
       'Performance monitoring',
-      'Security best practices',
+      'Security updates',
     ],
-    tech: 'Git • Version Control • Testing • Deployment',
-    color: 'pink',
+    tech: 'Git • Deployment • Testing • Monitoring',
+    color: 'brand',
+  },
+  {
+    title: 'Performance Optimization',
+    desc: 'Optimize your web applications for speed, SEO, and better user experience with best practices.',
+    icon: FaRocket,
+    features: [
+      'Load time optimization',
+      'SEO improvements',
+      'Bundle size reduction',
+      'Core Web Vitals boosting',
+    ],
+    tech: 'Vite • Lighthouse • Bundle Analysis',
+    color: 'accent',
   },
 ]
 
@@ -74,6 +114,7 @@ export default function ServicesModern() {
       minH="calc(100vh - var(--header-h) - var(--footer-h))"
       pt={{ base: 6, sm: 8, md: 10, lg: 12, xl: 14 }}
       pb={{ base: 8, sm: 10, md: 14, lg: 16, xl: 18 }}
+      bg="dark.bg"
       sx={{
         '@media (min-width: 768px) and (max-height: 700px)': {
           pt: 8,
@@ -81,8 +122,17 @@ export default function ServicesModern() {
         },
       }}
     >
-
-
+      {/* Subtle background gradient */}
+      <Box
+        position="absolute"
+        top="0"
+        left="0"
+        right="0"
+        bottom="0"
+        opacity={0.5}
+        bgGradient="radial(ellipse at 30% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%), radial(ellipse at 70% 100%, rgba(6, 182, 212, 0.06) 0%, transparent 50%)"
+        pointerEvents="none"
+      />
       <Container maxW="8xl" position="relative" zIndex={1} px={{ base: 4, sm: 6, md: 8 }}>
         {/* Header */}
         <MotionBox
@@ -118,7 +168,7 @@ export default function ServicesModern() {
         <SimpleGrid
           columns={{ base: 1, md: 2, lg: 3 }}
           spacing={{ base: 4, sm: 5, md: 5, lg: 6 }}
-          mb={{ base: 8, md: 20, lg: 28 }}
+          mb={{ base: 6, md: 8, lg: 10 }}
         >
           {services.map((service, index) => (
             <MotionBox
@@ -139,13 +189,14 @@ export default function ServicesModern() {
                   <Box
                     p={{ base: 3, md: 4 }}
                     borderRadius="xl"
-                    bg={`rgba(${service.color === 'cyan' ? '34,211,238' : service.color === 'purple' ? '168,85,247' : '236,72,153'},0.15)`}
+                    bg={`${service.color}.900`}
                     borderWidth="1px"
-                    borderColor={`${service.color}.300`}
+                    borderColor={`${service.color}.400`}
                     transition="all 0.3s"
                     _groupHover={{
-                      transform: 'scale(1.1) rotate(5deg)',
-                      boxShadow: `0 0 20px rgba(${service.color === 'cyan' ? '34,211,238' : service.color === 'purple' ? '168,85,247' : '236,72,153'},0.4)`,
+                      transform: 'scale(1.05)',
+                      boxShadow: '0 0 30px rgba(99, 102, 241, 0.3)',
+                      borderColor: 'brand.400',
                     }}
                   >
                     <Icon
@@ -209,8 +260,8 @@ export default function ServicesModern() {
                     fontSize={{ base: 'xs', md: 'sm' }}
                     color="gray.200"
                     _hover={{
-                      bg: `rgba(${service.color === 'cyan' ? '34,211,238' : service.color === 'purple' ? '168,85,247' : '236,72,153'},0.2)`,
-                      borderColor: `${service.color}.300`,
+                      bg: 'brand.600',
+                      borderColor: 'brand.300',
                       color: 'white',
                     }}
                   >
@@ -252,11 +303,12 @@ export default function ServicesModern() {
               to="/contact"
               size={{ base: 'md', md: 'lg' }}
               w={{ base: 'full', sm: 'auto' }}
-              bg="linear-gradient(135deg, #22d3ee, #a855f7)"
+              bgGradient="linear(to-r, brand.500, accent.500)"
               color="white"
               _hover={{
                 transform: 'translateY(-2px)',
-                boxShadow: '0 20px 40px rgba(34, 211, 238, 0.4)',
+                boxShadow: '0 20px 40px rgba(99, 102, 241, 0.4)',
+                bgGradient: 'linear(to-r, brand.600, accent.600)',
               }}
               rightIcon={<ArrowForwardIcon />}
             >

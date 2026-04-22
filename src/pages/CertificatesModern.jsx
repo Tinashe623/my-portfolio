@@ -371,9 +371,14 @@ export default function CertificatesModern() {
             p={{ base: 8, md: 10, lg: 12 }}
             textAlign="center"
             borderWidth="1px"
-            borderColor="rgba(34, 211, 238, 0.2)"
+            borderColor="rgba(99, 102, 241, 0.2)"
             position="relative"
             overflow="hidden"
+            _hover={{
+              borderColor: 'brand.400',
+              boxShadow: '0 20px 40px rgba(99, 102, 241, 0.15)',
+            }}
+            transition="all 0.3s"
           >
             {/* Decorative gradient */}
             <Box
@@ -382,7 +387,7 @@ export default function CertificatesModern() {
               left="-10%"
               w="120%"
               h="200%"
-              bgGradient="radial(circle, rgba(34,211,238,0.1), transparent 70%)"
+              bgGradient="radial(circle, rgba(99, 102, 241, 0.1), transparent 70%)"
               pointerEvents="none"
             />
 
@@ -390,9 +395,9 @@ export default function CertificatesModern() {
               <Box
                 p={4}
                 borderRadius="full"
-                bg="rgba(34, 211, 238, 0.1)"
-                backdropFilter="blur(10px)"
-                border="1px solid rgba(34, 211, 238, 0.3)"
+                bg="brand.900"
+                border="1px solid"
+                borderColor="brand.400"
               >
                 <Icon as={FaAward} boxSize={12} color="brand.300" />
               </Box>

@@ -12,14 +12,12 @@ import {
   HStack,
   Icon,
   Badge,
-  Divider,
   chakra,
   shouldForwardProp,
 } from '@chakra-ui/react'
-import { CheckCircleIcon, ArrowForwardIcon, DownloadIcon } from '@chakra-ui/icons'
+import { CheckCircleIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import { NavLink } from 'react-router-dom'
 import { motion, isValidMotionProp } from 'framer-motion'
-import { keyframes } from '@emotion/react'
 
 import GlassCard from '../components/effects/GlassCard'
 import {
@@ -34,7 +32,6 @@ import {
   FaHandshake,
   FaLightbulb,
   FaClock,
-  FaFolderOpen,
   FaUserGraduate,
   FaBriefcase,
   FaStar,
@@ -42,7 +39,6 @@ import {
   FaHtml5,
   FaCss3,
   FaJs,
-  FaNodeJs,
   FaGitAlt,
   FaDatabase,
 } from 'react-icons/fa'
@@ -55,11 +51,6 @@ const MotionBox = chakra(motion.div, {
 const MotionImage = chakra(motion.img, {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
 })
-
-const pulse = keyframes`
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-`
 
 function AnimatedNumber({ end, duration = 2000, suffix = '' }) {
   const [count, setCount] = useState(0)
@@ -712,7 +703,7 @@ export default function AboutModern() {
                               : 'purple.500'
                     }
                     border="3px solid"
-                    borderColor="dark.bg"
+                    borderColor="gray.900"
                   />
                   <Box ml={{ base: 4, sm: 5 }}>
                     <Text

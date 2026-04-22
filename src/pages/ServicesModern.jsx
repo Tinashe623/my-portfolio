@@ -11,6 +11,8 @@ import {
   ListItem,
   ListIcon,
   VStack,
+  HStack,
+  Badge,
   chakra,
   shouldForwardProp,
 } from '@chakra-ui/react'
@@ -38,6 +40,7 @@ const services = [
     ],
     tech: 'React • Vite • Chakra UI • TypeScript',
     color: 'brand',
+    badge: 'Popular',
   },
   {
     title: 'UI/UX Implementation',
@@ -51,6 +54,7 @@ const services = [
     ],
     tech: 'CSS3 • Framer Motion • HTML5 • ARIA',
     color: 'accent',
+    badge: 'Design',
   },
   {
     title: 'API Integration',
@@ -64,6 +68,7 @@ const services = [
     ],
     tech: 'REST • JSON • React Query • Hooks',
     color: 'brand',
+    badge: 'Backend',
   },
   {
     title: 'System Administration',
@@ -77,6 +82,7 @@ const services = [
     ],
     tech: 'Windows • Linux • Hardware • Networking',
     color: 'accent',
+    badge: 'Support',
   },
   {
     title: 'Website Maintenance',
@@ -90,6 +96,7 @@ const services = [
     ],
     tech: 'Git • Deployment • Testing • Monitoring',
     color: 'brand',
+    badge: 'Ongoing',
   },
   {
     title: 'Performance Optimization',
@@ -103,6 +110,25 @@ const services = [
     ],
     tech: 'Vite • Lighthouse • Bundle Analysis',
     color: 'accent',
+    badge: 'Best Value',
+  },
+]
+
+const processSteps = [
+  {
+    step: '01',
+    title: 'Discovery',
+    desc: 'We discuss your goals, requirements, and vision to create a tailored solution.',
+  },
+  {
+    step: '02',
+    title: 'Development',
+    desc: 'Building your project with clean code, regular updates, and quality assurance.',
+  },
+  {
+    step: '03',
+    title: 'Delivery',
+    desc: 'Final testing, deployment, and handover with documentation and support.',
   },
 ]
 
@@ -185,26 +211,49 @@ export default function ServicesModern() {
                 role="group"
               >
                 <VStack align="start" spacing={{ base: 2.5, sm: 3, md: 3.5, lg: 4 }} h="100%">
-                  {/* Icon */}
-                  <Box
-                    p={{ base: 3, md: 4 }}
-                    borderRadius="xl"
-                    bg={`${service.color}.900`}
-                    borderWidth="1px"
-                    borderColor={`${service.color}.400`}
-                    transition="all 0.3s"
-                    _groupHover={{
-                      transform: 'scale(1.05)',
-                      boxShadow: '0 0 30px rgba(99, 102, 241, 0.3)',
-                      borderColor: 'brand.400',
-                    }}
-                  >
-                    <Icon
-                      as={service.icon}
-                      boxSize={{ base: 6, md: 8 }}
-                      color={`${service.color}.300`}
-                    />
-                  </Box>
+                  {/* Icon & Badge */}
+                  <HStack spacing={3} w="100%">
+                    <Box
+                      p={{ base: 3, md: 4 }}
+                      borderRadius="xl"
+                      bg={`${service.color}.900`}
+                      borderWidth="1px"
+                      borderColor={`${service.color}.400`}
+                      transition="all 0.3s"
+                      _groupHover={{
+                        transform: 'scale(1.05)',
+                        boxShadow: '0 0 30px rgba(99, 102, 241, 0.3)',
+                        borderColor: 'brand.400',
+                      }}
+                    >
+                      <Icon
+                        as={service.icon}
+                        boxSize={{ base: 6, md: 8 }}
+                        color={`${service.color}.300`}
+                      />
+                    </Box>
+                    {service.badge && (
+                      <Badge
+                        px={2}
+                        py={1}
+                        borderRadius="full"
+                        fontSize="2xs"
+                        fontWeight="700"
+                        textTransform="uppercase"
+                        letterSpacing="wider"
+                        bg={
+                          service.badge === 'Popular'
+                            ? 'brand.600'
+                            : service.badge === 'Support'
+                              ? 'accent.600'
+                              : 'purple.600'
+                        }
+                        color="white"
+                      >
+                        {service.badge}
+                      </Badge>
+                    )}
+                  </HStack>
 
                   {/* Title & Tech */}
                   <Box>
@@ -272,6 +321,72 @@ export default function ServicesModern() {
             </MotionBox>
           ))}
         </SimpleGrid>
+
+        {/* Process Steps */}
+        <MotionBox
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          mb={{ base: 8, md: 10, lg: 12 }}
+        >
+          <VStack spacing={8}>
+            <Box textAlign="center">
+              <Heading
+                fontSize={{ base: 'xl', sm: '2xl', md: '3xl' }}
+                fontWeight="800"
+                color="white"
+              >
+                How I Work
+              </Heading>
+            </Box>
+            <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 4, md: 6 }} w="100%">
+              {processSteps.map((p, i) => (
+                <MotionBox
+                  key={p.step}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                >
+                  <Box
+                    p={6}
+                    borderRadius="xl"
+                    bg="rgba(255,255,255,0.02)"
+                    border="1px solid"
+                    borderColor="whiteAlpha.100"
+                    textAlign="center"
+                    position="relative"
+                    _hover={{
+                      borderColor: 'brand.400',
+                      transform: 'translateY(-4px)',
+                    }}
+                    transition="all 0.3s"
+                  >
+                    <Text
+                      position="absolute"
+                      top={4}
+                      right={4}
+                      fontSize="2xl"
+                      fontWeight="900"
+                      bgGradient="linear(to-br, brand.600, brand.400)"
+                      bgClip="text"
+                      opacity={0.4}
+                    >
+                      {p.step}
+                    </Text>
+                    <Heading size="sm" color="white" fontWeight="700" mb={2}>
+                      {p.title}
+                    </Heading>
+                    <Text color="gray.400" fontSize="sm">
+                      {p.desc}
+                    </Text>
+                  </Box>
+                </MotionBox>
+              ))}
+            </SimpleGrid>
+          </VStack>
+        </MotionBox>
 
         {/* CTA Section */}
         <MotionBox

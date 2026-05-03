@@ -14,7 +14,7 @@ import { motion } from 'framer-motion'
 import { FaCode, FaRocket, FaTools, FaWindows, FaLinux, FaBolt } from 'react-icons/fa'
 import { WHY_CHOOSE_US } from '../../constants'
 
-const MotionBox = motion(Box)
+const MotionBox = motion.create(Box)
 
 const iconMap = {
   FaCode,

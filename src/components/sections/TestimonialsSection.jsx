@@ -15,7 +15,7 @@ import { motion } from 'framer-motion'
 import { FaQuoteRight } from 'react-icons/fa'
 import { TESTIMONIALS } from '../../constants'
 
-const MotionBox = motion(Box)
+const MotionBox = motion.create(Box)
 
 export default function TestimonialsSection() {
   return (

@@ -19,7 +19,7 @@ import { FaReact, FaPalette, FaLinux, FaWindows, FaHtml5, FaCss3, FaJs } from 'r
 
 import GradientHeading from '../components/common/GradientHeading'
 
-const MotionBox = motion(Box)
+const MotionBox = motion.create(Box)
 
 const RESUME_PDF_PATH = '/Tinashe_mundieta_resume.pdf'
 const RESUME_PDF_PREVIEW_SRC = `${RESUME_PDF_PATH}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`

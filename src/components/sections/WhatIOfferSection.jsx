@@ -16,7 +16,7 @@ import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { NavLink } from 'react-router-dom'
 import { FaCode, FaRocket, FaServer } from 'react-icons/fa'
 
-const MotionBox = motion(Box)
+const MotionBox = motion.create(Box)
 
 const services = [
   {

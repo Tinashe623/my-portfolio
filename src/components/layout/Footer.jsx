@@ -15,7 +15,7 @@ import {
 import { motion } from 'framer-motion'
 import { FaWhatsapp, FaFacebook, FaLinkedin, FaGithub, FaReact, FaCode } from 'react-icons/fa'
 
-const MotionBox = motion(Box)
+const MotionBox = motion.create(Box)
 
 const socials = [
   {

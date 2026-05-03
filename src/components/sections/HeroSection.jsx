@@ -13,7 +13,7 @@ import {
 import { motion } from 'framer-motion'
 import { ANIMATION_VARIANTS, HERO_STATS } from '../../constants'
 
-const MotionBox = motion.div
+const MotionBox = motion.create(Box)
 
 const roles = ['Frontend Developer', 'React Specialist', 'UI/UX Enthusiast', 'System Administrator']
 

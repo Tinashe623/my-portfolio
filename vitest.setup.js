@@ -13,3 +13,11 @@ if (typeof window !== 'undefined' && !window.matchMedia) {
     dispatchEvent: () => false,
   })
 }
+
+// Mock IntersectionObserver for framer-motion in jsdom
+global.IntersectionObserver = class IntersectionObserver {
+  constructor() {}
+  disconnect() {}
+  observe() {}
+  unobserve() {}
+}

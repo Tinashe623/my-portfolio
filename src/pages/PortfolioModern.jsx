@@ -35,7 +35,6 @@ const pulse = keyframes`
   50% { opacity: 0.5; }
 `
 
-// Desktop tuning will primarily be controlled via Grid row heights and image preview heights
 const projects = PROJECTS
 
 export default function PortfolioModern() {
@@ -122,15 +121,19 @@ export default function PortfolioModern() {
                   overflow="hidden"
                   _hover={{ '& > img': { transform: 'scale(1.05)' } }}
                 >
-                  <Image
-                    src={featuredProject.image}
-                    alt={featuredProject.name}
-                    objectFit="cover"
-                    w="100%"
-                    h="100%"
-                    transition="transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)"
-                    filter="brightness(0.9)"
-                  />
+                   <Image
+                     src={featuredProject.image}
+                     alt={featuredProject.name}
+                     objectFit="cover"
+                     w="100%"
+                     h="100%"
+                     transition="transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)"
+                     filter="brightness(0.9)"
+                     width={1200}
+                     height={800}
+                     fetchPriority="high"
+                     loading="eager"
+                   />
                   <Box
                     position="absolute"
                     inset={0}
@@ -274,6 +277,11 @@ export default function PortfolioModern() {
                     transition="transform 0.5s ease"
                     _groupHover={{ transform: 'scale(1.05)' }}
                     filter="brightness(0.9)"
+                    width={1200}
+                    height={675}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <Box
                     position="absolute"

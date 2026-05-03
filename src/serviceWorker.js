@@ -1,18 +1,27 @@
-const CACHE_NAME = 'portfolio-v3'
+const CACHE_NAME = 'portfolio-v4'
 const PRECACHE_URLS = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/images/profile-pic (5).png',
-  '/images/hero-image.png',
+  '/images/profile-pic.jpg',
   '/Tinashe_mundieta_resume.pdf',
 ]
 
+// Installation: precache static assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(PRECACHE_URLS).catch((err) => {
-        console.warn('Failed to cache some assets:', err)
+      return cache.addAll(PRECACHE_URLS.map(url => 
+        // Skip caching if 404 (e.g., if resume doesn't exist)
+        fetch(url, { method: 'HEAD' }).then(res => res.ok ? url : null)
+      )).then((results) => {
+        // Filter out null results
+        const validUrls = results.filter(Boolean)
+        if (validUrls.length > 0) {
+          return cache.addAll(validUrls)
+        }
+      }).catch((err) => {
+        console.warn('Failed to precache some assets:', err)
       })
     }).then(() => {
       return self.skipWaiting()
@@ -20,6 +29,7 @@ self.addEventListener('install', (event) => {
   )
 })
 
+// Activation: clean up old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -36,52 +46,72 @@ self.addEventListener('activate', (event) => {
   )
 })
 
+// Fetch: Network-first for HTML, Cache-first for static assets
 self.addEventListener('fetch', (event) => {
-  if (!event.request.url.startsWith(self.location.origin)) {
+  const { request } = event
+  const url = new URL(request.url)
+
+  // Only handle same-origin requests
+  if (!url.origin.includes(self.location.origin)) {
     return
   }
 
-  if (event.request.mode === 'navigate') {
+  // Navigation requests: Network first, fallback to cache
+  if (request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request)
+      fetch(request)
         .then((response) => {
+          // Cache successful navigation responses
           const responseClone = response.clone()
           caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseClone)
+            cache.put(request, responseClone)
           })
           return response
         })
         .catch(() => {
-          return caches.match(event.request).then((response) => {
-            return response || caches.match('/index.html')
+          return caches.match(request).then((cached) => {
+            return cached || caches.match('/index.html')
           })
         })
     )
     return
   }
 
+  // Static assets: Cache first, network fallback, then stale-while-revalidate
   if (
-    event.request.destination === 'script' ||
-    event.request.destination === 'style' ||
-    event.request.destination === 'image' ||
-    event.request.destination === 'font'
+    request.destination === 'script' ||
+    request.destination === 'style' ||
+    request.destination === 'image' ||
+    request.destination === 'font'
   ) {
     event.respondWith(
-      caches.match(event.request).then((cachedResponse) => {
+      caches.match(request).then((cachedResponse) => {
         if (cachedResponse) {
+          // Fetch in background to update cache (stale-while-revalidate)
+          fetch(request).then((networkResponse) => {
+            if (networkResponse && networkResponse.status === 200) {
+              caches.open(CACHE_NAME).then((cache) => {
+                cache.put(request, networkResponse.clone())
+              })
+            }
+          }).catch(() => {})
           return cachedResponse
         }
-        return fetch(event.request).then((response) => {
+
+        // Not in cache, fetch from network
+        return fetch(request).then((response) => {
+          // Cache successful responses
           if (!response || response.status !== 200 || response.type !== 'basic') {
             return response
           }
           const responseClone = response.clone()
           caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseClone)
+            cache.put(request, responseClone)
           })
           return response
         }).catch(() => {
-          if (event.request.destination === 'image') {
+          // For images, return empty response instead of error
+          if (request.destination === 'image') {
             return new Response('', { status: 200, statusText: 'OK' })
           }
         })
@@ -90,6 +120,7 @@ self.addEventListener('fetch', (event) => {
   }
 })
 
+// Listen for messages (e.g., skipWaiting)
 self.addEventListener('message', (event) => {
   if (event.data === 'skipWaiting') {
     self.skipWaiting()

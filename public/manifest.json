@@ -1,18 +1,41 @@
 {
-  "name": "Tinashe Mundieta Portfolio",
+  "name": "Tinashe Mundieta Portfolio - Frontend Developer",
   "short_name": "TM Portfolio",
-  "description": "Frontend Developer Portfolio - Tinashe Mundieta",
+  "description": "Professional portfolio of Tinashe Mundieta, a Frontend Developer specializing in React, TypeScript, and modern web technologies.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#111928",
-  "theme_color": "#0e7490",
+  "background_color": "#0f172a",
+  "theme_color": "#6366f1",
   "orientation": "portrait-primary",
+  "categories": ["portfolio", "developer", "web development"],
   "icons": [
     {
-      "src": "/images/profile-pic.png",
+      "src": "/images/profile-pic.jpg",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/profile-pic.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/profile-pic.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "maskable"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "/images/profile-pic.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": []
 }

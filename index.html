@@ -17,35 +17,59 @@
     <meta name="theme-color" content="#14b8a6" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://tinashe-mundieta.vercel.app/" />
-    <link rel="icon" href="/images/profile-pic.png" />
+    <link rel="icon" href="/images/profile-pic.jpg" />
     <link rel="manifest" href="/manifest.json" />
-    <link rel="apple-touch-icon" href="/images/profile-pic.png" />
+    <link rel="apple-touch-icon" href="/images/profile-pic.jpg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
     <meta property="og:title" content="Tinashe Mundieta — Portfolio" />
     <meta
       property="og:description"
       content="Frontend developer building responsive, accessible web apps with React, Vite and Chakra UI."
     />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="/images/profile-pic.png" />
-    <meta property="og:image:alt" content="Portrait of Tinashe Mundieta" />
+    <meta property="og:image" content="https://tinashe-mundieta.vercel.app/images/profile-pic.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Tinashe Mundieta Portfolio" />
+    <meta property="og:url" content="https://tinashe-mundieta.vercel.app/" />
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Tinashe Mundieta — Portfolio" />
     <meta
       name="twitter:description"
       content="Frontend developer building responsive, accessible web apps with React, Vite and Chakra UI."
     />
-    <meta name="twitter:image" content="/images/profile-pic.png" />
+    <meta name="twitter:image" content="https://tinashe-mundieta.vercel.app/images/profile-pic.jpg" />
+    <meta name="twitter:image:alt" content="Tinashe Mundieta Portfolio" />
 
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://www.google-analytics.com" />
+    <link rel="preconnect" href="https://va.vercel-analytics.com" />
+
+    <!-- DNS prefetch -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
+    <!-- Preload critical fonts (optional but improves LCP) -->
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
     <!-- Performance hints -->
-    <link rel="dns-prefetch" href="//www.google-analytics.com" />
+    <meta name="renderer" content="webkit" />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

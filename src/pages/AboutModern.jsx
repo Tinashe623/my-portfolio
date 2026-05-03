@@ -211,15 +211,70 @@ export default function AboutModern() {
           </Text>
         </MotionBox>
 
-        <Flex direction={{ base: 'column', lg: 'row' }} align="center" gap={{ base: 8, lg: 12 }} mb={{ base: 14, md: 16 }}>
-          <MotionBox initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }} flex={{ base: 'none', lg: '0 0 auto' }}>
-            <Box position="relative">
-              <Box position="absolute" top="50%" left="50%" transform="translate(-50%, -50%)" w="120%" h="120%" bg="radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%)" filter="blur(30px)" pointerEvents="none" />
-              <GlassCard variant="strong" p={2} borderRadius="3xl" w={{ base: '220px', sm: '260px', md: '300px', lg: '340px' }} h={{ base: '220px', sm: '260px', md: '300px', lg: '340px' }} hover3d>
-                <MotionImage src="/images/profile-pic (5).png" alt="Tinashe Mundieta" borderRadius="2xl" w="100%" h="100%" objectFit="cover" whileHover={{ scale: 1.03 }} transition="0.3s" />
-              </GlassCard>
-            </Box>
-          </MotionBox>
+         <Flex 
+           direction={{ base: 'column', lg: 'row' }} 
+           align={{ base: 'center', lg: 'center' }} 
+           gap={{ base: 8, lg: 12 }} 
+           mb={{ base: 14, md: 16 }}
+           position="relative"
+         >
+           <MotionBox 
+             initial={{ opacity: 0, scale: 0.9 }} 
+             animate={{ opacity: 1, scale: 1 }} 
+             transition={{ duration: 0.6 }}
+             flex={{ base: 'none', lg: '0 0 auto' }}
+             w={{ base: '100%', sm: '280px', md: '320px', lg: '340px' }}
+             maxW={{ base: '280px', sm: '320px', md: '340px' }}
+             mx="auto"
+           >
+             <Box position="relative" width="100%" paddingBottom="100%">
+               {/* Glow background - positioned absolutely outside the image container */}
+               <Box 
+                 position="absolute"
+                 top="50%"
+                 left="50%"
+                 transform="translate(-50%, -50%)"
+                 w="120%"
+                 h="120%"
+                 bg="radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%)"
+                 filter="blur(30px)"
+                 pointerEvents="none"
+                 zIndex={0}
+               />
+               <GlassCard 
+                 variant="strong" 
+                 p={2} 
+                 borderRadius="3xl" 
+                 position="absolute"
+                 top={0}
+                 left={0}
+                 right={0}
+                 bottom={0}
+                 overflow="hidden"
+                 hover3d
+                 _hover={{
+                   transform: 'translateY(-4px)',
+                 }}
+               >
+                 <MotionImage 
+                   src="/images/profile-pic.jpg" 
+                   alt="Tinashe Mundieta" 
+                   borderRadius="2xl"
+                   objectFit="cover"
+                   w="100%"
+                   h="100%"
+                   whileHover={{ scale: 1.05 }}
+                   transition="0.3s"
+                   loading="lazy"
+                   decoding="async"
+                   style={{
+                     aspectRatio: '1 / 1',
+                     objectPosition: 'center top',
+                   }}
+                 />
+               </GlassCard>
+             </Box>
+           </MotionBox>
 
           <MotionBox flex={1} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.2 }}>
             <Box p={{ base: 6, md: 8 }} borderRadius="2xl" bg="rgba(255,255,255,0.02)" border="1px solid" borderColor="whiteAlpha.100">

@@ -22,11 +22,11 @@ import GlassCard from '../components/effects/GlassCard'
 import { FaReact, FaCode, FaPalette, FaRocket, FaLinux, FaWindows, FaBullseye, FaEye, FaHandshake, FaLightbulb, FaClock, FaUserGraduate, FaBriefcase, FaStar, FaLayerGroup, FaHtml5, FaCss3, FaJs, FaGitAlt, FaDatabase } from 'react-icons/fa'
 import { FiSettings } from 'react-icons/fi'
 
-const MotionBox = chakra(motion.div, {
+const MotionBox = chakra(motion.create('div'), {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
 })
 
-const MotionImage = chakra(motion.img, {
+const MotionImage = chakra(motion.create('img'), {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
 })
 

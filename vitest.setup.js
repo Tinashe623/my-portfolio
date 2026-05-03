@@ -1,3 +1,18 @@
+// Mock IntersectionObserver for framer-motion in jsdom
+global.IntersectionObserver = class IntersectionObserver {
+  constructor() {
+    this.root = null;
+    this.rootMargin = '';
+    this.thresholds = [];
+  }
+  disconnect() {}
+  observe() {}
+  unobserve() {}
+  takeRecords() {
+    return [];
+  }
+};
+
 import '@testing-library/jest-dom/vitest'
 
 // Polyfill matchMedia for Chakra UI hooks in jsdom
@@ -12,12 +27,4 @@ if (typeof window !== 'undefined' && !window.matchMedia) {
     removeEventListener: () => {},
     dispatchEvent: () => false,
   })
-}
-
-// Mock IntersectionObserver for framer-motion in jsdom
-global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
-  disconnect() {}
-  observe() {}
-  unobserve() {}
 }

@@ -2,6 +2,50 @@
 node_modules/
 dist/
 .env
-PEFORMANCE_IMPROVEMENTS.md
+
+# Performance & optimization documentation (local working notes)
+PERFORMANCE_AUDIT.md
+OPTIMIZATION_SUMMARY.md
+PERFOMANCE_IMPROVEMENTS.md
 PERFOMANCE_SUMMARY.md
-    
+PEFORMANCE_IMPROVEMENTS.md
+
+# Image optimization artifacts (when running npm run optimize-images)
+scripts/output/
+scripts/tmp/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.idea
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

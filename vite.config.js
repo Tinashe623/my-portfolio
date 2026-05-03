@@ -7,8 +7,19 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 600,
     sourcemap: false,
-    minify: 'esbuild',
-    target: 'es2015',
+    minify: 'terser',
+    target: 'es2020',
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'router': ['react-router-dom'],
+          'ui': ['@chakra-ui/react', '@emotion/react', '@emotion/styled', 'framer-motion'],
+          'icons': ['react-icons'],
+        },
+      },
+    },
   },
   test: {
     environment: 'jsdom',

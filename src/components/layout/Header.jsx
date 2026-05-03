@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import {
   Box,
   Container,
@@ -21,17 +21,33 @@ import {
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { NavLink } from 'react-router-dom'
 import { NAV_LINKS } from '../../constants'
+import { useRoutePrefetch } from '../../hooks/useRoutePrefetch'
 
 const CNavLink = chakra(NavLink)
 
 function NavLinks({ onClick }) {
+  const { setupNavLinkPrefetch } = useRoutePrefetch()
+  const navRef = useRef(null)
+
+  useEffect(() => {
+    if (navRef.current) {
+      return setupNavLinkPrefetch(navRef.current)
+    }
+  }, [setupNavLinkPrefetch])
+
   return (
-    <HStack as="nav" spacing={2} display={{ base: 'none', lg: 'flex' }}>
+    <HStack
+      as="nav"
+      ref={navRef}
+      spacing={2}
+      display={{ base: 'none', lg: 'flex' }}
+    >
       {NAV_LINKS.map(({ label, path }) => (
         <CNavLink
           key={path}
           to={path}
           onClick={onClick}
+          data-prefetch-path={path}
           px={5}
           py={2}
           borderRadius="full"
@@ -143,7 +159,7 @@ export default function Header() {
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
-    window.addEventListener('scroll', onScroll)
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 

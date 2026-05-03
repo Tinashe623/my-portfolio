@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import {
   Box,
   Container,
@@ -10,11 +10,11 @@ import {
   Textarea,
   Button,
   Text,
+  VStack,
+  SimpleGrid,
   HStack,
   Icon,
   Link,
-  VStack,
-  Flex,
   chakra,
   shouldForwardProp,
 } from '@chakra-ui/react'
@@ -40,18 +40,26 @@ export default function ContactModern() {
   const [message, setMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const subject = `Portfolio contact from ${name || 'someone'}`
-  const body = `Name: ${name}\nEmail: ${fromEmail}\n\nMessage:\n${message}`
-  const mailtoHref = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  const mailtoHref = useMemo(() => {
+    const subject = `Portfolio contact from ${name || 'someone'}`
+    const body = `Name: ${name}\nEmail: ${fromEmail}\n\nMessage:\n${message}`
+    return `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  }, [name, fromEmail, message])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault()
     setIsSubmitting(true)
     setTimeout(() => {
       window.location.href = mailtoHref
       setIsSubmitting(false)
     }, 500)
-  }
+  }, [mailtoHref])
+
+  const contactInfo = useMemo(() => [
+    { icon: FaClock, label: 'Response Time', value: 'Within 24 hours' },
+    { icon: FaMapMarkerAlt, label: 'Location', value: 'Remote-Friendly' },
+    { icon: FaCheckCircle, label: 'Availability', value: 'Open to Opportunities' },
+  ], [])
 
   return (
     <Box
@@ -61,10 +69,18 @@ export default function ContactModern() {
       pt={{ base: 8, md: 10, lg: 12 }}
       pb={{ base: 10, md: 12, lg: 16 }}
     >
-
+      <Box
+        position="absolute"
+        top="0"
+        left="0"
+        right="0"
+        bottom="0"
+        opacity={0.5}
+        bgGradient="radial(ellipse at 30% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%), radial(ellipse at 70% 100%, rgba(6, 182, 212, 0.06) 0%, transparent 50%)"
+        pointerEvents="none"
+      />
 
       <Container maxW="7xl" position="relative" zIndex={1} px={{ base: 4, md: 6, lg: 8 }}>
-        {/* Header */}
         <MotionBox
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -81,31 +97,19 @@ export default function ContactModern() {
           >
             Get In Touch
           </Heading>
-          <Text
-            fontSize={{ base: 'md', md: 'lg' }}
-            color="gray.400"
-            maxW="xl"
-            mx="auto"
-            lineHeight="tall"
-          >
+          <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.400" maxW="xl" mx="auto" lineHeight="tall">
             Have a question or want to work together? Drop me a message.
           </Text>
         </MotionBox>
 
-        {/* Main Content - Centered Single Column */}
-        <Flex justify="center" mb={{ base: 10, md: 12 }}>
+        <HStack justify="center" mb={{ base: 10, md: 12 }}>
           <Box w="100%" maxW="2xl">
-            {/* Contact Form */}
             <MotionBox
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <GlassCard
-                p={{ base: 6, md: 8 }}
-                borderWidth="1px"
-                borderColor="rgba(34, 211, 238, 0.2)"
-              >
+              <GlassCard p={{ base: 6, md: 8 }} borderWidth="1px" borderColor="rgba(34, 211, 238, 0.2)">
                 <Stack spacing={5} as="form" onSubmit={handleSubmit}>
                   <Text fontSize="sm" color="gray.500" mb={2} fontWeight="600">
                     * Required fields
@@ -160,9 +164,10 @@ export default function ContactModern() {
                       Message *
                     </FormLabel>
                     <Textarea
-                      rows={5}
                       placeholder="Tell me about your project..."
                       size="lg"
+                      rows={5}
+                      resize="vertical"
                       bg="rgba(255, 255, 255, 0.05)"
                       borderColor="rgba(255, 255, 255, 0.1)"
                       color="white"
@@ -181,114 +186,63 @@ export default function ContactModern() {
                   <Button
                     type="submit"
                     size="lg"
-                    w="full"
-                    bgGradient="linear(135deg, brand.400, brand.600)"
-                    color="white"
-                    leftIcon={<Icon as={FaPaperPlane} />}
                     isLoading={isSubmitting}
-                    loadingText="Sending..."
+                    loadingText="Opening Email..."
+                    bgGradient="linear(to-r, brand.500, accent.500)"
+                    color="white"
                     _hover={{
-                      bgGradient: 'linear(135deg, brand.300, brand.500)',
                       transform: 'translateY(-2px)',
+                      boxShadow: '0 20px 40px rgba(99, 102, 241, 0.4)',
+                      bgGradient: 'linear(to-r, brand.600, accent.600)',
                     }}
-                    transition="all 0.3s"
+                    rightIcon={<Icon as={FaPaperPlane} />}
+                    w="full"
                   >
-                    Send Message
+                    {isSubmitting ? 'Processing...' : 'Send Message'}
                   </Button>
                 </Stack>
               </GlassCard>
             </MotionBox>
-
-            {/* Contact Links */}
-            <MotionBox
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              mt={8}
-            >
-              <VStack spacing={3}>
-                <Text fontSize="sm" color="gray.500" fontWeight="600">
-                  Or reach me directly:
-                </Text>
-                <HStack spacing={6} flexWrap="wrap" justify="center">
-                  <Link
-                    href="mailto:tinashemundieta36@gmail.com"
-                    color="brand.300"
-                    fontSize="sm"
-                    fontWeight="600"
-                    _hover={{ color: 'brand.200', textDecoration: 'underline' }}
-                  >
-                    📧 Email
-                  </Link>
-                  <Link
-                    href="https://www.linkedin.com/in/tinashe-mundieta-041715302/"
-                    isExternal
-                    color="brand.300"
-                    fontSize="sm"
-                    fontWeight="600"
-                    _hover={{ color: 'brand.200', textDecoration: 'underline' }}
-                  >
-                    💼 LinkedIn
-                  </Link>
-                  <Link
-                    href="https://github.com/Tinashe623"
-                    isExternal
-                    color="brand.300"
-                    fontSize="sm"
-                    fontWeight="600"
-                    _hover={{ color: 'brand.200', textDecoration: 'underline' }}
-                  >
-                    🐙 GitHub
-                  </Link>
-                  <Link
-                    href="https://wa.me/263779941427"
-                    isExternal
-                    color="brand.300"
-                    fontSize="sm"
-                    fontWeight="600"
-                    _hover={{ color: 'brand.200', textDecoration: 'underline' }}
-                  >
-                    💬 WhatsApp
-                  </Link>
-                </HStack>
-              </VStack>
-            </MotionBox>
           </Box>
-        </Flex>
+        </HStack>
 
-        {/* Info Footer */}
+        <MotionBox
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4} maxW="4xl" mx="auto">
+            {contactInfo.map((info, index) => (
+              <GlassCard key={info.label} variant="default" p={5} textAlign="center">
+                <VStack spacing={3}>
+                  <Box p={3} borderRadius="full" bg="rgba(34, 211, 238, 0.1)" color="accent.300">
+                    <Icon as={info.icon} boxSize={6} />
+                  </Box>
+                  <Heading size="sm" color="gray.100" fontWeight="700">
+                    {info.label}
+                  </Heading>
+                  <Text color="gray.400" fontSize="sm">
+                    {info.value}
+                  </Text>
+                </VStack>
+              </GlassCard>
+            ))}
+          </SimpleGrid>
+        </MotionBox>
+
         <MotionBox
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
+          mt={{ base: 10, md: 12 }}
+          textAlign="center"
         >
-          <HStack
-            justify="center"
-            spacing={8}
-            flexWrap="wrap"
-            py={6}
-            borderTop="1px solid"
-            borderColor="rgba(255, 255, 255, 0.05)"
-          >
-            <HStack spacing={2}>
-              <Icon as={FaCheckCircle} color="green.400" boxSize={4} />
-              <Text fontSize="sm" color="gray.400">
-                Available for work
-              </Text>
-            </HStack>
-            <HStack spacing={2}>
-              <Icon as={FaClock} color="purple.400" boxSize={4} />
-              <Text fontSize="sm" color="gray.400">
-                24h response time
-              </Text>
-            </HStack>
-            <HStack spacing={2}>
-              <Icon as={FaMapMarkerAlt} color="pink.400" boxSize={4} />
-              <Text fontSize="sm" color="gray.400">
-                Harare, Zimbabwe
-              </Text>
-            </HStack>
-          </HStack>
+          <Text color="gray.400" fontSize="sm">
+            Or reach me directly at{' '}
+            <Link href={`mailto:${EMAIL}`} color="brand.400" _hover={{ color: 'brand.300' }} isExternal>
+              {EMAIL}
+            </Link>
+          </Text>
         </MotionBox>
       </Container>
     </Box>

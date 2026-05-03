@@ -1,19 +1,14 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Box } from '@chakra-ui/react'
-import {
-  HeroSection,
-  WhyChooseUsSection,
-  TestimonialsSection,
-  WhatIOfferSection,
-} from '../components/sections'
+import { HeroSection, WhyChooseUsSection, TestimonialsSection, WhatIOfferSection } from '../components/sections'
 
 export default function HomeModern() {
-  return (
-    <Box>
-      <HeroSection />
-      <WhyChooseUsSection />
-      <TestimonialsSection />
-      <WhatIOfferSection />
-    </Box>
-  )
+  const memoizedSections = useMemo(() => [
+    <HeroSection key="hero" />,
+    <WhyChooseUsSection key="why" />,
+    <TestimonialsSection key="testimonials" />,
+    <WhatIOfferSection key="offer" />,
+  ], [])
+
+  return <Box>{memoizedSections}</Box>
 }

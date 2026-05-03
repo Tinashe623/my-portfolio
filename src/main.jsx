@@ -19,3 +19,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </React.StrictMode>,
 )
+
+// Register service worker in production
+if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/serviceWorker.js').then(
+      (registration) => {
+        console.log('Service Worker registered:', registration)
+      },
+      (err) => {
+        console.warn('Service Worker registration failed:', err)
+      }
+    )
+  })
+}

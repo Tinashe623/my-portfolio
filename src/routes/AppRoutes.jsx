@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useMemo } from 'react'
 import { Routes, Route, useLocation, useOutlet } from 'react-router-dom'
 import { Box, Center, Spinner } from '@chakra-ui/react'
 import { AnimatePresence } from 'framer-motion'
@@ -18,6 +18,31 @@ const Contact = React.lazy(() => import('../pages/ContactModern.jsx'))
 const Resume = React.lazy(() => import('../pages/ResumePdf.jsx'))
 const NotFound = React.lazy(() => import('../pages/NotFound.jsx'))
 
+const routeConfig = {
+  '/': { component: Home },
+  '/about': { component: About },
+  '/services': { component: Services },
+  '/portfolio': { component: Portfolio },
+  '/certificates': { component: Certificates },
+  '/contact': { component: Contact },
+  '/resume': { component: Resume },
+  '*': { component: NotFound },
+}
+
+function LoadingFallback() {
+  return (
+    <Center minH="100vh" bg="dark.bg">
+      <Spinner
+        thickness="3px"
+        speed="0.65s"
+        emptyColor="whiteAlpha.200"
+        color="brand.500"
+        size="xl"
+      />
+    </Center>
+  )
+}
+
 function Layout() {
   const location = useLocation()
   const currentOutlet = useOutlet()
@@ -25,7 +50,7 @@ function Layout() {
   return (
     <Box
       minH="100vh"
-      bg="transparent" // Changed from dark.bg to transparent to let StarField show
+      bg="transparent"
       display="flex"
       flexDir="column"
       position="relative"
@@ -42,7 +67,7 @@ function Layout() {
         overflowX="hidden"
         tabIndex={-1}
         outline="none"
-        pt="64px" // Add padding top for fixed header
+        pt="64px"
       >
         <AnimatePresence mode="wait" initial={false}>
           {currentOutlet && React.cloneElement(currentOutlet, { key: location.pathname })}
@@ -53,90 +78,33 @@ function Layout() {
   )
 }
 
-function Fallback() {
+function AppRoute({ path }) {
+  const Page = routeConfig[path]?.component || routeConfig['*'].component
   return (
-    <Center h="100vh" bg="dark.bg">
-      <Spinner
-        thickness="3px"
-        speed="0.65s"
-        emptyColor="whiteAlpha.200"
-        color="brand.500"
-        size="xl"
-      />
-    </Center>
+    <PageTransition>
+      <Suspense fallback={<LoadingFallback />}>
+        <Page />
+      </Suspense>
+    </PageTransition>
   )
 }
 
 export default function AppRoutes() {
+  const routes = useMemo(() => Object.keys(routeConfig), [])
+
   return (
-    <Suspense fallback={<Fallback />}>
+    <Suspense fallback={<LoadingFallback />}>
       <ScrollToTop />
       <Routes>
         <Route element={<Layout />}>
-          <Route
-            index
-            element={
-              <PageTransition>
-                <Home />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="about"
-            element={
-              <PageTransition>
-                <About />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="services"
-            element={
-              <PageTransition>
-                <Services />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="portfolio"
-            element={
-              <PageTransition>
-                <Portfolio />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="certificates"
-            element={
-              <PageTransition>
-                <Certificates />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="contact"
-            element={
-              <PageTransition>
-                <Contact />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="resume"
-            element={
-              <PageTransition>
-                <Resume />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <PageTransition>
-                <NotFound />
-              </PageTransition>
-            }
-          />
+          {routes.map((path) => (
+            <Route
+              key={path}
+              index={path === '/'}
+              path={path !== '/' ? path : undefined}
+              element={<AppRoute path={path} />}
+            />
+          ))}
         </Route>
       </Routes>
     </Suspense>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import {
   Box,
   Container,
@@ -18,30 +18,8 @@ import {
 import { CheckCircleIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import { NavLink } from 'react-router-dom'
 import { motion, isValidMotionProp } from 'framer-motion'
-
 import GlassCard from '../components/effects/GlassCard'
-import {
-  FaReact,
-  FaCode,
-  FaPalette,
-  FaRocket,
-  FaLinux,
-  FaWindows,
-  FaBullseye,
-  FaEye,
-  FaHandshake,
-  FaLightbulb,
-  FaClock,
-  FaUserGraduate,
-  FaBriefcase,
-  FaStar,
-  FaLayerGroup,
-  FaHtml5,
-  FaCss3,
-  FaJs,
-  FaGitAlt,
-  FaDatabase,
-} from 'react-icons/fa'
+import { FaReact, FaCode, FaPalette, FaRocket, FaLinux, FaWindows, FaBullseye, FaEye, FaHandshake, FaLightbulb, FaClock, FaUserGraduate, FaBriefcase, FaStar, FaLayerGroup, FaHtml5, FaCss3, FaJs, FaGitAlt, FaDatabase } from 'react-icons/fa'
 import { FiSettings } from 'react-icons/fi'
 
 const MotionBox = chakra(motion.div, {
@@ -52,24 +30,30 @@ const MotionImage = chakra(motion.img, {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
 })
 
-function AnimatedNumber({ end, duration = 2000, suffix = '' }) {
+const AnimatedNumber = React.memo(function AnimatedNumber({ end, duration = 2000, suffix = '' }) {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
     let startTime
     let animationFrame
+    let isMounted = true
 
     const animate = (timestamp) => {
       if (!startTime) startTime = timestamp
       const progress = Math.min((timestamp - startTime) / duration, 1)
-      setCount(Math.floor(progress * end))
+      if (isMounted) {
+        setCount(Math.floor(progress * end))
+      }
       if (progress < 1) {
         animationFrame = requestAnimationFrame(animate)
       }
     }
 
     animationFrame = requestAnimationFrame(animate)
-    return () => cancelAnimationFrame(animationFrame)
+    return () => {
+      isMounted = false
+      cancelAnimationFrame(animationFrame)
+    }
   }, [end, duration])
 
   return (
@@ -78,7 +62,7 @@ function AnimatedNumber({ end, duration = 2000, suffix = '' }) {
       {suffix}
     </span>
   )
-}
+})
 
 const stats = [
   { label: 'Projects Completed', value: 10, suffix: '+', color: 'brand' },
@@ -150,57 +134,56 @@ const techStack = [
   { name: 'Linux', icon: FaLinux, color: '#FCC624' },
 ]
 
-const missionVision = {
-  mission: {
-    icon: FaBullseye,
-    title: 'My Mission',
-    text: 'To deliver exceptional digital solutions that combine technical excellence with reliable IT infrastructure, helping businesses establish a strong online presence while maintaining seamless operations.',
-    color: 'brand',
-  },
-  vision: {
-    icon: FaEye,
-    title: 'My Vision',
-    text: 'To be a trusted partner for businesses seeking comprehensive web development and IT solutions, known for quality craftsmanship, reliability, and commitment to client success.',
-    color: 'accent',
-  },
-}
-
-const coreValues = [
-  {
-    icon: FaLightbulb,
-    title: 'Innovation',
-    desc: 'Continuously learning and implementing modern technologies to deliver cutting-edge solutions.',
-  },
-  {
-    icon: FaHandshake,
-    title: 'Reliability',
-    desc: 'Dependable service delivery with clear communication and accountability.',
-  },
-  {
-    icon: FaClock,
-    title: 'Timeliness',
-    desc: 'Respecting deadlines and delivering quality work within agreed timeframes.',
-  },
-  {
-    icon: FaLayerGroup,
-    title: 'Quality',
-    desc: 'Attention to detail and commitment to writing clean, maintainable code.',
-  },
-]
-
-const whatIDo = [
-  'Component-driven UIs with React + Chakra UI',
-  'API integration (REST/JSON), form handling, and state management',
-  'Accessibility-first mindset and mobile-first layouts',
-  'System maintenance and OS administration (Windows & Linux)',
-  'Hardware upgrades, troubleshooting, and performance optimization',
-  'Collaborative workflows with Git and clear communication',
-]
-
 export default function AboutModern() {
+  const missionVision = useMemo(() => ({
+    mission: {
+      icon: FaBullseye,
+      title: 'My Mission',
+      text: 'To deliver exceptional digital solutions that combine technical excellence with reliable IT infrastructure, helping businesses establish a strong online presence while maintaining seamless operations.',
+      color: 'brand',
+    },
+    vision: {
+      icon: FaEye,
+      title: 'My Vision',
+      text: 'To be a trusted partner for businesses seeking comprehensive web development and IT solutions, known for quality craftsmanship, reliability, and commitment to client success.',
+      color: 'accent',
+    },
+  }), [])
+
+  const coreValues = useMemo(() => [
+    {
+      icon: FaLightbulb,
+      title: 'Innovation',
+      desc: 'Continuously learning and implementing modern technologies to deliver cutting-edge solutions.',
+    },
+    {
+      icon: FaHandshake,
+      title: 'Reliability',
+      desc: 'Dependable service delivery with clear communication and accountability.',
+    },
+    {
+      icon: FaClock,
+      title: 'Timeliness',
+      desc: 'Respecting deadlines and delivering quality work within agreed timeframes.',
+    },
+    {
+      icon: FaLayerGroup,
+      title: 'Quality',
+      desc: 'Attention to detail and commitment to writing clean, maintainable code.',
+    },
+  ], [])
+
+  const whatIDo = useMemo(() => [
+    'Component-driven UIs with React + Chakra UI',
+    'API integration (REST/JSON), form handling, and state management',
+    'Accessibility-first mindset and mobile-first layouts',
+    'System maintenance and OS administration (Windows & Linux)',
+    'Hardware upgrades, troubleshooting, and performance optimization',
+    'Collaborative workflows with Git and clear communication',
+  ], [])
+
   return (
     <Box position="relative" overflow="hidden" color="white">
-      {/* Background Effects */}
       <Box
         position="absolute"
         top="0"
@@ -212,40 +195,12 @@ export default function AboutModern() {
         pointerEvents="none"
       />
 
-      <Container
-        maxW="8xl"
-        position="relative"
-        zIndex={1}
-        py={{ base: 8, md: 12, lg: 16 }}
-        px={{ base: 4, md: 6, lg: 8 }}
-      >
-        {/* Header */}
-        <MotionBox
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          textAlign="center"
-          mb={{ base: 10, md: 12, lg: 14 }}
-        >
-          <Badge
-            px={4}
-            py={1}
-            borderRadius="full"
-            bg="rgba(99, 102, 241, 0.15)"
-            color="brand.300"
-            fontSize="xs"
-            fontWeight="600"
-            letterSpacing="wide"
-            mb={4}
-          >
+      <Container maxW="8xl" position="relative" zIndex={1} py={{ base: 8, md: 12, lg: 16 }} px={{ base: 4, md: 6, lg: 8 }}>
+        <MotionBox initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} textAlign="center" mb={{ base: 10, md: 12, lg: 14 }}>
+          <Badge px={4} py={1} borderRadius="full" bg="rgba(99, 102, 241, 0.15)" color="brand.300" fontSize="xs" fontWeight="600" letterSpacing="wide" mb={4}>
             GET TO KNOW ME
           </Badge>
-          <Heading
-            fontSize={{ base: '3xl', sm: '4xl', md: '5xl' }}
-            fontWeight="800"
-            mb={4}
-            color="white"
-          >
+          <Heading fontSize={{ base: '3xl', sm: '4xl', md: '5xl' }} fontWeight="800" mb={4} color="white">
             About{' '}
             <Text as="span" bgGradient="linear(135deg, brand.400, accent.400)" bgClip="text">
               Me
@@ -256,68 +211,18 @@ export default function AboutModern() {
           </Text>
         </MotionBox>
 
-        {/* Profile + Intro Section */}
-        <Flex
-          direction={{ base: 'column', lg: 'row' }}
-          align="center"
-          gap={{ base: 8, lg: 12 }}
-          mb={{ base: 14, md: 16 }}
-        >
-          {/* Profile Image */}
-          <MotionBox
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            flex={{ base: 'none', lg: '0 0 auto' }}
-          >
+        <Flex direction={{ base: 'column', lg: 'row' }} align="center" gap={{ base: 8, lg: 12 }} mb={{ base: 14, md: 16 }}>
+          <MotionBox initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }} flex={{ base: 'none', lg: '0 0 auto' }}>
             <Box position="relative">
-              <Box
-                position="absolute"
-                top="50%"
-                left="50%"
-                transform="translate(-50%, -50%)"
-                w="120%"
-                h="120%"
-                bg="radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%)"
-                filter="blur(30px)"
-                pointerEvents="none"
-              />
-              <GlassCard
-                variant="strong"
-                p={2}
-                borderRadius="3xl"
-                w={{ base: '220px', sm: '260px', md: '300px', lg: '340px' }}
-                h={{ base: '220px', sm: '260px', md: '300px', lg: '340px' }}
-                hover3d
-              >
-                <MotionImage
-                  src="/images/profile-pic (5).png"
-                  alt="Tinashe Mundieta"
-                  borderRadius="2xl"
-                  w="100%"
-                  h="100%"
-                  objectFit="cover"
-                  whileHover={{ scale: 1.03 }}
-                  transition="0.3s"
-                />
+              <Box position="absolute" top="50%" left="50%" transform="translate(-50%, -50%)" w="120%" h="120%" bg="radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%)" filter="blur(30px)" pointerEvents="none" />
+              <GlassCard variant="strong" p={2} borderRadius="3xl" w={{ base: '220px', sm: '260px', md: '300px', lg: '340px' }} h={{ base: '220px', sm: '260px', md: '300px', lg: '340px' }} hover3d>
+                <MotionImage src="/images/profile-pic (5).png" alt="Tinashe Mundieta" borderRadius="2xl" w="100%" h="100%" objectFit="cover" whileHover={{ scale: 1.03 }} transition="0.3s" />
               </GlassCard>
             </Box>
           </MotionBox>
 
-          {/* Introduction */}
-          <MotionBox
-            flex={1}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <Box
-              p={{ base: 6, md: 8 }}
-              borderRadius="2xl"
-              bg="rgba(255,255,255,0.02)"
-              border="1px solid"
-              borderColor="whiteAlpha.100"
-            >
+          <MotionBox flex={1} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.2 }}>
+            <Box p={{ base: 6, md: 8 }} borderRadius="2xl" bg="rgba(255,255,255,0.02)" border="1px solid" borderColor="whiteAlpha.100">
               <VStack align="start" spacing={5}>
                 <Text fontSize={{ base: 'md', md: 'lg' }} lineHeight="tall" color="gray.300">
                   Frontend Engineer focused on the{' '}
@@ -332,8 +237,7 @@ export default function AboutModern() {
                   <Text as="span" fontWeight="700" color="cyan.300">
                     OS maintenance
                   </Text>
-                  . I build responsive, accessible interfaces with attention to performance,
-                  readability, and great user experience.
+                  . I build responsive, accessible interfaces with attention to performance, readability, and great user experience.
                 </Text>
 
                 <Box w="100%">
@@ -355,40 +259,10 @@ export default function AboutModern() {
                 </Box>
 
                 <Stack direction={{ base: 'column', sm: 'row' }} spacing={4} pt={2} w="100%">
-                  <Button
-                    as={NavLink}
-                    to="/portfolio"
-                    size="lg"
-                    px={8}
-                    fontWeight="700"
-                    bgGradient="linear(to-r, brand.500, accent.500)"
-                    color="white"
-                    _hover={{
-                      bgGradient: 'linear(to-r, brand.600, accent.600)',
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 10px 30px rgba(99, 102, 241, 0.3)',
-                    }}
-                    transition="all 0.3s"
-                    rightIcon={<ArrowForwardIcon />}
-                    w={{ base: 'full', sm: 'auto' }}
-                  >
+                  <Button as={NavLink} to="/portfolio" size="lg" px={8} fontWeight="700" bgGradient="linear(to-r, brand.500, accent.500)" color="white" _hover={{ bgGradient: 'linear(to-r, brand.600, accent.600)', transform: 'translateY(-2px)', boxShadow: '0 10px 30px rgba(99, 102, 241, 0.3)' }} transition="all 0.3s" rightIcon={<ArrowForwardIcon />} w={{ base: 'full', sm: 'auto' }}>
                     View Work
                   </Button>
-                  <Button
-                    as={NavLink}
-                    to="/contact"
-                    size="lg"
-                    px={8}
-                    fontWeight="600"
-                    variant="outline"
-                    borderColor="whiteAlpha.300"
-                    color="white"
-                    _hover={{
-                      bg: 'whiteAlpha.100',
-                      borderColor: 'brand.400',
-                    }}
-                    w={{ base: 'full', sm: 'auto' }}
-                  >
+                  <Button as={NavLink} to="/contact" size="lg" px={8} fontWeight="600" variant="outline" borderColor="whiteAlpha.300" color="white" _hover={{ bg: 'whiteAlpha.100', borderColor: 'brand.400' }} w={{ base: 'full', sm: 'auto' }}>
                     Contact Me
                   </Button>
                 </Stack>
@@ -397,37 +271,11 @@ export default function AboutModern() {
           </MotionBox>
         </Flex>
 
-        {/* Mission & Vision */}
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6} mb={{ base: 14, md: 16 }}>
           {[missionVision.mission, missionVision.vision].map((item, i) => (
-            <MotionBox
-              key={item.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
-              <Box
-                p={7}
-                borderRadius="2xl"
-                bg="rgba(255,255,255,0.02)"
-                border="1px solid"
-                borderColor="whiteAlpha.100"
-                position="relative"
-                overflow="hidden"
-                _hover={{
-                  borderColor: `${item.color}.400`,
-                }}
-                transition="all 0.3s"
-              >
-                <Box
-                  position="absolute"
-                  top={0}
-                  left={0}
-                  right={0}
-                  h="3px"
-                  bgGradient={`linear(to-r, ${item.color}.500, ${item.color}.300)`}
-                />
+            <MotionBox key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}>
+              <Box p={7} borderRadius="2xl" bg="rgba(255,255,255,0.02)" border="1px solid" borderColor="whiteAlpha.100" position="relative" overflow="hidden" _hover={{ borderColor: `${item.color}.400` }} transition="all 0.3s">
+                <Box position="absolute" top={0} left={0} right={0} h="3px" bgGradient={`linear(to-r, ${item.color}.500, ${item.color}.300)`} />
                 <HStack align="start" spacing={4}>
                   <Box p={3} borderRadius="xl" bg={`${item.color}.900`} color={`${item.color}.300`}>
                     <Icon as={item.icon} boxSize={6} />
@@ -446,67 +294,23 @@ export default function AboutModern() {
           ))}
         </SimpleGrid>
 
-        {/* Core Values */}
-        <MotionBox
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          mb={{ base: 14, md: 16 }}
-        >
+        <MotionBox initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} mb={{ base: 14, md: 16 }}>
           <VStack spacing={8}>
             <Box textAlign="center">
-              <Badge
-                px={4}
-                py={1}
-                borderRadius="full"
-                bg="rgba(168, 85, 247, 0.15)"
-                color="accent.300"
-                fontSize="xs"
-                fontWeight="600"
-                letterSpacing="wide"
-                mb={4}
-              >
+              <Badge px={4} py={1} borderRadius="full" bg="rgba(168, 85, 247, 0.15)" color="accent.300" fontSize="xs" fontWeight="600" letterSpacing="wide" mb={4}>
                 MY VALUES
               </Badge>
-              <Heading
-                fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}
-                fontWeight="800"
-                color="white"
-              >
+              <Heading fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }} fontWeight="800" color="white">
                 Core Values
               </Heading>
             </Box>
 
             <SimpleGrid columns={{ base: 1, sm: 2, lg: 4 }} spacing={5} w="100%">
               {coreValues.map((value, i) => (
-                <MotionBox
-                  key={value.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                >
-                  <Box
-                    p={6}
-                    borderRadius="xl"
-                    bg="rgba(255,255,255,0.02)"
-                    border="1px solid"
-                    borderColor="whiteAlpha.100"
-                    textAlign="center"
-                    _hover={{
-                      borderColor: 'accent.400',
-                      transform: 'translateY(-4px)',
-                    }}
-                    transition="all 0.3s"
-                  >
+                <MotionBox key={value.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.1 }}>
+                  <Box p={6} borderRadius="xl" bg="rgba(255,255,255,0.02)" border="1px solid" borderColor="whiteAlpha.100" textAlign="center" _hover={{ borderColor: 'accent.400', transform: 'translateY(-4px)' }} transition="all 0.3s">
                     <VStack spacing={3}>
-                      <Box
-                        p={3}
-                        borderRadius="full"
-                        bg="rgba(168, 85, 247, 0.15)"
-                        color="accent.300"
-                      >
+                      <Box p={3} borderRadius="full" bg="rgba(168, 85, 247, 0.15)" color="accent.300">
                         <Icon as={value.icon} boxSize={6} />
                       </Box>
                       <Heading size="sm" color="white" fontWeight="700">
@@ -523,117 +327,15 @@ export default function AboutModern() {
           </VStack>
         </MotionBox>
 
-        {/* Skills Grid */}
-        <MotionBox
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          mb={{ base: 14, md: 16 }}
-        >
-          <Box textAlign="center" mb={{ base: 8, md: 10 }}>
-            <Badge
-              px={4}
-              py={1}
-              borderRadius="full"
-              bg="rgba(34, 211, 238, 0.15)"
-              color="cyan.300"
-              fontSize="xs"
-              fontWeight="600"
-              letterSpacing="wide"
-              mb={4}
-            >
-              EXPERTISE
-            </Badge>
-            <Heading
-              fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}
-              fontWeight="800"
-              color="white"
-            >
-              Skills & Expertise
-            </Heading>
-          </Box>
-
-          <SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 7 }} spacing={{ base: 3, sm: 4 }}>
-            {skills.map((skill, i) => (
-              <MotionBox
-                key={skill.name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-              >
-                <Box
-                  p={{ base: 4, sm: 5 }}
-                  borderRadius="xl"
-                  bg="rgba(255,255,255,0.02)"
-                  border="1px solid"
-                  borderColor="whiteAlpha.100"
-                  textAlign="center"
-                  _hover={{
-                    borderColor: skill.color,
-                    bg: 'rgba(255,255,255,0.04)',
-                    transform: 'translateY(-4px)',
-                  }}
-                  transition="all 0.3s"
-                >
-                  <VStack spacing={2}>
-                    <Icon as={skill.icon} boxSize={{ base: 6, sm: 7, md: 8 }} color={skill.color} />
-                    <Text fontWeight="600" fontSize={{ base: '2xs', sm: 'xs' }} color="gray.300">
-                      {skill.name}
-                    </Text>
-                  </VStack>
-                </Box>
-              </MotionBox>
-            ))}
-          </SimpleGrid>
-        </MotionBox>
-
-        {/* Animated Stats */}
-        <MotionBox
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          mb={{ base: 14, md: 16 }}
-        >
+        <MotionBox initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} mb={{ base: 14, md: 16 }}>
           <SimpleGrid columns={{ base: 2, sm: 4 }} spacing={{ base: 3, sm: 4 }}>
             {stats.map((stat, i) => (
-              <MotionBox
-                key={stat.label}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-              >
-                <Box
-                  p={{ base: 4, sm: 5 }}
-                  borderRadius="xl"
-                  bg="rgba(255,255,255,0.02)"
-                  border="1px solid"
-                  borderColor="whiteAlpha.100"
-                  textAlign="center"
-                  _hover={{
-                    borderColor: `${stat.color}.400`,
-                    transform: 'translateY(-4px)',
-                  }}
-                  transition="all 0.3s"
-                >
-                  <Text
-                    fontSize={{ base: 'xl', sm: '2xl', md: '3xl' }}
-                    fontWeight="800"
-                    bgGradient={`linear(to-r, ${stat.color}.400, ${stat.color}.200)`}
-                    bgClip="text"
-                  >
+              <MotionBox key={stat.label} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.1 }}>
+                <Box p={{ base: 4, sm: 5 }} borderRadius="xl" bg="rgba(255,255,255,0.02)" border="1px solid" borderColor="whiteAlpha.100" textAlign="center" _hover={{ borderColor: `${stat.color}.400`, transform: 'translateY(-4px)' }} transition="all 0.3s">
+                  <Text fontSize={{ base: 'xl', sm: '2xl', md: '3xl' }} fontWeight="800" bgGradient={`linear(to-r, ${stat.color}.400, ${stat.color}.200)`} bgClip="text" lineHeight="1">
                     <AnimatedNumber end={stat.value} suffix={stat.suffix} />
                   </Text>
-                  <Text
-                    fontSize={{ base: '2xs', sm: 'xs' }}
-                    color="gray.500"
-                    fontWeight="600"
-                    textTransform="uppercase"
-                    letterSpacing="wider"
-                  >
+                  <Text fontSize={{ base: '2xs', sm: 'xs' }} color="gray.500" fontWeight="600" textTransform="uppercase" letterSpacing="wider">
                     {stat.label}
                   </Text>
                 </Box>
@@ -642,89 +344,23 @@ export default function AboutModern() {
           </SimpleGrid>
         </MotionBox>
 
-        {/* Career Timeline */}
-        <MotionBox
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          mb={{ base: 14, md: 16 }}
-        >
+        <MotionBox initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} mb={{ base: 14, md: 16 }}>
           <Box textAlign="center" mb={8}>
-            <Badge
-              px={4}
-              py={1}
-              borderRadius="full"
-              bg="rgba(34, 197, 94, 0.15)"
-              color="green.300"
-              fontSize="xs"
-              fontWeight="600"
-              letterSpacing="wide"
-              mb={4}
-            >
+            <Badge px={4} py={1} borderRadius="full" bg="rgba(34, 197, 94, 0.15)" color="green.300" fontSize="xs" fontWeight="600" letterSpacing="wide" mb={4}>
               MY JOURNEY
             </Badge>
-            <Heading
-              fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}
-              fontWeight="800"
-              color="white"
-            >
+            <Heading fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }} fontWeight="800" color="white">
               Career Timeline
             </Heading>
           </Box>
 
-          <Box
-            position="relative"
-            pl={{ base: 6, md: 8 }}
-            borderLeft="2px solid"
-            borderColor="whiteAlpha.200"
-          >
+          <Box position="relative" pl={{ base: 6, md: 8 }} borderLeft="2px solid" borderColor="whiteAlpha.200">
             {careerTimeline.map((item, i) => (
-              <MotionBox
-                key={`${item.year}-${i}`}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.15 }}
-                mb={{ base: 4, sm: 6 }}
-              >
+              <MotionBox key={`${item.year}-${i}`} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.15 }} mb={{ base: 4, sm: 6 }}>
                 <HStack align="start" spacing={3}>
-                  <Box
-                    position="absolute"
-                    left="-7px"
-                    w={3}
-                    h={3}
-                    borderRadius="full"
-                    bg={
-                      item.color === 'brand'
-                        ? 'brand.500'
-                        : item.color === 'accent'
-                          ? 'accent.500'
-                          : item.color === 'blue'
-                            ? 'blue.500'
-                            : item.color === 'green'
-                              ? 'green.500'
-                              : 'purple.500'
-                    }
-                    border="3px solid"
-                    borderColor="gray.900"
-                  />
+                  <Box position="absolute" left="-7px" w={3} h={3} borderRadius="full" bg={item.color === 'brand' ? 'brand.500' : item.color === 'accent' ? 'accent.500' : item.color === 'blue' ? 'blue.500' : item.color === 'green' ? 'green.500' : 'purple.500'} border="3px solid" borderColor="gray.900" />
                   <Box ml={{ base: 4, sm: 5 }}>
-                    <Text
-                      fontSize="2xs"
-                      color={
-                        item.color === 'brand'
-                          ? 'brand.400'
-                          : item.color === 'accent'
-                            ? 'accent.400'
-                            : item.color === 'blue'
-                              ? 'blue.400'
-                              : item.color === 'green'
-                                ? 'green.400'
-                                : 'purple.400'
-                      }
-                      fontWeight="700"
-                    >
+                    <Text fontSize="2xs" color={item.color === 'brand' ? 'brand.400' : item.color === 'accent' ? 'accent.400' : item.color === 'blue' ? 'blue.400' : item.color === 'green' ? 'green.400' : 'purple.400'} fontWeight="700">
                       {item.year}
                     </Text>
                     <Heading size="xs" color="white" fontWeight="700" mb={1}>
@@ -740,47 +376,41 @@ export default function AboutModern() {
           </Box>
         </MotionBox>
 
-        {/* Tech Stack */}
-        <MotionBox
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <Box
-            p={{ base: 6, md: 8 }}
-            borderRadius="2xl"
-            bg="rgba(255,255,255,0.02)"
-            border="1px solid"
-            borderColor="whiteAlpha.100"
-            textAlign="center"
-          >
+        <MotionBox initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} mb={{ base: 14, md: 16 }}>
+          <Box textAlign="center" mb={{ base: 8, md: 6 }}>
+            <Badge px={4} py={1} borderRadius="full" bg="rgba(34, 211, 238, 0.15)" color="cyan.300" fontSize="xs" fontWeight="600" letterSpacing="wide" mb={4}>
+              EXPERTISE
+            </Badge>
+            <Heading fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }} fontWeight="800" color="white">
+              Skills & Expertise
+            </Heading>
+          </Box>
+
+          <SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 7 }} spacing={{ base: 3, sm: 4 }}>
+            {skills.map((skill, i) => (
+              <MotionBox key={skill.name} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.05 }}>
+                <Box p={{ base: 4, sm: 5 }} borderRadius="xl" bg="rgba(255,255,255,0.02)" border="1px solid" borderColor="whiteAlpha.100" textAlign="center" _hover={{ borderColor: skill.color, bg: 'rgba(255,255,255,0.04)', transform: 'translateY(-4px)' }} transition="all 0.3s">
+                  <VStack spacing={2}>
+                    <Icon as={skill.icon} boxSize={{ base: 6, sm: 7, md: 8 }} color={skill.color} />
+                    <Text fontWeight="600" fontSize={{ base: '2xs', sm: 'xs' }} color="gray.300">
+                      {skill.name}
+                    </Text>
+                  </VStack>
+                </Box>
+              </MotionBox>
+            ))}
+          </SimpleGrid>
+        </MotionBox>
+
+        <MotionBox initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} mb={{ base: 14, md: 16 }}>
+          <Box p={{ base: 6, md: 8 }} borderRadius="2xl" bg="rgba(255,255,255,0.02)" border="1px solid" borderColor="whiteAlpha.100" textAlign="center">
             <Heading size="md" mb={{ base: 5, md: 6 }} color="white" fontWeight="700">
               Technology Stack
             </Heading>
             <SimpleGrid columns={{ base: 2, sm: 3, md: 4, lg: 6 }} spacing={3}>
               {techStack.map((tech, i) => (
-                <MotionBox
-                  key={tech.name}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: i * 0.05 }}
-                >
-                  <Box
-                    p={3}
-                    borderRadius="lg"
-                    bg="rgba(255,255,255,0.02)"
-                    border="1px solid"
-                    borderColor="whiteAlpha.100"
-                    textAlign="center"
-                    _hover={{
-                      borderColor: tech.color,
-                      bg: 'rgba(255,255,255,0.05)',
-                      transform: 'translateY(-4px)',
-                    }}
-                    transition="all 0.3s"
-                  >
+                <MotionBox key={tech.name} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.3, delay: i * 0.05 }}>
+                  <Box p={3} borderRadius="lg" bg="rgba(255,255,255,0.02)" border="1px solid" borderColor="whiteAlpha.100" textAlign="center" _hover={{ borderColor: tech.color, bg: 'rgba(255,255,255,0.05)', transform: 'translateY(-4px)' }} transition="all 0.3s">
                     <VStack spacing={1}>
                       <Box color={tech.color}>
                         <Icon as={tech.icon} boxSize={{ base: 5, sm: 6 }} />

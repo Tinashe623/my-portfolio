@@ -23,7 +23,7 @@ import { FaCertificate, FaAward, FaCheckCircle, FaTrophy } from 'react-icons/fa'
 
 import GlassCard from '../components/effects/GlassCard'
 
-const MotionBox = chakra(motion.div, {
+const MotionBox = chakra(motion.create('div'), {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
 })
 

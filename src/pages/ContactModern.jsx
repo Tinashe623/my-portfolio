@@ -44,7 +44,7 @@ if (import.meta.env.VITE_EMAILJS_PUBLIC_KEY) {
 
 import GlassCard from '../components/effects/GlassCard'
 
-const MotionBox = chakra(motion.div, {
+const MotionBox = chakra(motion.create('div'), {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
 })
 
@@ -64,7 +64,7 @@ function SuccessModal({ isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
       <ModalOverlay backdropFilter="none" bg="rgba(0, 0, 0, 0.6)" />
       <ModalContent
-        as={motion.div}
+        as={motion.create('div')}
         initial={{ opacity: 0, scale: 0.8, y: 50 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.8, y: 50 }}
@@ -81,7 +81,7 @@ function SuccessModal({ isOpen, onClose }) {
         <ModalCloseButton zIndex={10} />
         <ModalBody py={10} textAlign="center">
           <Box
-            as={motion.div}
+            as={motion.create('div')}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: 'spring', damping: 15 }}
@@ -99,7 +99,7 @@ function SuccessModal({ isOpen, onClose }) {
           </Box>
           <Heading
             id="success-modal-title"
-            as={motion.h2}
+            as={motion.create('h2')}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -118,7 +118,7 @@ function SuccessModal({ isOpen, onClose }) {
 
         <ModalFooter justifyContent="center" pb={8}>
           <Button
-            as={motion.button}
+            as={motion.create('button')}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             size="lg"
@@ -143,7 +143,7 @@ function ErrorModal({ isOpen, onClose, errorMessage, errorDetails }) {
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
       <ModalOverlay backdropFilter="none" bg="rgba(0, 0, 0, 0.6)" />
       <ModalContent
-        as={motion.div}
+        as={motion.create('div')}
         initial={{ opacity: 0, scale: 0.8, y: 50 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.8, y: 50 }}
@@ -159,7 +159,7 @@ function ErrorModal({ isOpen, onClose, errorMessage, errorDetails }) {
         <ModalCloseButton zIndex={10} />
         <ModalBody py={10} textAlign="center">
           <Box
-            as={motion.div}
+            as={motion.create('div')}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: 'spring', damping: 15 }}
@@ -177,7 +177,7 @@ function ErrorModal({ isOpen, onClose, errorMessage, errorDetails }) {
           </Box>
           <Heading
             id="error-modal-title"
-            as={motion.h2}
+            as={motion.create('h2')}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -211,7 +211,7 @@ function ErrorModal({ isOpen, onClose, errorMessage, errorDetails }) {
 
         <ModalFooter justifyContent="center" pb={8}>
           <Button
-            as={motion.button}
+            as={motion.create('button')}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             size="lg"

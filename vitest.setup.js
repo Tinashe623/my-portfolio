@@ -1,17 +1,28 @@
-// Mock IntersectionObserver for framer-motion in jsdom
-global.IntersectionObserver = class IntersectionObserver {
-  constructor() {
-    this.root = null;
-    this.rootMargin = '';
-    this.thresholds = [];
+// Immediately set IntersectionObserver mock before any imports
+(() => {
+  const MockIntersectionObserver = class {
+    constructor(callback, options) {
+      this.callback = callback;
+      this.options = options;
+      this.root = null;
+      this.rootMargin = '';
+      this.thresholds = [];
+    }
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+    takeRecords() {
+      return [];
+    }
+  };
+
+  if (typeof global !== 'undefined') {
+    global.IntersectionObserver = MockIntersectionObserver;
   }
-  disconnect() {}
-  observe() {}
-  unobserve() {}
-  takeRecords() {
-    return [];
+  if (typeof window !== 'undefined') {
+    window.IntersectionObserver = MockIntersectionObserver;
   }
-};
+})();
 
 import '@testing-library/jest-dom/vitest'
 

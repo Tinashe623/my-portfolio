@@ -27,7 +27,7 @@ const variants = {
 export default function PageTransition({ children }) {
   return (
     <Box 
-      as={motion.div}
+      as={motion.create('div')}
       initial="initial"
       animate="enter"
       exit="exit"

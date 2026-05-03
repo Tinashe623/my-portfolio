@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, chakra, shouldForwardProp } from '@chakra-ui/react'
 import { motion, isValidMotionProp } from 'framer-motion'
 
-const MotionHeading = chakra(motion.h1, {
+const MotionHeading = chakra(motion.create('h1'), {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
 })
 

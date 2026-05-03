@@ -26,7 +26,7 @@ import GlassCard from '../components/effects/GlassCard'
 import { FaGithub, FaExternalLinkAlt, FaUsers } from 'react-icons/fa'
 import { PROJECTS } from '../constants/projectsData'
 
-const MotionBox = chakra(motion.div, {
+const MotionBox = chakra(motion.create('div'), {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
 })
 

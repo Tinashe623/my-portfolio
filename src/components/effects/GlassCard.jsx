@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import { chakra, shouldForwardProp } from '@chakra-ui/react'
 import { motion, isValidMotionProp } from 'framer-motion'
 
-const MotionBox = chakra(motion.div, {
+const MotionBox = chakra(motion.create('div'), {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
 })
 

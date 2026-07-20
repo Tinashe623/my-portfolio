@@ -9,9 +9,12 @@ import {
   VStack,
   SimpleGrid,
   Badge,
+  Button,
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { ANIMATION_VARIANTS, HERO_STATS } from '../../constants'
+import { NavLink } from 'react-router-dom'
+import { ArrowForwardIcon } from '@chakra-ui/icons'
 
 const MotionBox = motion.create(Box)
 
@@ -176,10 +179,10 @@ export default function HeroSection() {
 
           <VStack position="absolute" right={{ base: 'none', lg: '4vw' }} top="50%" transform={{ lg: 'translateY(-50%)' }} spacing={6} display={{ base: 'none', lg: 'flex' }}>
             <Badge px={4} py={2} borderRadius="full" bg="rgba(16, 185, 129, 0.15)" border="1px solid" borderColor="green.400">
-              <Text fontSize="sm" color="green.300" fontWeight="600">Linux</Text>
+              <Text fontSize="sm" color="green.300" fontWeight="600">Remote</Text>
             </Badge>
             <Badge px={4} py={2} borderRadius="full" bg="rgba(59, 130, 246, 0.15)" border="1px solid" borderColor="blue.400">
-              <Text fontSize="sm" color="blue.300" fontWeight="600">Windows</Text>
+              <Text fontSize="sm" color="blue.300" fontWeight="600">Freelance</Text>
             </Badge>
             <Badge px={4} py={2} borderRadius="full" bg="rgba(249, 115, 22, 0.15)" border="1px solid" borderColor="orange.400">
               <Text fontSize="sm" color="orange.300" fontWeight="600">Vite</Text>
@@ -224,8 +227,47 @@ export default function HeroSection() {
 
               <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={6}>
                 <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.400" lineHeight="tall" maxW="lg" mx="auto">
-                  Building modern web experiences with <Text as="span" color="brand.300" fontWeight="600">React</Text> and delivering comprehensive <Text as="span" color="accent.300" fontWeight="600">IT solutions</Text>. Let's create something extraordinary together.
+                  Available for freelance projects worldwide. I build modern web experiences with <Text as="span" color="brand.300" fontWeight="600">React</Text> and deliver clean, accessible interfaces for remote-ready businesses.
                 </Text>
+              </MotionBox>
+
+              <MotionBox variants={ANIMATION_VARIANTS.itemUp} mb={8}>
+                <HStack spacing={4} justify="center" flexWrap="wrap">
+                  <Button
+                    as={NavLink}
+                    to="/contact"
+                    size="lg"
+                    px={8}
+                    fontWeight="700"
+                    bgGradient="linear(to-r, brand.500, accent.500)"
+                    color="white"
+                    _hover={{
+                      bgGradient: 'linear(to-r, brand.600, accent.600)',
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 10px 30px rgba(99, 102, 241, 0.3)',
+                    }}
+                    rightIcon={<ArrowForwardIcon />}
+                    transition="all 0.3s"
+                  >
+                    Start a Project
+                  </Button>
+                  <Button
+                    as={NavLink}
+                    to="/portfolio"
+                    size="lg"
+                    px={8}
+                    fontWeight="600"
+                    variant="outline"
+                    borderColor="whiteAlpha.300"
+                    color="white"
+                    _hover={{
+                      bg: 'whiteAlpha.100',
+                      borderColor: 'brand.400',
+                    }}
+                  >
+                    View Portfolio
+                  </Button>
+                </HStack>
               </MotionBox>
 
               <MotionBox variants={ANIMATION_VARIANTS.itemUp}>

@@ -12,8 +12,8 @@ export const HERO_STATS = [
     color: 'brand',
   },
   {
-    label: 'Skills',
-    value: '15+',
+    label: 'Remote',
+    value: 'Worldwide',
     icon: 'CheckCircleIcon',
     color: 'accent',
   },
@@ -59,33 +59,33 @@ export const FLOATING_BADGES = [
 export const WHY_CHOOSE_US = [
   {
     icon: 'FaCode',
-    title: 'Clean Code',
-    desc: 'Well-structured, maintainable code that scales with your business needs',
+    title: 'Clean, Scalable Code',
+    desc: 'Well-structured React code using modern patterns that grows with your product',
   },
   {
     icon: 'FaBolt',
-    title: 'Fast Performance',
-    desc: 'Optimized applications with lightning-fast load times and smooth interactions',
+    title: 'Fast Delivery',
+    desc: 'Efficient workflows and clear milestones so your project ships on time',
   },
   {
     icon: 'FaRocket',
-    title: 'Modern Tech Stack',
-    desc: 'Latest React ecosystem with Chakra UI and Framer Motion for stunning UIs',
+    title: 'Modern Frontend Stack',
+    desc: 'React, TypeScript, Chakra UI, and Framer Motion for polished production-ready apps',
   },
   {
-    icon: 'FaWindows',
-    title: 'Windows Systems',
-    desc: 'System maintenance, upgrades, and troubleshooting for Windows environments',
+    icon: 'FaUsers',
+    title: 'Remote Collaboration',
+    desc: 'Comfortable async communication across time zones with transparent progress updates',
   },
   {
-    icon: 'FaLinux',
-    title: 'Linux Administration',
-    desc: 'Server setup, maintenance, and optimization for Linux-based systems',
+    icon: 'FaPalette',
+    title: 'Design-First Mindset',
+    desc: 'Pixel-perfect UI implementation with accessibility and responsive behavior built in',
   },
   {
-    icon: 'FaTools',
-    title: 'Full Support',
-    desc: 'Ongoing maintenance and support to keep your digital assets running smoothly',
+    icon: 'FaCheckCircle',
+    title: 'Reliable Support',
+    desc: 'Ongoing maintenance and iteration after launch so your app stays healthy',
   },
 ]
 
@@ -93,20 +93,18 @@ export const TESTIMONIALS = [
   {
     name: 'Mr George Mundieta',
     role: 'Business Owner, GMP Electrical',
-
     quote:
       'Tinashe delivered our electrical services platform on time with exceptional attention to detail. The real-time quote feature works flawlessly.',
   },
   {
     name: 'Mr Chigumira',
-    role: 'Head,james Zongoro Primary School',
+    role: 'Head, St James Zongoro Primary School',
     quote:
       'Professional work on our school website. Parents love how easy it is to access information. Highly recommended!',
   },
   {
     name: 'MR Tongogara Chiwashira',
-    role: 'CEO, igns Hydraulics',
-
+    role: 'CEO, Reigns Hydraulics',
     quote:
       'Our company website looks modern and professional. Tinashe understood our industrial needs perfectly.',
   },

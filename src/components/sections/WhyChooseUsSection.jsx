@@ -11,7 +11,7 @@ import {
   Badge,
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
-import { FaCode, FaRocket, FaTools, FaWindows, FaLinux, FaBolt } from 'react-icons/fa'
+import { FaCode, FaRocket, FaTools, FaUsers, FaPalette, FaCheckCircle } from 'react-icons/fa'
 import { WHY_CHOOSE_US } from '../../constants'
 
 const MotionBox = motion.create(Box)
@@ -20,9 +20,9 @@ const iconMap = {
   FaCode,
   FaRocket,
   FaTools,
-  FaWindows,
-  FaLinux,
-  FaBolt,
+  FaUsers,
+  FaPalette,
+  FaCheckCircle,
 }
 
 export default function WhyChooseUsSection() {
@@ -68,8 +68,7 @@ export default function WhyChooseUsSection() {
             mx="auto"
             lineHeight="tall"
           >
-            Combining modern frontend development expertise to deliver
-            comprehensive digital solutions
+            Modern frontend development expertise for digital products that users love
           </Text>
         </MotionBox>
 

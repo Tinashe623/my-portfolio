@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import {
   Box,
   Container,
@@ -32,23 +32,14 @@ import {
   FaCheckCircle,
   FaClock,
   FaMapMarkerAlt,
-  FaExclamationTriangle,
   FaSpinner,
 } from 'react-icons/fa'
-import { init, send } from 'emailjs-com'
-
-// Initialize EmailJS immediately
-if (import.meta.env.VITE_EMAILJS_PUBLIC_KEY) {
-  init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY)
-}
-
 import GlassCard from '../components/effects/GlassCard'
 
 const MotionBox = chakra(motion.create('div'), {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
 })
 
-// Validation helpers
 const validateEmail = (email) => {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   return re.test(email)
@@ -58,7 +49,6 @@ const validateRequired = (value) => {
   return value.trim().length > 0
 }
 
-// Success Modal Component with animations
 function SuccessModal({ isOpen, onClose }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
@@ -109,10 +99,11 @@ function SuccessModal({ isOpen, onClose }) {
             bgGradient="linear(135deg, #22d3ee, #a855f7)"
             bgClip="text"
           >
-            Message Sent!
+            Message Ready!
           </Heading>
           <Text color="gray.300" fontSize="md" lineHeight="tall" maxW="sm" mx="auto">
-            Thank you for reaching out! I've received your message and will get back to you within 24 hours.
+            Your email client should have opened with a pre-filled message. If it didn&apos;t,
+            please reach me directly at the email below.
           </Text>
         </ModalBody>
 
@@ -137,113 +128,14 @@ function SuccessModal({ isOpen, onClose }) {
   )
 }
 
-// Error Modal Component
-function ErrorModal({ isOpen, onClose, errorMessage, errorDetails }) {
-  return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
-      <ModalOverlay backdropFilter="none" bg="rgba(0, 0, 0, 0.6)" />
-      <ModalContent
-        as={motion.create('div')}
-        initial={{ opacity: 0, scale: 0.8, y: 50 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.8, y: 50 }}
-        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-        borderRadius="2xl"
-        bg="rgba(16, 20, 42, 0.95)"
-        borderWidth="1px"
-        borderColor="rgba(239, 68, 68, 0.3)"
-        boxShadow="0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(239, 68, 68, 0.2)"
-        maxW="2xl"
-        mx="auto"
-      >
-        <ModalCloseButton zIndex={10} />
-        <ModalBody py={10} textAlign="center">
-          <Box
-            as={motion.create('div')}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: 'spring', damping: 15 }}
-            w="80px"
-            h="80px"
-            mx="auto"
-            mb={6}
-            borderRadius="full"
-            bg="rgba(239, 68, 68, 0.1)"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Icon as={FaExclamationTriangle} boxSize={10} color="red.400" />
-          </Box>
-          <Heading
-            id="error-modal-title"
-            as={motion.create('h2')}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            fontSize="2xl"
-            fontWeight="800"
-            mb={3}
-            color="red.300"
-          >
-            Oops! Something went wrong
-          </Heading>
-          <Text color="gray.300" fontSize="md" lineHeight="tall" mb={2}>
-            {errorMessage || 'Failed to send message. Please try again.'}
-          </Text>
-          {errorDetails && import.meta.env.DEV && (
-            <Box mt={4} p={4} borderRadius="md" bg="rgba(255,255,255,0.05)" borderWidth="1px" borderColor="rgba(255,255,255,0.1)">
-              <Text fontSize="xs" color="gray.500" mb={2} fontFamily="mono">
-                Error details (dev only):
-              </Text>
-              <Text fontSize="xs" color="gray.400" fontFamily="mono" whiteSpace="pre-wrap">
-                {JSON.stringify(errorDetails, null, 2)}
-              </Text>
-            </Box>
-          )}
-          <Text color="gray.500" fontSize="sm" mt={4}>
-            You can also reach me directly at{' '}
-            <Link href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL || 'tinashemundieta36@gmail.com'}`} color="brand.400" isExternal>
-              {import.meta.env.VITE_CONTACT_EMAIL || 'tinashemundieta36@gmail.com'}
-            </Link>
-          </Text>
-        </ModalBody>
-
-        <ModalFooter justifyContent="center" pb={8}>
-          <Button
-            as={motion.create('button')}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            size="lg"
-            px={8}
-            borderRadius="xl"
-            bg="red.500"
-            color="white"
-            fontWeight="600"
-            onClick={onClose}
-          >
-            Try Again
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
-  )
-}
-
 export default function ContactModern() {
   const EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'tinashemundieta36@gmail.com'
-
-  // EmailJS config
-  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
-  const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
-  const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
   const [name, setName] = useState('')
   const [fromEmail, setFromEmail] = useState('')
   const [message, setMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  // Validation state
   const [errors, setErrors] = useState({
     name: '',
     email: '',
@@ -255,41 +147,9 @@ export default function ContactModern() {
     message: false,
   })
 
-   const [isSuccessOpen, setIsSuccessOpen] = useState(false)
-   const [isErrorOpen, setIsErrorOpen] = useState(false)
-   const [errorMessage, setErrorMessage] = useState('')
-   const [errorDetails, setErrorDetails] = useState(null)
+  const [isSuccessOpen, setIsSuccessOpen] = useState(false)
+  const toast = useToast()
 
-   const toast = useToast()
-
-  // Debug modal state changes
-  useEffect(() => {
-    console.log('[ContactForm] Modal states - success:', isSuccessOpen, 'error:', isErrorOpen)
-  }, [isSuccessOpen, isErrorOpen])
-
-   // Log config on mount (dev only)
-   useEffect(() => {
-     if (import.meta.env.DEV) {
-       console.log('[ContactForm] EmailJS config:', {
-         serviceId: EMAILJS_SERVICE_ID ? 'set' : 'missing',
-         templateId: EMAILJS_TEMPLATE_ID ? 'set' : 'missing',
-         publicKey: EMAILJS_PUBLIC_KEY ? 'set' : 'missing',
-         contactEmail: EMAIL,
-       })
-       // Verify credentials are not the placeholder values
-       if (
-         EMAILJS_SERVICE_ID === 'your_service_id' ||
-         EMAILJS_TEMPLATE_ID === 'your_template_id' ||
-         EMAILJS_PUBLIC_KEY === 'your_public_key'
-       ) {
-         console.warn(
-           '[ContactForm] You are using placeholder EmailJS credentials! Replace them in .env file.',
-         )
-       }
-     }
-   }, [EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY, EMAIL])
-
-  // Real-time validation for a field
   const validateField = useCallback((field, value) => {
     switch (field) {
       case 'name':
@@ -318,7 +178,6 @@ export default function ContactModern() {
     }
   }, [])
 
-  // Handle blur for validation
   const handleBlur = useCallback(
     (field) => {
       setTouched((prev) => ({ ...prev, [field]: true }))
@@ -333,7 +192,6 @@ export default function ContactModern() {
     [name, fromEmail, message, validateField],
   )
 
-  // Validate all fields
   const validateAll = useCallback(() => {
     const newErrors = {
       name: validateField('name', name),
@@ -345,11 +203,18 @@ export default function ContactModern() {
     return !Object.values(newErrors).some((error) => error !== '')
   }, [name, fromEmail, message, validateField])
 
+  const buildMailto = useCallback(() => {
+    const subject = encodeURIComponent(`Portfolio Contact: ${name || 'New Message'}`)
+    const body = encodeURIComponent(
+      `Name: ${name || ''}\nEmail: ${fromEmail || ''}\n\n${message || ''}`,
+    )
+    return `mailto:${EMAIL}?subject=${subject}&body=${body}`
+  }, [EMAIL, name, fromEmail, message])
+
   const handleSubmit = useCallback(
-    async (e) => {
+    (e) => {
       e.preventDefault()
 
-      // Validate all fields before submitting
       const isValid = validateAll()
       if (!isValid) {
         console.log('[ContactForm] Validation failed:', errors)
@@ -359,109 +224,38 @@ export default function ContactModern() {
       setIsSubmitting(true)
 
       try {
-        // Ensure EmailJS is properly configured
-        if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
-          const missing = []
-          if (!EMAILJS_SERVICE_ID) missing.push('SERVICE_ID')
-          if (!EMAILJS_TEMPLATE_ID) missing.push('TEMPLATE_ID')
-          if (!EMAILJS_PUBLIC_KEY) missing.push('PUBLIC_KEY')
-          throw new Error(`Missing EmailJS credentials: ${missing.join(', ')}. Add them to .env.`)
-        }
+        window.location.href = buildMailto()
 
-        // Log attempt (dev only)
-        if (import.meta.env.DEV) {
-          console.log('[ContactForm] Sending email via EmailJS')
-        }
+        toast({
+          title: 'Opening email client...',
+          description: 'If your email client did not open, please use the email link below.',
+          status: 'info',
+          duration: 4000,
+          isClosable: true,
+          position: 'bottom-right',
+        })
 
-        // Send the email using EmailJS (public key already initialized globally)
-        const result = await send(
-          EMAILJS_SERVICE_ID,
-          EMAILJS_TEMPLATE_ID,
-          {
-            from_name: name,
-            from_email: fromEmail,
-            message: message,
-            reply_to: fromEmail,
-          }
-        )
-
-        if (result.status === 200) {
-          // Success - show modal and clear form
-          toast({
-            title: 'Message sent!',
-            description: 'Your message has been delivered successfully.',
-            status: 'success',
-            duration: 3000,
-            isClosable: true,
-            position: 'bottom-right',
-          })
-          setIsSuccessOpen(true)
-          setName('')
-          setFromEmail('')
-          setMessage('')
-          setErrors({ name: '', email: '', message: '' })
-          setTouched({ name: false, email: false, message: false })
-        } else {
-          throw new Error(`EmailJS returned status ${result.status}`)
-        }
+        setIsSuccessOpen(true)
+        setName('')
+        setFromEmail('')
+        setMessage('')
+        setErrors({ name: '', email: '', message: '' })
+        setTouched({ name: false, email: false, message: false })
       } catch (error) {
-        console.error('[ContactForm] Email Error:', error)
-        console.error('[ContactForm] Full error object:', JSON.stringify(error, null, 2))
-
-        // Extract user-friendly message
-        let userMessage = 'Failed to send message. Please try again.'
-
-        // Try to get meaningful message from error
-        if (error.message) {
-          userMessage = error.message
-        } else if (error.text) {
-          userMessage = error.text
-        } else if (typeof error === 'string') {
-          userMessage = error
-        }
-
-        // Suggest solutions for common errors
-        if (error.message?.includes('CORS') || error.message?.includes('network')) {
-          userMessage = 'Network error: EmailJS requires HTTPS. Access via http://localhost:5173 or configure allowed origins in EmailJS dashboard.'
-        } else if (error.message?.includes('Invalid') || error.message?.includes('403') || error.message?.includes('401')) {
-          userMessage = 'Invalid EmailJS credentials. Verify Service ID, Template ID, and Public Key in your .env file.'
-        } else if (error.message?.includes('not configured') || error.message?.includes('missing')) {
-          userMessage = 'Email service not configured. Add EmailJS credentials to .env.'
-        } else if (error.message?.includes('Template')) {
-          userMessage = 'Template error: Check your Template ID in EmailJS dashboard and ensure template variables match.'
-        } else if (error.message?.includes('Service')) {
-          userMessage = 'Service error: Check your Service ID in EmailJS dashboard.'
-        }
-
-        // Store error details for debugging (dev only)
-        setErrorMessage(userMessage)
-        if (import.meta.env.DEV) {
-          setErrorDetails({
-            originalError: error,
-            message: error.message,
-            status: error.status,
-            text: error.text,
-            stack: error.stack,
-          })
-        } else {
-          setErrorDetails(null)
-        }
-        setIsErrorOpen(true)
+        console.error('[ContactForm] Submit error:', error)
+        toast({
+          title: 'Something went wrong',
+          description: 'Please reach out directly via the email link below.',
+          status: 'error',
+          duration: 4000,
+          isClosable: true,
+          position: 'bottom-right',
+        })
       } finally {
         setIsSubmitting(false)
       }
     },
-    [
-      name,
-      fromEmail,
-      message,
-      errors,
-      validateAll,
-      EMAILJS_SERVICE_ID,
-      EMAILJS_TEMPLATE_ID,
-      EMAILJS_PUBLIC_KEY,
-      toast,
-    ],
+    [validateAll, errors, buildMailto, toast],
   )
 
   const contactInfo = useMemo(
@@ -481,7 +275,6 @@ export default function ContactModern() {
       pt={{ base: 8, md: 10, lg: 12 }}
       pb={{ base: 10, md: 12, lg: 16 }}
     >
-      {/* Background gradient */}
       <Box
         position="absolute"
         top="0"
@@ -517,7 +310,7 @@ export default function ContactModern() {
             mx="auto"
             lineHeight="tall"
           >
-            Have a question or want to work together? Drop me a message and I'll get back to you
+            Have a question or want to work together? Drop me a message and I&apos;ll get back to you
             soon.
           </Text>
         </MotionBox>
@@ -539,7 +332,6 @@ export default function ContactModern() {
                     * Required fields
                   </Text>
 
-                  {/* Name Field */}
                   <FormControl isRequired isInvalid={touched.name && errors.name !== ''}>
                     <FormLabel color="white" fontWeight="600" fontSize="sm">
                       Name *
@@ -576,7 +368,6 @@ export default function ContactModern() {
                     <FormErrorMessage>{errors.name}</FormErrorMessage>
                   </FormControl>
 
-                  {/* Email Field */}
                   <FormControl isRequired isInvalid={touched.email && errors.email !== ''}>
                     <FormLabel color="white" fontWeight="600" fontSize="sm">
                       Email *
@@ -614,7 +405,6 @@ export default function ContactModern() {
                     <FormErrorMessage>{errors.email}</FormErrorMessage>
                   </FormControl>
 
-                  {/* Message Field */}
                   <FormControl isRequired isInvalid={touched.message && errors.message !== ''}>
                     <FormLabel color="white" fontWeight="600" fontSize="sm">
                       Message *
@@ -657,7 +447,7 @@ export default function ContactModern() {
                     type="submit"
                     size="lg"
                     isLoading={isSubmitting}
-                    loadingText="Sending..."
+                    loadingText="Opening..."
                     spinner={<Icon as={FaSpinner} />}
                     bgGradient="linear(to-r, brand.500, accent.500)"
                     color="white"
@@ -673,7 +463,7 @@ export default function ContactModern() {
                     w="full"
                     transition="all 0.2s ease"
                   >
-                    {isSubmitting ? 'Sending Message...' : 'Send Message'}
+                    {isSubmitting ? 'Opening...' : 'Send Message'}
                   </Button>
                 </Stack>
               </GlassCard>
@@ -726,16 +516,7 @@ export default function ContactModern() {
         </MotionBox>
       </Container>
 
-      {/* Success Modal */}
       <SuccessModal isOpen={isSuccessOpen} onClose={() => setIsSuccessOpen(false)} />
-
-      {/* Error Modal */}
-      <ErrorModal
-        isOpen={isErrorOpen}
-        onClose={() => setIsErrorOpen(false)}
-        errorMessage={errorMessage}
-        errorDetails={errorDetails}
-      />
     </Box>
   )
 }

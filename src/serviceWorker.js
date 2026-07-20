@@ -4,7 +4,7 @@ const PRECACHE_URLS = [
   '/index.html',
   '/manifest.json',
   '/images/profile-pic.jpg',
-  '/Tinashe_mundieta_resume.pdf',
+  '/Tinashe_Mundieta_CV.pdf',
 ]
 
 // Installation: precache static assets

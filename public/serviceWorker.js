@@ -7,7 +7,7 @@ const PRECACHE_URLS = [
   '/manifest.json',
   '/images/profile-pic (5).png',
   '/images/hero-image.png',
-  '/Tinashe_mundieta_resume.pdf',
+  '/Tinashe_Mundieta_CV.pdf',
 ]
 
 self.addEventListener('install', (event) => {

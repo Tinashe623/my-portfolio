@@ -21,7 +21,7 @@ import GradientHeading from '../components/common/GradientHeading'
 
 const MotionBox = motion.create(Box)
 
-const RESUME_PDF_PATH = '/Tinashe_mundieta_resume.pdf'
+const RESUME_PDF_PATH = '/Tinashe_Mundieta_CV.pdf'
 const RESUME_PDF_PREVIEW_SRC = `${RESUME_PDF_PATH}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`
 
 const resumeSummary = {

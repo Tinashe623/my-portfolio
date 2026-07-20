@@ -7,8 +7,7 @@ import { describe, it, expect } from 'vitest';
 describe('AboutModern Page', () => {
     it('renders without crashing', () => {
         render(<AboutModern />);
-        // Could verify heading presence
-        expect(screen.getByText(/About Me/i)).toBeInTheDocument();
-        expect(screen.getByText(/Core Strengths/i)).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: /About Me/i })).toBeInTheDocument();
+        expect(screen.getByText(/Core Values/i)).toBeInTheDocument();
     });
 });

@@ -80,7 +80,7 @@ export default function Footer() {
                 </Text>
               </Heading>
               <Text color="dark.textMuted" fontSize="sm" lineHeight="tall">
-                Frontend developer with system administration expertise. Building digital
+                Frontend developer specializing in React and modern web technologies. Building digital
                 experiences with passion and precision.
               </Text>
               <HStack spacing={3}>
@@ -148,21 +148,18 @@ export default function Footer() {
                 Services
               </Heading>
               <Stack spacing={2}>
-                <Text color="dark.textMuted" fontSize="sm">
-                  Web Development
-                </Text>
-                <Text color="dark.textMuted" fontSize="sm">
-                  React Applications
-                </Text>
-                <Text color="dark.textMuted" fontSize="sm">
-                  System Administration
-                </Text>
-                <Text color="dark.textMuted" fontSize="sm">
-                  IT Support
-                </Text>
-                <Text color="dark.textMuted" fontSize="sm">
-                  Hardware Maintenance
-                </Text>
+                  <Text color="dark.textMuted" fontSize="sm">
+                    Web Development
+                  </Text>
+                  <Text color="dark.textMuted" fontSize="sm">
+                    React Applications
+                  </Text>
+                  <Text color="dark.textMuted" fontSize="sm">
+                    UI/UX Implementation
+                  </Text>
+                  <Text color="dark.textMuted" fontSize="sm">
+                    API Integration
+                  </Text>
               </Stack>
             </VStack>
           </MotionBox>

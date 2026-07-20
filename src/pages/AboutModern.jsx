@@ -87,13 +87,6 @@ const careerTimeline = [
     color: 'accent',
   },
   {
-    year: '2024',
-    title: 'System Admin Skills',
-    desc: 'Expanded into Windows & Linux administration, hardware maintenance, and IT support.',
-    icon: FiSettings,
-    color: 'blue',
-  },
-  {
     year: '2025',
     title: 'Professional Freelance',
     desc: 'Started taking on client projects, delivering real-world web solutions.',
@@ -173,14 +166,12 @@ export default function AboutModern() {
     },
   ], [])
 
-  const whatIDo = useMemo(() => [
-    'Component-driven UIs with React + Chakra UI',
-    'API integration (REST/JSON), form handling, and state management',
-    'Accessibility-first mindset and mobile-first layouts',
-    'System maintenance and OS administration (Windows & Linux)',
-    'Hardware upgrades, troubleshooting, and performance optimization',
-    'Collaborative workflows with Git and clear communication',
-  ], [])
+const whatIDo = useMemo(() => [
+  'Component-driven UIs with React + Chakra UI',
+  'API integration (REST/JSON), form handling, and state management',
+  'Accessibility-first mindset and mobile-first layouts',
+  'Collaborative workflows with Git and clear communication',
+], [])
 
   return (
     <Box position="relative" overflow="hidden" color="white">
@@ -207,7 +198,7 @@ export default function AboutModern() {
             </Text>
           </Heading>
           <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.400" maxW="2xl" mx="auto">
-            Frontend developer with system administration expertise
+            Frontend developer focused on React ecosystem and modern web solutions
           </Text>
         </MotionBox>
 
@@ -279,18 +270,10 @@ export default function AboutModern() {
           <MotionBox flex={1} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.2 }}>
             <Box p={{ base: 6, md: 8 }} borderRadius="2xl" bg="rgba(255,255,255,0.02)" border="1px solid" borderColor="whiteAlpha.100">
               <VStack align="start" spacing={5}>
-                <Text fontSize={{ base: 'md', md: 'lg' }} lineHeight="tall" color="gray.300">
+                 <Text fontSize={{ base: 'md', md: 'lg' }} lineHeight="tall" color="gray.300">
                   Frontend Engineer focused on the{' '}
                   <Text as="span" fontWeight="700" color="brand.300">
                     React ecosystem
-                  </Text>
-                  , with expertise in{' '}
-                  <Text as="span" fontWeight="700" color="cyan.300">
-                    system administration
-                  </Text>{' '}
-                  and{' '}
-                  <Text as="span" fontWeight="700" color="cyan.300">
-                    OS maintenance
                   </Text>
                   . I build responsive, accessible interfaces with attention to performance, readability, and great user experience.
                 </Text>

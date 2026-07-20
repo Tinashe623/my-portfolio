@@ -14,7 +14,7 @@ import {
 import { motion } from 'framer-motion'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { NavLink } from 'react-router-dom'
-import { FaCode, FaRocket, FaServer } from 'react-icons/fa'
+import { FaCode, FaRocket } from 'react-icons/fa'
 
 const MotionBox = motion.create(Box)
 
@@ -30,12 +30,6 @@ const services = [
     desc: 'Pixel-perfect, accessible user interfaces with smooth animations and intuitive interactions.',
     icon: FaRocket,
     color: 'accent',
-  },
-  {
-    title: 'System Administration',
-    desc: 'Windows & Linux server management, maintenance, upgrades, and technical support.',
-    icon: FaServer,
-    color: 'green',
   },
 ]
 

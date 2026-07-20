@@ -15,7 +15,7 @@ import { ANIMATION_VARIANTS, HERO_STATS } from '../../constants'
 
 const MotionBox = motion.create(Box)
 
-const roles = ['Frontend Developer', 'React Specialist', 'UI/UX Enthusiast', 'System Administrator']
+const roles = ['Frontend Developer', 'React Specialist', 'UI/UX Enthusiast']
 
 export default function HeroSection() {
   const [roleIndex, setRoleIndex] = useState(0)

@@ -68,7 +68,7 @@ export default function WhyChooseUsSection() {
             mx="auto"
             lineHeight="tall"
           >
-            Combining modern frontend development with system administration expertise to deliver
+            Combining modern frontend development expertise to deliver
             comprehensive digital solutions
           </Text>
         </MotionBox>

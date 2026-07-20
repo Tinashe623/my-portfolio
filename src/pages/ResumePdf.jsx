@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { DownloadIcon, ExternalLinkIcon, TimeIcon, EmailIcon, PhoneIcon } from '@chakra-ui/icons'
 import { motion } from 'framer-motion'
-import { FaReact, FaPalette, FaLinux, FaWindows, FaHtml5, FaCss3, FaJs } from 'react-icons/fa'
+import { FaReact, FaPalette, FaHtml5, FaCss3, FaJs } from 'react-icons/fa'
 
 import GradientHeading from '../components/common/GradientHeading'
 
@@ -26,12 +26,12 @@ const RESUME_PDF_PREVIEW_SRC = `${RESUME_PDF_PATH}#toolbar=0&navpanes=0&scrollba
 
 const resumeSummary = {
   name: 'Tinashe Mundieta',
-  title: 'Frontend Developer & System Administrator',
+  title: 'Frontend Developer',
   location: 'Harare, Zimbabwe',
   email: 'tinashe.mundieta@email.com',
   phone: '+263 771 234 567',
   summary:
-    'Passionate frontend developer with expertise in React ecosystem and system administration. Skilled at building responsive, accessible web applications while maintaining reliable IT infrastructure.',
+    'Passionate frontend developer specializing in React ecosystem. Skilled at building responsive, accessible web applications with clean, maintainable code.',
   experience: [
     {
       year: '2023 - Present',
@@ -42,10 +42,10 @@ const resumeSummary = {
     },
     {
       year: '2022 - 2023',
-      role: 'IT Support Specialist',
+      role: 'Junior Developer',
       company: 'Tech Solutions Hub',
       description:
-        'Provided system administration, hardware maintenance, and technical support services.',
+        'Contributed to frontend feature development, bug fixes, and UI improvements for client projects.',
     },
   ],
   education: [
@@ -63,9 +63,8 @@ const skills = [
   { name: 'JavaScript', icon: FaJs, color: '#F7DF1E' },
   { name: 'HTML5', icon: FaHtml5, color: '#E34F26' },
   { name: 'CSS3', icon: FaCss3, color: '#1572B6' },
-  { name: 'Windows Admin', icon: FaWindows, color: '#0078D4' },
-  { name: 'Linux', icon: FaLinux, color: '#FCC624' },
   { name: 'UI Design', icon: FaPalette, color: '#2dd4bf' },
+  { name: 'Chakra UI', icon: FaReact, color: '#319795' },
 ]
 
 export default function ResumePdf() {

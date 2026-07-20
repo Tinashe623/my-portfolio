@@ -19,7 +19,7 @@ import {
 import { CheckIcon, SettingsIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import { motion, isValidMotionProp } from 'framer-motion'
 import { NavLink } from 'react-router-dom'
-import { FaReact, FaCode, FaServer, FaRocket, FaDatabase } from 'react-icons/fa'
+import { FaReact, FaCode, FaRocket, FaDatabase } from 'react-icons/fa'
 
 import GlassCard from '../components/effects/GlassCard'
 
@@ -71,21 +71,7 @@ const services = [
     badge: 'Backend',
   },
   {
-    title: 'System Administration',
-    desc: 'Windows & Linux server management, hardware maintenance, troubleshooting, and IT support services.',
-    icon: FaServer,
-    features: [
-      'Windows Server administration',
-      'Linux systems management',
-      'Hardware maintenance',
-      'IT troubleshooting & support',
-    ],
-    tech: 'Windows • Linux • Hardware • Networking',
-    color: 'accent',
-    badge: 'Support',
-  },
-  {
-    title: 'Website Maintenance',
+    title: 'Performance Optimization',
     desc: 'Keep your web presence fresh with content updates, bug fixes, performance monitoring, and security patches.',
     icon: SettingsIcon,
     features: [

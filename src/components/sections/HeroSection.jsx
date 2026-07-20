@@ -141,6 +141,21 @@ export default function HeroSection() {
         }}
         pointerEvents="none"
       />
+      <Box
+        position="absolute"
+        inset={0}
+        bgImage="/images/hero.jpg"
+        bgSize="cover"
+        bgPosition="center"
+        opacity={0.25}
+        pointerEvents="none"
+      />
+      <Box
+        position="absolute"
+        inset={0}
+        bgGradient="linear(to-b, rgba(15,23,42,0.3), rgba(15,23,42,0.7))"
+        pointerEvents="none"
+      />
       {hasReducedMotion && (
         <Box position="absolute" inset={0} bg="rgba(15, 23, 42, 0.7)" pointerEvents="none" />
       )}

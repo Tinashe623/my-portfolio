@@ -73,6 +73,7 @@ export default function ResumePdf() {
       position="relative"
       overflow="hidden"
       color="white"
+      bg="dark.bg"
       minH="calc(100vh - var(--header-h) - var(--footer-h))"
     >
       <Box

@@ -111,7 +111,7 @@ function HeroSection() {
   const heroStats = React.useMemo(() => HERO_STATS, [])
 
   return (
-    <Box position="relative" overflow="hidden" color="white">
+    <Box position="relative" overflow="hidden" color="white" bg="dark.bg">
       <Box
         position="absolute"
         inset={0}

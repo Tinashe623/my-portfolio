@@ -174,7 +174,7 @@ const whatIDo = useMemo(() => [
 ], [])
 
   return (
-    <Box position="relative" overflow="hidden" color="white" minH="calc(100vh - var(--header-h) - var(--footer-h))">
+    <Box position="relative" overflow="hidden" color="white" bg="dark.bg" minH="calc(100vh - var(--header-h) - var(--footer-h))">
       <Box
         position="absolute"
         top="0"

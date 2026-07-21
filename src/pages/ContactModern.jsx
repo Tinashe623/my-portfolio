@@ -274,6 +274,7 @@ export default function ContactModern() {
       minH="calc(100vh - var(--header-h) - var(--footer-h))"
       pt={{ base: 8, md: 10, lg: 12 }}
       pb={{ base: 10, md: 12, lg: 16 }}
+      bg="dark.bg"
     >
       <Box
         position="absolute"

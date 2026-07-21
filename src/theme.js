@@ -53,12 +53,6 @@ const styles = {
       color: 'dark.text',
       fontFamily: 'body',
       overflowX: 'hidden',
-      backgroundImage: mode(
-        'none',
-        'radial-gradient(ellipse at 20% 0%, rgba(124, 58, 237, 0.15) 0%, transparent 50%), radial-gradient(ellipse at 80% 100%, rgba(6, 182, 212, 0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(30, 27, 75, 0.4) 0%, transparent 70%)',
-      )(props),
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
     },
     '::selection': {
       bg: 'brand.500',

@@ -7,16 +7,26 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 800,
     sourcemap: false,
-    minify: 'terser',
+    minify: 'esbuild',
     target: 'es2020',
     cssCodeSplit: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'router': ['react-router-dom'],
-          'ui': ['@chakra-ui/react', '@emotion/react', '@emotion/styled', 'framer-motion'],
-          'icons': ['react-icons'],
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor'
+            }
+            if (id.includes('react-router-dom')) {
+              return 'router'
+            }
+            if (id.includes('@chakra-ui/react') || id.includes('@emotion') || id.includes('framer-motion')) {
+              return 'ui'
+            }
+            if (id.includes('react-icons')) {
+              return 'icons'
+            }
+          }
         },
         // Ensure consistent chunk naming for caching
         chunkFileNames: (chunkInfo) => {
@@ -51,7 +61,6 @@ export default defineConfig({
       'react-router-dom',
       '@chakra-ui/react',
       '@chakra-ui/utils',
-      'lodash.mergewith'
     ],
   },
   // Dedupe commonly used packages to avoid duplicates
@@ -61,7 +70,6 @@ export default defineConfig({
       'react-dom',
       '@chakra-ui/react',
       'framer-motion',
-      'lodash.mergewith'
     ],
   },
   server: {

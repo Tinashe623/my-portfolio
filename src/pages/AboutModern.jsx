@@ -248,7 +248,7 @@ const whatIDo = useMemo(() => [
                  }}
                >
                  <MotionImage 
-                   src="/images/profile-pic.jpg" 
+                    src="/images/profile-pic.webp"
                    alt="Tinashe Mundieta" 
                    borderRadius="2xl"
                    objectFit="cover"

@@ -147,7 +147,7 @@ export default function HeroSection() {
       <Box
         position="absolute"
         inset={0}
-        bgImage="/images/hero.jpg"
+        bgImage="/images/hero.webp"
         bgSize="cover"
         bgPosition="center"
         opacity={0.25}

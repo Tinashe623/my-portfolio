@@ -17,9 +17,9 @@
     <meta name="theme-color" content="#14b8a6" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://tinashe-mundieta.vercel.app/" />
-    <link rel="icon" href="/images/profile-pic.jpg" />
+    <link rel="icon" href="/images/profile-pic.webp" />
     <link rel="manifest" href="/manifest.json" />
-    <link rel="apple-touch-icon" href="/images/profile-pic.jpg" />
+    <link rel="apple-touch-icon" href="/images/profile-pic.webp" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -28,7 +28,7 @@
       property="og:description"
       content="Frontend developer building responsive, accessible web apps with React, Vite and Chakra UI."
     />
-    <meta property="og:image" content="https://tinashe-mundieta.vercel.app/images/profile-pic.jpg" />
+    <meta property="og:image" content="https://tinashe-mundieta.vercel.app/images/profile-pic.webp" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Tinashe Mundieta Portfolio" />
@@ -41,7 +41,7 @@
       name="twitter:description"
       content="Frontend developer building responsive, accessible web apps with React, Vite and Chakra UI."
     />
-    <meta name="twitter:image" content="https://tinashe-mundieta.vercel.app/images/profile-pic.jpg" />
+    <meta name="twitter:image" content="https://tinashe-mundieta.vercel.app/images/profile-pic.webp" />
     <meta name="twitter:image:alt" content="Tinashe Mundieta Portfolio" />
 
     <!-- Preconnect to external domains -->
@@ -67,6 +67,11 @@
         rel="stylesheet"
       />
     </noscript>
+
+    <!-- Preload critical assets -->
+    <link rel="preload" as="image" href="/images/hero.webp" />
+    <link rel="preload" as="image" href="/images/profile-pic.webp" />
+    <link rel="preload" as="document" href="/Tinashe_Mundieta_CV.pdf" />
 
     <!-- Performance hints -->
     <meta name="renderer" content="webkit" />

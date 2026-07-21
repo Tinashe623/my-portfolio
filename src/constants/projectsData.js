@@ -5,7 +5,7 @@ export const PROJECTS = [
     url: 'https://github.com/Tinashe623/Cake-store-project',
     homepage: 'https://tarie-cakes.vercel.app',
     tags: ['React', 'TypeScript', 'Chakra UI', 'Vite', 'Framer Motion'],
-    image: '/images/projects/tarie-cakes-preview.png',
+    image: '/images/projects/tarie-cakes-preview.webp',
     gridArea: { base: 'auto', md: '1 / 1 / 2 / 3' },
   },
   {
@@ -15,7 +15,7 @@ export const PROJECTS = [
     homepage: 'https://gmp-electrical-solutions.vercel.app/',
     tags: ['React', 'Vite', 'Chakra UI'],
     featured: true,
-    image: '/images/projects/gmp-preview.png',
+    image: '/images/projects/gmp-preview.webp',
     gridArea: { base: 'auto', md: '1 / 1 / 3 / 3' },
   },
   {
@@ -50,7 +50,7 @@ export const PROJECTS = [
     url: 'https://github.com/Tinashe623/zongoro-primary',
     homepage: 'https://zongoro-primary.vercel.app/',
     tags: ['React', 'Vite', 'Chakra UI'],
-    image: '/images/projects/st-james-zongoro-preview.png',
+    image: '/images/projects/st-james-zongoro-preview.webp',
     inProgress: true,
   },
   {
@@ -59,7 +59,7 @@ export const PROJECTS = [
     url: 'https://github.com/Tinashe623/reigns-hydraulics',
     homepage: 'https://reigns-hydraulics.vercel.app/',
     tags: ['React', 'Vite', 'Chakra UI'],
-    image: '/images/projects/reigns-preview.png',
+    image: '/images/projects/reigns-preview.webp',
     inProgress: true,
   },
   {
@@ -68,7 +68,7 @@ export const PROJECTS = [
     url: 'https://github.com/Tinashe623/exquisite-rubble-removal',
     homepage: 'https://exquisite-rubble-removal.vercel.app/',
     tags: ['React', 'Vite', 'Chakra UI'],
-    image: '/images/projects/rubble-removal-preview.png',
+    image: '/images/projects/rubble-removal-preview.webp',
     inProgress: true,
   },
   {

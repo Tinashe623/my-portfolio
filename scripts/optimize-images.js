@@ -1,36 +1,12 @@
-#!/usr/bin/env node
+import fs from 'fs'
+import path from 'path'
+import sharp from 'sharp'
 
-/**
- * Image Optimization Script
- * Compresses PNG/JPG images to WebP and creates responsive sizes
- * 
- * Usage: node scripts/optimize-images.js
- * 
- * Requirements:
- *   npm install sharp
- *   (or use: npx sharp-cli input.png -o output.webp)
- */
-
-const fs = require('fs')
-const path = require('path')
-
-// Check if sharp is available
-let sharp
-try {
-  sharp = require('sharp')
-} catch (_e) {
-  console.log('⚠️  Sharp not installed. Install with: npm install sharp')
-  console.log('Falling back to file copying...\n')
-}
-
-const IMAGE_DIR = path.join(__dirname, '..', 'public', 'images')
-// const PROJECTS_DIR = path.join(IMAGE_DIR, 'projects') // Reserved for future use
+const IMAGE_DIR = path.join(process.cwd(), 'public', 'images')
 
 const imagesToOptimize = [
-  // Profile picture (already converted to jpg, but can be compressed)
+  { input: 'hero.jpg', output: 'hero.webp', sizes: [1920] },
   { input: 'profile-pic.jpg', output: 'profile-pic.webp', sizes: [340, 680] },
-
-  // Project images - target WebP with multiple sizes
   { input: 'projects/clock-preview.png', output: 'projects/clock-preview.webp', sizes: [400, 800] },
   { input: 'projects/todo-preview.png', output: 'projects/todo-preview.webp', sizes: [400, 800] },
   { input: 'projects/temp-preview.png', output: 'projects/temp-preview.webp', sizes: [400, 800] },
@@ -53,17 +29,8 @@ async function optimizeImage(inputPath, outputPath, sizes) {
   const stats = fs.statSync(fullInput)
   console.log(`\n📁 ${inputPath} (${(stats.size / 1024 / 1024).toFixed(2)} MB)`)
 
-  if (!sharp) {
-    // Just copy if sharp not available
-    fs.copyFileSync(fullInput, fullOutput)
-    console.log(`   Copied to ${outputPath} (sharp not available for compression)`)
-    return
-  }
-
   try {
-    // Create WebP version (lossless or lossy with quality 80)
     const image = sharp(fullInput)
-    // Resize to max width, maintain aspect ratio
     const resizeOptions = sizes ? { width: sizes[0] } : {}
 
     await image
@@ -78,7 +45,6 @@ async function optimizeImage(inputPath, outputPath, sizes) {
     console.log(`   ✅ WebP: ${outputPath} (${(newStats.size / 1024).toFixed(0)} KB)`)
     console.log(`   💾 Saved: ${(saved / 1024).toFixed(0)} KB (${percent}%)`)
 
-    // Also create 2x version for retina
     if (sizes && sizes[1]) {
       const retinaOutput = fullOutput.replace('.webp', `@2x.webp`)
       await sharp(fullInput)

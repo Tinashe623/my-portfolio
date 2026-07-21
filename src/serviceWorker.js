@@ -3,7 +3,7 @@ const PRECACHE_URLS = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/images/profile-pic.jpg',
+  '/images/profile-pic.webp',
   '/Tinashe_Mundieta_CV.pdf',
 ]
 

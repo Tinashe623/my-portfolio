@@ -4,12 +4,13 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import GlassCard from "@/components/common/GlassCard";
 import GradientHeading from "@/components/common/GradientHeading";
-import { FaExternalLinkAlt, FaGithub, FaLock } from "react-icons/fa";
+import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 
 const projects = [
   {
     id: 1,
     title: "GMP Electrical",
+    slug: "gmp-electrical",
     description:
       "Professional business website for GMP Electrical built with React, Vite, TypeScript, and Chakra UI. Features responsive design, service showcase, and contact integration.",
     image: "/images/projects/gmp-preview.webp",
@@ -17,12 +18,13 @@ const projects = [
     category: "Frontend",
     status: "completed",
     featured: true,
-    liveUrl: "#",
-    codeUrl: "#",
+    liveUrl: "https://gmp-electrical-solutions.vercel.app/",
+    codeUrl: "https://github.com/Tinashe623/gmp-electrical-solutions",
   },
   {
     id: 2,
     title: "Tarie Cakes",
+    slug: "tarie-cakes",
     description:
       "Custom bakery storefront built with React + Vite + TypeScript + Chakra UI. Includes product catalog, ordering flow, and responsive mobile-first design.",
     image: "/images/projects/tarie-cakes-preview.webp",
@@ -30,12 +32,13 @@ const projects = [
     category: "Frontend",
     status: "completed",
     featured: true,
-    liveUrl: "#",
-    codeUrl: "#",
+    liveUrl: "https://tarie-cakes.vercel.app",
+    codeUrl: "https://github.com/Tinashe623/Cake-store-project",
   },
   {
     id: 3,
     title: "St James Zongoro Primary",
+    slug: "st-james-zongoro-primary",
     description:
       "School website built with React, Vite, TypeScript, and Chakra UI. Designed for accessibility, fast load times, and easy content updates.",
     image: "/images/projects/st-james-zongoro-preview.webp",
@@ -43,38 +46,13 @@ const projects = [
     category: "Frontend",
     status: "completed",
     featured: false,
-    liveUrl: "#",
-    codeUrl: "#",
+    liveUrl: "https://zongoro-primary.vercel.app/",
+    codeUrl: "https://github.com/Tinashe623/zongoro-primary",
   },
   {
     id: 4,
-    title: "Reigns Hydraulics",
-    description:
-      "Corporate site for Reigns Hydraulics built with React + Vite + TypeScript + Chakra UI. Focused on performance, SEO, and clean UI.",
-    image: "/images/projects/reigns-preview.webp",
-    tags: ["React", "Vite", "TypeScript", "Chakra UI"],
-    category: "Frontend",
-    status: "completed",
-    featured: false,
-    liveUrl: "#",
-    codeUrl: "#",
-  },
-  {
-    id: 5,
-    title: "Exquisite Rubble Removal",
-    description:
-      "Service business website built with React, Vite, TypeScript, and Chakra UI. Features quote requests, gallery, and responsive layout.",
-    image: "/images/projects/rubble-removal-preview.webp",
-    tags: ["React", "Vite", "TypeScript", "Chakra UI"],
-    category: "Frontend",
-    status: "completed",
-    featured: false,
-    liveUrl: "#",
-    codeUrl: "#",
-  },
-  {
-    id: 6,
     title: "Personal Portfolio",
+    slug: "personal-portfolio",
     description:
       "This portfolio website built with Next.js, TypeScript, Tailwind CSS, Prisma, and PostgreSQL. A full-stack application with admin dashboard and blog.",
     image: "/images/projects/temp-preview.webp",
@@ -82,21 +60,8 @@ const projects = [
     category: "Full-Stack",
     status: "completed",
     featured: true,
-    liveUrl: "#",
-    codeUrl: "#",
-  },
-  {
-    id: 7,
-    title: "Inventory Management System",
-    description:
-      "Full-stack inventory management system with barcode scanning, stock alerts, and reporting dashboard. Coming soon.",
-    image: "/images/projects/clock-preview.webp",
-    tags: ["Next.js", "Prisma", "PostgreSQL", "PWA"],
-    category: "Full-Stack",
-    status: "in-progress",
-    featured: false,
-    liveUrl: "#",
-    codeUrl: "#",
+    liveUrl: "https://tinashe-mundieta.vercel.app",
+    codeUrl: "https://github.com/Tinashe623/my-portfolio",
   },
 ];
 
@@ -127,36 +92,70 @@ export default function PortfolioPage() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <GlassCard className="overflow-hidden h-full flex flex-col group">
-                <div className="relative h-48 bg-dark-800 overflow-hidden">
-                  {project.image ? (
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-dark-600">
-                      No Image
-                    </div>
-                  )}
-                  {project.status === "in-progress" && (
-                    <span className="absolute top-4 right-4 bg-yellow-500/20 text-yellow-400 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
-                      <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
-                      Coming Soon
-                    </span>
-                  )}
-                  {project.featured && (
-                    <span className="absolute top-4 left-4 bg-brand-500/20 text-brand-400 text-xs font-bold px-3 py-1 rounded-full">
-                      Featured
-                    </span>
-                  )}
-                </div>
+                <Link href={`/portfolio/${project.slug}`} className="block">
+                  <div className="relative h-48 bg-dark-800 overflow-hidden">
+                    {project.slug === "personal-portfolio" ? (
+                      <div className="terminal-thumbnail">
+                        <div className="terminal-dots">
+                          <div className="terminal-dot"></div>
+                          <div className="terminal-dot"></div>
+                          <div className="terminal-dot"></div>
+                        </div>
+                        <div className="terminal-content">
+                          <div className="terminal-line">
+                            <span className="terminal-prompt">$</span>
+                            <span className="terminal-text">npm create next-app</span>
+                          </div>
+                          <div className="terminal-line">
+                            <span className="terminal-prompt">$</span>
+                            <span className="terminal-text">npx prisma migrate</span>
+                          </div>
+                          <div className="terminal-line">
+                            <span className="terminal-prompt">$</span>
+                            <span className="terminal-text">npm run dev</span>
+                            <span className="terminal-cursor"></span>
+                          </div>
+                        </div>
+                        <div className="terminal-particles">
+                          <div className="terminal-particle">{ }</div>
+                          <div className="terminal-particle">&lt;/&gt;</div>
+                          <div className="terminal-particle">{ }</div>
+                          <div className="terminal-particle">&lt;/&gt;</div>
+                          <div className="terminal-particle">{ }</div>
+                        </div>
+                      </div>
+                    ) : project.image ? (
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-dark-600">
+                        No Image
+                      </div>
+                    )}
+                    {project.status === "in-progress" && project.slug !== "personal-portfolio" && (
+                      <span className="absolute top-4 right-4 bg-yellow-500/20 text-yellow-400 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                        <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
+                        Coming Soon
+                      </span>
+                    )}
+                    {project.featured && (
+                      <span className="absolute top-4 left-4 bg-brand-500/20 text-brand-400 text-xs font-bold px-3 py-1 rounded-full">
+                        Featured
+                      </span>
+                    )}
+                  </div>
+                </Link>
 
                 <div className="p-6 flex-grow flex flex-col">
-                  <span className="text-xs text-brand-400 font-medium mb-2">{project.category}</span>
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-brand-400 transition-colors">
-                    {project.title}
-                  </h3>
+                  <Link href={`/portfolio/${project.slug}`} className="block mb-2">
+                    <span className="text-xs text-brand-400 font-medium">{project.category}</span>
+                    <h3 className="text-xl font-bold group-hover:text-brand-400 transition-colors">
+                      {project.title}
+                    </h3>
+                  </Link>
                   <p className="text-dark-400 text-sm mb-4 flex-grow">
                     {project.description}
                   </p>

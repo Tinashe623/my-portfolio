@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import GlassCard from "@/components/common/GlassCard";
 import GradientHeading from "@/components/common/GradientHeading";
-import { FaExternalLinkAlt, FaCheckCircle } from "react-icons/fa";
+import { FaExternalLinkAlt, FaCheckCircle, FaCertificate } from "react-icons/fa";
 
 const certificates = [
   {
@@ -12,9 +12,8 @@ const certificates = [
     issuer: "W3Schools",
     issueDate: "2024-04-03",
     credentialId: "w3html2024",
-    credentialUrl: "https://www.w3schools.com/cert/certificate.aspx",
+    credentialUrl: "https://verify.w3schools.com/1OOV2NTADY",
     tags: ["HTML5", "Frontend"],
-    image: "/images/projects/temp-preview.webp",
   },
   {
     id: 2,
@@ -22,9 +21,8 @@ const certificates = [
     issuer: "W3Schools",
     issueDate: "2024-04-27",
     credentialId: "w3css2024",
-    credentialUrl: "https://www.w3schools.com/cert/certificate.aspx",
+    credentialUrl: "https://verify.w3schools.com/1ORGOIOLIT",
     tags: ["CSS3", "Frontend"],
-    image: "/images/projects/todo-preview.webp",
   },
   {
     id: 3,
@@ -32,9 +30,8 @@ const certificates = [
     issuer: "W3Schools",
     issueDate: "2024-10-19",
     credentialId: "w3js2024",
-    credentialUrl: "https://www.w3schools.com/cert/certificate.aspx",
+    credentialUrl: "https://verify.w3schools.com/1PAT7PQY0O",
     tags: ["JavaScript", "Frontend"],
-    image: "/images/projects/clock-preview.webp",
   },
   {
     id: 4,
@@ -42,9 +39,8 @@ const certificates = [
     issuer: "W3Schools",
     issueDate: "2024-10-19",
     credentialId: "w3frontend2024",
-    credentialUrl: "https://www.w3schools.com/cert/certificate.aspx",
+    credentialUrl: "https://verify.w3schools.com/1PAT7UCLEL",
     tags: ["Frontend", "Full-Stack"],
-    image: "/images/projects/gmp-preview.webp",
   },
 ];
 
@@ -75,18 +71,8 @@ export default function CertificatesPage() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <GlassCard className="overflow-hidden h-full flex flex-col">
-                <div className="relative h-48 bg-dark-800 overflow-hidden">
-                  {cert.image ? (
-                    <img
-                      src={cert.image}
-                      alt={cert.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-dark-600">
-                      Certificate Image
-                    </div>
-                  )}
+                <div className="relative h-48 bg-dark-800 flex items-center justify-center">
+                  <FaCertificate className="w-16 h-16 text-brand-400 opacity-80" />
                 </div>
 
                 <div className="p-6 flex-grow flex flex-col">

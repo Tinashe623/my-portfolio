@@ -133,7 +133,7 @@ export default function EditProjectPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <GradientHeading>Edit Project</GradientHeading>
+          <GradientHeading className="pb-2">Edit Project</GradientHeading>
         </motion.div>
       </div>
 

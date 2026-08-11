@@ -1,51 +1,59 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import GlassCard from "@/components/common/GlassCard";
 import GradientHeading from "@/components/common/GradientHeading";
 import { FaCalendar, FaTag, FaArrowRight } from "react-icons/fa";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
-const blogPosts = [
-  {
-    id: 1,
-    title: "Getting Started with Next.js 14 and Server Actions",
-    excerpt:
-      "Learn how to build modern web applications with Next.js 14, exploring Server Actions, App Router, and the latest features.",
-    date: "2025-01-15",
-    tags: ["Next.js", "React", "Full-Stack"],
-    readTime: "8 min read",
-  },
-  {
-    id: 2,
-    title: "Prisma + PostgreSQL: A Perfect Match for Modern Apps",
-    excerpt:
-      "Discover why Prisma and PostgreSQL are the go-to stack for building scalable database-backed applications.",
-    date: "2025-01-08",
-    tags: ["Prisma", "PostgreSQL", "Database"],
-    readTime: "6 min read",
-  },
-  {
-    id: 3,
-    title: "Building Type-Safe APIs with Zod and Next.js",
-    excerpt:
-      "How to implement runtime validation and type safety in your Next.js applications using Zod schemas.",
-    date: "2024-12-20",
-    tags: ["TypeScript", "Zod", "API"],
-    readTime: "5 min read",
-  },
-  {
-    id: 4,
-    title: "Deploying Full-Stack Apps to Vercel with PostgreSQL",
-    excerpt:
-      "A step-by-step guide to deploying your Next.js + Prisma + PostgreSQL application to Vercel with a Neon database.",
-    date: "2024-12-10",
-    tags: ["Vercel", "Deployment", "PostgreSQL"],
-    readTime: "7 min read",
-  },
-];
+interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  tags: string[];
+  published: boolean;
+  publishedAt?: string;
+  createdAt: string;
+}
 
 export default function BlogPage() {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/blog")
+      .then((res) => res.json())
+      .then((data) => {
+        setPosts(data.posts || []);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <LoadingSpinner size="lg" variant="glass" label="Loading articles..." />
+        </div>
+      </div>
+    );
+  }
+
+  if (posts.length === 0) {
+    return (
+      <div className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto text-center">
+          <GradientHeading className="pb-2">Blog</GradientHeading>
+          <p className="mt-4 text-dark-400">No articles published yet. Check back later!</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
@@ -55,7 +63,7 @@ export default function BlogPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <GradientHeading>Blog</GradientHeading>
+          <GradientHeading className="pb-2">Blog</GradientHeading>
           <p className="mt-4 text-dark-400 max-w-2xl mx-auto text-balance">
             Thoughts, tutorials, and insights on full-stack development with Next.js,
             Prisma, PostgreSQL, and modern web technologies.
@@ -63,7 +71,7 @@ export default function BlogPage() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {blogPosts.map((post, index) => (
+          {posts.map((post, index) => (
             <motion.div
               key={post.id}
               initial={{ opacity: 0, y: 20 }}
@@ -71,43 +79,46 @@ export default function BlogPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <GlassCard className="p-6 md:p-8 h-full flex flex-col group cursor-pointer">
-                <div className="flex items-center gap-4 text-sm text-dark-500 mb-4">
-                  <span className="flex items-center gap-1">
-                    <FaCalendar className="w-4 h-4" />
-                    {new Date(post.date).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </span>
-                  <span>{post.readTime}</span>
-                </div>
-
-                <h3 className="text-xl font-bold mb-3 group-hover:text-brand-400 transition-colors">
-                  {post.title}
-                </h3>
-                <p className="text-dark-400 text-sm mb-6 flex-grow">
-                  {post.excerpt}
-                </p>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs px-2 py-1 rounded-full bg-dark-800 text-dark-300 flex items-center gap-1"
-                      >
-                        <FaTag className="w-3 h-3" />
-                        {tag}
+              <Link href={`/blog/${post.slug}`}>
+                <GlassCard className="p-6 md:p-8 h-full flex flex-col group cursor-pointer">
+                  <div className="flex items-center gap-4 text-sm text-dark-500 mb-4">
+                    {post.publishedAt && (
+                      <span className="flex items-center gap-1">
+                        <FaCalendar className="w-4 h-4" />
+                        {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
                       </span>
-                    ))}
+                    )}
                   </div>
-                  <span className="text-brand-400 group-hover:translate-x-1 transition-transform">
-                    <FaArrowRight className="w-4 h-4" />
-                  </span>
-                </div>
-              </GlassCard>
+
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-brand-400 transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-dark-400 text-sm mb-6 flex-grow">
+                    {post.excerpt}
+                  </p>
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap gap-2">
+                      {post.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-xs px-2 py-1 rounded-full bg-dark-800 text-dark-300 flex items-center gap-1"
+                        >
+                          <FaTag className="w-3 h-3" />
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="text-brand-400 group-hover:translate-x-1 transition-transform">
+                      <FaArrowRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                </GlassCard>
+              </Link>
             </motion.div>
           ))}
         </div>

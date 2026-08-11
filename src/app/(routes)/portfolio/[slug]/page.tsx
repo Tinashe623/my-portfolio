@@ -1,83 +1,55 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import GlassCard from "@/components/common/GlassCard";
 import GradientHeading from "@/components/common/GradientHeading";
 import { FaExternalLinkAlt, FaGithub, FaArrowLeft } from "react-icons/fa";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
-const projects = [
-  {
-    id: 1,
-    title: "GMP Electrical",
-    slug: "gmp-electrical",
-    description:
-      "Professional business website for GMP Electrical built with React, Vite, TypeScript, and Chakra UI. Features responsive design, service showcase, and contact integration.",
-    longDescription:
-      "GMP Electrical is a professional business website designed to showcase electrical and solar services. Built with React, Vite, TypeScript, and Chakra UI, it features a responsive design, service showcase, and contact integration. The site emphasizes clean UI and performance.",
-    image: "/images/projects/gmp-preview.webp",
-    tags: ["React", "Vite", "TypeScript", "Chakra UI"],
-    category: "Frontend",
-    status: "completed",
-    featured: true,
-    liveUrl: "https://gmp-electrical-solutions.vercel.app/",
-    codeUrl: "https://github.com/Tinashe623/gmp-electrical-solutions",
-  },
-  {
-    id: 2,
-    title: "Tarie Cakes",
-    slug: "tarie-cakes",
-    description:
-      "Custom bakery storefront built with React + Vite + TypeScript + Chakra UI. Includes product catalog, ordering flow, and responsive mobile-first design.",
-    longDescription:
-      "Tarie Cakes is a custom bakery storefront featuring a product catalog, ordering flow, and responsive mobile-first design. Built with React, Vite, TypeScript, and Chakra UI, it provides a warm, inviting UI with smooth animations.",
-    image: "/images/projects/tarie-cakes-preview.webp",
-    tags: ["React", "Vite", "TypeScript", "Chakra UI"],
-    category: "Frontend",
-    status: "completed",
-    featured: true,
-    liveUrl: "https://tarie-cakes.vercel.app",
-    codeUrl: "https://github.com/Tinashe623/Cake-store-project",
-  },
-  {
-    id: 3,
-    title: "St James Zongoro Primary",
-    slug: "st-james-zongoro-primary",
-    description:
-      "School website built with React, Vite, TypeScript, and Chakra UI. Designed for accessibility, fast load times, and easy content updates.",
-    longDescription:
-      "Official school website for St James Zongoro Primary School with admissions, events, and information portal. Built with React, Vite, TypeScript, and Chakra UI, designed for accessibility, fast load times, and easy content updates.",
-    image: "/images/projects/st-james-zongoro-preview.webp",
-    tags: ["React", "Vite", "TypeScript", "Chakra UI"],
-    category: "Frontend",
-    status: "completed",
-    featured: false,
-    liveUrl: "https://zongoro-primary.vercel.app/",
-    codeUrl: "https://github.com/Tinashe623/zongoro-primary",
-  },
-  {
-    id: 4,
-    title: "Personal Portfolio",
-    slug: "personal-portfolio",
-    description:
-      "This portfolio website built with Next.js, TypeScript, Tailwind CSS, Prisma, and PostgreSQL. A full-stack application with admin dashboard and blog.",
-    longDescription:
-      "Modern, aesthetically driven professional portfolio showcasing projects and skills with premium glassmorphism design. Built with Next.js, TypeScript, Tailwind CSS, Prisma, and PostgreSQL. A full-stack application with admin dashboard and blog.",
-    image: "/images/projects/temp-preview.webp",
-    tags: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-    category: "Full-Stack",
-    status: "completed",
-    featured: true,
-    liveUrl: "https://tinashe-mundieta.vercel.app",
-    codeUrl: "https://github.com/Tinashe623/my-portfolio",
-  },
-];
+interface Project {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  content?: string;
+  image?: string;
+  tags: string[];
+  category: string;
+  status: string;
+  featured: boolean;
+  liveUrl?: string;
+  codeUrl?: string;
+}
 
 export default function ProjectPage() {
   const params = useParams();
   const slug = params.slug as string;
-  const project = projects.find((p) => p.slug === slug);
+  const [project, setProject] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/projects")
+      .then((res) => res.json())
+      .then((data) => {
+        const found = (data.projects || []).find((p: Project) => p.slug === slug);
+        setProject(found || null);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto">
+          <LoadingSpinner size="lg" variant="glass" label="Loading project..." />
+        </div>
+      </div>
+    );
+  }
 
   if (!project) {
     return (
@@ -93,6 +65,8 @@ export default function ProjectPage() {
       </div>
     );
   }
+
+  const longDescription = project.content || project.description;
 
   return (
     <div className="py-20 px-4 sm:px-6 lg:px-8">
@@ -149,12 +123,43 @@ export default function ProjectPage() {
                     <div className="terminal-particle">{ }</div>
                   </div>
                 </div>
-              ) : (
+              ) : project.image ? (
                 <img
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover"
                 />
+              ) : (
+                <div className="project-placeholder">
+                  <div className="project-placeholder-grid" />
+                  <div className="project-placeholder-shapes">
+                    <div className="project-placeholder-shape" />
+                    <div className="project-placeholder-shape" />
+                    <div className="project-placeholder-shape" />
+                    <div className="project-placeholder-shape" />
+                    <div className="project-placeholder-shape" />
+                  </div>
+                  <div className="project-placeholder-dots">
+                    <div className="project-placeholder-dot" />
+                    <div className="project-placeholder-dot" />
+                    <div className="project-placeholder-dot" />
+                    <div className="project-placeholder-dot" />
+                    <div className="project-placeholder-dot" />
+                    <div className="project-placeholder-dot" />
+                    <div className="project-placeholder-dot" />
+                    <div className="project-placeholder-dot" />
+                  </div>
+                  <div className="project-placeholder-content">
+                    <div className="project-placeholder-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" />
+                      </svg>
+                    </div>
+                    <span className="project-placeholder-label">Coming Soon</span>
+                  </div>
+                </div>
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-dark-900/80 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
@@ -179,7 +184,7 @@ export default function ProjectPage() {
 
             <div className="p-6 md:p-10">
               <p className="text-dark-400 text-lg mb-8 leading-relaxed">
-                {project.longDescription}
+                {longDescription}
               </p>
 
               <div className="flex flex-wrap gap-4">

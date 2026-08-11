@@ -40,7 +40,7 @@ export default function AdminProjectsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <GradientHeading>Manage Projects</GradientHeading>
+          <GradientHeading className="pb-2">Manage Projects</GradientHeading>
           <p className="mt-2 text-dark-400">Add, edit, or remove portfolio projects</p>
         </motion.div>
         <div className="flex gap-4">

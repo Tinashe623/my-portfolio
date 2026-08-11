@@ -1,71 +1,62 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import GlassCard from "@/components/common/GlassCard";
 import GradientHeading from "@/components/common/GradientHeading";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
-const projects = [
-  {
-    id: 1,
-    title: "GMP Electrical",
-    slug: "gmp-electrical",
-    description:
-      "Professional business website for GMP Electrical built with React, Vite, TypeScript, and Chakra UI. Features responsive design, service showcase, and contact integration.",
-    image: "/images/projects/gmp-preview.webp",
-    tags: ["React", "Vite", "TypeScript", "Chakra UI"],
-    category: "Frontend",
-    status: "completed",
-    featured: true,
-    liveUrl: "https://gmp-electrical-solutions.vercel.app/",
-    codeUrl: "https://github.com/Tinashe623/gmp-electrical-solutions",
-  },
-  {
-    id: 2,
-    title: "Tarie Cakes",
-    slug: "tarie-cakes",
-    description:
-      "Custom bakery storefront built with React + Vite + TypeScript + Chakra UI. Includes product catalog, ordering flow, and responsive mobile-first design.",
-    image: "/images/projects/tarie-cakes-preview.webp",
-    tags: ["React", "Vite", "TypeScript", "Chakra UI"],
-    category: "Frontend",
-    status: "completed",
-    featured: true,
-    liveUrl: "https://tarie-cakes.vercel.app",
-    codeUrl: "https://github.com/Tinashe623/Cake-store-project",
-  },
-  {
-    id: 3,
-    title: "St James Zongoro Primary",
-    slug: "st-james-zongoro-primary",
-    description:
-      "School website built with React, Vite, TypeScript, and Chakra UI. Designed for accessibility, fast load times, and easy content updates.",
-    image: "/images/projects/st-james-zongoro-preview.webp",
-    tags: ["React", "Vite", "TypeScript", "Chakra UI"],
-    category: "Frontend",
-    status: "completed",
-    featured: false,
-    liveUrl: "https://zongoro-primary.vercel.app/",
-    codeUrl: "https://github.com/Tinashe623/zongoro-primary",
-  },
-  {
-    id: 4,
-    title: "Personal Portfolio",
-    slug: "personal-portfolio",
-    description:
-      "This portfolio website built with Next.js, TypeScript, Tailwind CSS, Prisma, and PostgreSQL. A full-stack application with admin dashboard and blog.",
-    image: "/images/projects/temp-preview.webp",
-    tags: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-    category: "Full-Stack",
-    status: "completed",
-    featured: true,
-    liveUrl: "https://tinashe-mundieta.vercel.app",
-    codeUrl: "https://github.com/Tinashe623/my-portfolio",
-  },
-];
+interface Project {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  image?: string;
+  tags: string[];
+  category: string;
+  status: string;
+  featured: boolean;
+  liveUrl?: string;
+  codeUrl?: string;
+}
 
 export default function PortfolioPage() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/projects")
+      .then((res) => res.json())
+      .then((data) => {
+        setProjects(data.projects || []);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <LoadingSpinner size="lg" variant="glass" label="Loading projects..." />
+        </div>
+      </div>
+    );
+  }
+
+  if (projects.length === 0) {
+    return (
+      <div className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <GradientHeading>Portfolio</GradientHeading>
+          <p className="mt-4 text-dark-400">No projects found. Check back later!</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -131,8 +122,35 @@ export default function PortfolioPage() {
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-dark-600">
-                        No Image
+                      <div className="project-placeholder">
+                        <div className="project-placeholder-grid" />
+                        <div className="project-placeholder-shapes">
+                          <div className="project-placeholder-shape" />
+                          <div className="project-placeholder-shape" />
+                          <div className="project-placeholder-shape" />
+                          <div className="project-placeholder-shape" />
+                          <div className="project-placeholder-shape" />
+                        </div>
+                        <div className="project-placeholder-dots">
+                          <div className="project-placeholder-dot" />
+                          <div className="project-placeholder-dot" />
+                          <div className="project-placeholder-dot" />
+                          <div className="project-placeholder-dot" />
+                          <div className="project-placeholder-dot" />
+                          <div className="project-placeholder-dot" />
+                          <div className="project-placeholder-dot" />
+                          <div className="project-placeholder-dot" />
+                        </div>
+                        <div className="project-placeholder-content">
+                          <div className="project-placeholder-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                              <circle cx="8.5" cy="8.5" r="1.5" />
+                              <polyline points="21 15 16 10 5 21" />
+                            </svg>
+                          </div>
+                          <span className="project-placeholder-label">Coming Soon</span>
+                        </div>
                       </div>
                     )}
                     {project.status === "in-progress" && project.slug !== "personal-portfolio" && (

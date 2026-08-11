@@ -39,7 +39,7 @@ export default function AdminBlogPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <GradientHeading>Manage Blog</GradientHeading>
+          <GradientHeading className="pb-2">Manage Blog</GradientHeading>
           <p className="mt-2 text-dark-400">Create and manage blog posts</p>
         </motion.div>
         <div className="flex gap-4">

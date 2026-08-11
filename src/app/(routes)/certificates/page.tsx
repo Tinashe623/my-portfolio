@@ -61,7 +61,7 @@ export default function CertificatesPage() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {certificates.map((cert, index) => (
             <motion.div
               key={cert.id}

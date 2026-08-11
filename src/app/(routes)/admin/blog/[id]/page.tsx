@@ -121,7 +121,7 @@ export default function EditBlogPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <GradientHeading>Edit Blog Post</GradientHeading>
+          <GradientHeading className="pb-2">Edit Blog Post</GradientHeading>
         </motion.div>
       </div>
 

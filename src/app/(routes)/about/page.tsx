@@ -180,16 +180,16 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className={`relative flex items-center ${
+                  className={`relative flex flex-col md:flex-row ${
                     index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                   }`}
                 >
                   <div className="w-full md:w-1/2 px-4">
-                    <GlassCard className="p-6">
+                    <GlassCard className="p-4 md:p-6">
                       <span className="text-brand-400 font-bold text-sm">
                         {item.year}
                       </span>
-                      <h4 className="text-xl font-bold mt-2 mb-2">
+                      <h4 className="text-lg md:text-xl font-bold mt-2 mb-2">
                         {item.title}
                       </h4>
                       <p className="text-dark-400 text-sm">{item.description}</p>

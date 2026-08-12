@@ -57,7 +57,7 @@ export default function AdminLoginPage() {
         className="w-full max-w-md"
       >
         <div className="text-center mb-8">
-          <GradientHeading>Admin Login</GradientHeading>
+          <GradientHeading className="pb-2">Admin Login</GradientHeading>
           <p className="mt-2 text-dark-400">
             Sign in to access the admin dashboard
           </p>
@@ -79,18 +79,18 @@ export default function AdminLoginPage() {
               <label htmlFor="email" className="block text-sm font-medium mb-2">
                 Email
               </label>
-              <div className="relative">
-                <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-dark-500" />
-                <input
-                  id="email"
-                  type="email"
-                  {...register("email")}
-                  className={`w-full pl-10 pr-4 py-3 rounded-lg bg-dark-800 border ${
-                    errors.email ? "border-red-500" : "border-dark-700"
-                  } text-dark-100 placeholder-dark-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors`}
-                  placeholder="admin@example.com"
-                />
-              </div>
+               <div className="relative">
+                 <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-brand-400/70" />
+                  <input
+                    id="email"
+                    type="email"
+                    {...register("email")}
+                    className={`w-full pl-10 pr-4 py-3 rounded-lg bg-dark-800/80 border caret-dark-100 ${
+                      errors.email ? "border-red-500" : "border-white/10"
+                    } text-dark-100 placeholder-dark-500 focus:outline-none focus:border-brand-500 focus:bg-dark-800 transition-colors`}
+                    placeholder="Enter your email"
+                  />
+               </div>
               {errors.email && (
                 <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
               )}
@@ -101,16 +101,16 @@ export default function AdminLoginPage() {
                 Password
               </label>
               <div className="relative">
-                <FaKey className="absolute left-3 top-1/2 transform -translate-y-1/2 text-dark-500" />
-                <input
-                  id="password"
-                  type="password"
-                  {...register("password")}
-                  className={`w-full pl-10 pr-4 py-3 rounded-lg bg-dark-800 border ${
-                    errors.password ? "border-red-500" : "border-dark-700"
-                  } text-dark-100 placeholder-dark-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors`}
-                  placeholder="••••••••"
-                />
+                <FaKey className="absolute left-3 top-1/2 transform -translate-y-1/2 text-brand-400/70" />
+                  <input
+                    id="password"
+                    type="password"
+                    {...register("password")}
+                    className={`w-full pl-10 pr-4 py-3 rounded-lg bg-dark-800/80 border caret-dark-100 ${
+                      errors.password ? "border-red-500" : "border-white/10"
+                    } text-dark-100 placeholder-dark-500 focus:outline-none focus:border-brand-500 focus:bg-dark-800 transition-colors`}
+                    placeholder="Enter your password"
+                  />
               </div>
               {errors.password && (
                 <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>

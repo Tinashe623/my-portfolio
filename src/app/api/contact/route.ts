@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function GET() {
   try {
@@ -48,6 +51,26 @@ export async function POST(request: Request) {
       },
     });
 
+    try {
+      const contactEmail = process.env.CONTACT_EMAIL || "tinashemundieta36@gmail.com";
+      await resend.emails.send({
+        from: "Portfolio Contact <onboarding@resend.dev>",
+        to: [contactEmail],
+        replyTo: email,
+        subject: subject || "New Contact Form Message",
+        html: `
+          <h2>New message from your portfolio</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Subject:</strong> ${subject || "No subject"}</p>
+          <p><strong>Message:</strong></p>
+          <p>${message.replace(/\n/g, "<br>")}</p>
+        `,
+      });
+    } catch (emailError) {
+      console.error("Error sending email:", emailError);
+    }
+
     return NextResponse.json(
       { message: "Message sent successfully", data: newMessage },
       { status: 201 }
@@ -56,6 +79,32 @@ export async function POST(request: Request) {
     console.error("Error creating message:", error);
     return NextResponse.json(
       { error: "Failed to send message" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const body = await request.json();
+    const { id } = body;
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Message ID is required" },
+        { status: 400 }
+      );
+    }
+
+    await prisma.message.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({ message: "Message deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting message:", error);
+    return NextResponse.json(
+      { error: "Failed to delete message" },
       { status: 500 }
     );
   }

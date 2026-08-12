@@ -14,6 +14,19 @@ export default function AdminDashboard() {
     { label: "Blog Posts", value: "4", icon: FaNewspaper, color: "text-green-400" },
   ]);
 
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch {
+      // ignore logout errors
+    } finally {
+      window.location.href = "/";
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
@@ -30,15 +43,13 @@ export default function AdminDashboard() {
             <FaHome className="w-4 h-4" />
             View Site
           </Link>
-          <form action="/api/auth/logout" method="POST">
-            <button
-              type="submit"
-              className="btn-outline text-sm py-2 px-4 flex items-center gap-2 text-red-400 border-red-400/30 hover:bg-red-500/10"
-            >
-              <FaSignOutAlt className="w-4 h-4" />
-              Logout
-            </button>
-          </form>
+          <button
+            onClick={handleLogout}
+            className="btn-outline text-sm py-2 px-4 flex items-center gap-2 text-red-400 border-red-400/30 hover:bg-red-500/10"
+          >
+            <FaSignOutAlt className="w-4 h-4" />
+            Logout
+          </button>
         </div>
       </div>
 

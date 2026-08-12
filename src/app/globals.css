@@ -256,6 +256,25 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #475569;
   }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-text-fill-color: #f1f5f9;
+    -webkit-box-shadow: 0 0 0px 1000px #1e293b inset;
+    transition: background-color 5000s ease-in-out 0s;
+    caret-color: #f1f5f9;
+  }
+
+  input::placeholder {
+    color: #64748b;
+  }
+
+  input:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.5);
+  }
 }
 
 @layer components {
@@ -520,3 +539,5 @@
   0%, 100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
   50% { box-shadow: 0 0 25px rgba(99, 102, 241, 0.4); }
 }
+
+

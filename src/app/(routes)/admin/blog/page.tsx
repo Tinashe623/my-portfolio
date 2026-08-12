@@ -7,6 +7,7 @@ import { FaArrowLeft, FaNewspaper, FaEdit, FaTrash } from "react-icons/fa";
 import GlassCard from "@/components/common/GlassCard";
 import GradientHeading from "@/components/common/GradientHeading";
 import SkeletonLoader from "@/components/common/SkeletonLoader";
+import ConfirmDialog from "@/components/common/ConfirmDialog";
 
 interface BlogPost {
   id: string;
@@ -20,6 +21,37 @@ interface BlogPost {
 export default function AdminBlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const handleDeleteClick = (id: string) => {
+    setDeleteTargetId(id);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deleteTargetId) return;
+
+    setDeletingId(deleteTargetId);
+    try {
+      const response = await fetch(`/api/blog/${deleteTargetId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        setPosts((prev) => prev.filter((p) => p.id !== deleteTargetId));
+      } else {
+        const result = await response.json();
+        alert(result.error || "Failed to delete blog post");
+      }
+    } catch {
+      alert("An error occurred. Please try again.");
+    } finally {
+      setDeletingId(null);
+      setDeleteTargetId(null);
+    }
+  };
 
   useEffect(() => {
     fetch("/api/blog")
@@ -101,17 +133,29 @@ export default function AdminBlogPage() {
                       <FaEdit className="w-3 h-3" />
                       Edit
                     </Link>
-                    <button className="text-red-400 hover:text-red-300 text-xs py-1 px-3 flex items-center gap-1">
-                      <FaTrash className="w-3 h-3" />
-                      Delete
-                    </button>
+                     <button
+                       onClick={() => handleDeleteClick(post.id)}
+                       disabled={deletingId === post.id}
+                       className="text-red-400 hover:text-red-300 text-xs py-1 px-3 flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                     >
+                       <FaTrash className="w-3 h-3" />
+                       {deletingId === post.id ? "Deleting..." : "Delete"}
+                     </button>
                   </div>
                 </div>
-              </GlassCard>
-            </motion.div>
-          ))}
-        </div>
-      )}
+          </GlassCard>
+        </motion.div>
+      ))}
+    </div>
+  )}
+  <ConfirmDialog
+    isOpen={isDeleteDialogOpen}
+    onClose={() => setIsDeleteDialogOpen(false)}
+    onConfirm={handleDeleteConfirm}
+    message="This action cannot be undone. The blog post will be permanently removed."
+    confirmText="Delete"
+    variant="danger"
+  />
     </>
   );
 }

@@ -7,6 +7,7 @@ import { FaPlus, FaEdit, FaTrash, FaArrowLeft } from "react-icons/fa";
 import GlassCard from "@/components/common/GlassCard";
 import GradientHeading from "@/components/common/GradientHeading";
 import SkeletonLoader from "@/components/common/SkeletonLoader";
+import ConfirmDialog from "@/components/common/ConfirmDialog";
 
 interface Project {
   id: string;
@@ -21,6 +22,37 @@ interface Project {
 export default function AdminProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const handleDeleteClick = (id: string) => {
+    setDeleteTargetId(id);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deleteTargetId) return;
+
+    setDeletingId(deleteTargetId);
+    try {
+      const response = await fetch(`/api/projects/${deleteTargetId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        setProjects((prev) => prev.filter((p) => p.id !== deleteTargetId));
+      } else {
+        const result = await response.json();
+        alert(result.error || "Failed to delete project");
+      }
+    } catch {
+      alert("An error occurred. Please try again.");
+    } finally {
+      setDeletingId(null);
+      setDeleteTargetId(null);
+    }
+  };
 
   useEffect(() => {
     fetch("/api/projects")
@@ -98,16 +130,28 @@ export default function AdminProjectsPage() {
                     <FaEdit className="w-3 h-3" />
                     Edit
                   </Link>
-                  <button className="text-red-400 hover:text-red-300 text-xs py-1 px-3 flex items-center gap-1">
-                    <FaTrash className="w-3 h-3" />
-                    Delete
-                  </button>
+                   <button
+                     onClick={() => handleDeleteClick(project.id)}
+                     disabled={deletingId === project.id}
+                     className="text-red-400 hover:text-red-300 text-xs py-1 px-3 flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                   >
+                     <FaTrash className="w-3 h-3" />
+                     {deletingId === project.id ? "Deleting..." : "Delete"}
+                   </button>
                 </div>
-              </GlassCard>
-            </motion.div>
-          ))}
-        </div>
-      )}
+          </GlassCard>
+        </motion.div>
+      ))}
+    </div>
+  )}
+  <ConfirmDialog
+    isOpen={isDeleteDialogOpen}
+    onClose={() => setIsDeleteDialogOpen(false)}
+    onConfirm={handleDeleteConfirm}
+    message="This action cannot be undone. The project will be permanently removed from your portfolio."
+    confirmText="Delete"
+    variant="danger"
+  />
     </>
   );
 }

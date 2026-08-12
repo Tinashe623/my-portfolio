@@ -1,115 +1,150 @@
-# 🚀 Tinashe Mundieta | Modern Portfolio
+# Tinashe Mundieta - Full-Stack Software Developer Portfolio
 
-[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Chakra UI](https://img.shields.io/badge/Chakra%20UI-2.8-319795?logo=chakraui&logoColor=white)](https://chakra-ui.com/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+A modern, professional portfolio website built with Next.js 15, TypeScript, Tailwind CSS, Prisma, and SQLite (local) / PostgreSQL (production).
 
-A high-performance, aesthetically driven personal portfolio designed to showcase projects, skills, and certifications. Built with a focus on **User Experience (UX)**, **Accessibility (a11y)**, and **Modern Engineering** practices.
+## Tech Stack
 
-🔗 **Live Demo:** [tinashe-mundieta.vercel.app](https://tinashe-mundieta.vercel.app/)
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: Prisma ORM + SQLite (dev) / PostgreSQL (prod)
+- **Animations**: Framer Motion
+- **Icons**: React Icons
+- **Analytics**: Vercel Analytics & Speed Insights
+- **Forms**: React Hook Form + Zod validation
 
----
+## Features
 
-## ✨ Key Features
+- Responsive dark-mode glassmorphism design
+- Dynamic content management with Prisma + database
+- Functional contact form with backend storage
+- Admin dashboard for managing content
+- Blog section with dynamic posts
+- Project portfolio with database-backed content
+- Certificate showcase
+- SEO optimized with metadata
+- PWA-ready
 
-- **💎 Premium Design:** Glassmorphism effects, dark-mode first aesthetic, and smooth micro-interactions via Framer Motion.
-- **📱 Mobile-First:** Fully responsive layout optimized for all devices, ensuring professional display even on the smallest screens.
-- **⚡ Performance Optimized:** Built on Vite for lightning-fast HMR and optimized production bundles.
-- **♿ Accessibility:** Semantic HTML, ARIA attributes, and keyboard-friendly navigation.
-- **📄 Interactive Resume:** Built-in resume viewer and professional service showcase.
-- **🎓 Certificate Management:** Curated list of certifications with modal verification links.
-
----
-
-## 🛠️ Tech Stack
-
-### Core
-- **React 18** - UI Component logic
-- **Vite** - Build tool & dev server
-- **React Router 7** - Declarative routing
-- **Framer Motion** - Production-ready animations
-
-### Styling & UI
-- **Chakra UI** - Modular component system
-- **Vanilla CSS** - Custom design tokens
-- **React Icons** - Comprehensive icon set
-
----
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
+
+- Node.js >= 20.0.0
+- npm >= 10.0.0
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Tinashe623/my-portfolio.git
-   cd my-portfolio
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up Environment Variables**
-   Create a `.env` file in the root directory:
-   ```bash
-   VITE_CONTACT_PHONE="+263..."
-   VITE_WHATSAPP_PHONE="263..."
-  
-   # See .env.example for all options
-   ```
-
-4. **Run for development**
-   ```bash
-   npm run dev
-   ```
-
-5. **Build for production**
-   ```bash
-   npm run build
-   ```
-
----
-
-## 🗂️ Project Structure
-
-```text
-src/
-├── components/
-│   ├── layout/      # Header, Footer, and Navigation
-│   ├── effects/     # Animations and Glassmorphism
-│   └── common/      # Reusable UI components
-├── pages/           # Main view components
-├── assets/          # Static images and styles
-├── routes/          # Navigation logic
-└── theme.js         # Global Chakra UI overrides
+1. Clone the repository:
+```bash
+git clone https://github.com/Tinashe623/my-portfolio.git
+cd my-portfolio
 ```
 
----
+2. Install dependencies:
+```bash
+npm install
+```
 
-## 🛡️ Engineering Quality
+3. Set up environment variables:
+```bash
+cp .env.example .env
+```
+Update the `.env` file with your configuration.
 
-- **SEO Ready:** Meta tags, Open Graph (OG), and Twitter Cards implemented for social sharing.
-- **Clean Code:** Component-based architecture with separated concerns.
-- **Type-safe-ish:** Modern JavaScript patterns with a focus on readability and maintainability.
+4. Set up the database:
+```bash
+npx prisma generate
+npx prisma db push
+npm run db:seed
+```
 
----
+5. Start the development server:
+```bash
+npm run dev
+```
 
-## 🤝 Contact & Professional Links
+The application will be available at `http://localhost:3000`.
 
-- **LinkedIn:** [Tinashe Mundieta](https://www.linkedin.com/in/tinashe-mundieta-041715302/)
-- **GitHub:** [@Tinashe623](https://github.com/Tinashe623)
+## Available Scripts
 
----
+- `npm run dev` - Start development server with Turbopack
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run db:generate` - Generate Prisma client
+- `npm run db:push` - Push schema to database
+- `npm run db:seed` - Seed database with initial data
+- `npm run db:studio` - Open Prisma Studio
 
-## 📄 License
+## Admin Dashboard
 
-This project is open-source and available under the **MIT License**. Feel free to use the code as a reference for your own portfolio!
+Access the admin dashboard at `/admin/login` with credentials:
+- Email: `admin@tinashemundieta.com`
+- Password: `admin123`
 
-*Built with ❤️ by Tinashe Mundieta*
+**⚠️ Change these credentials in production!**
+
+## Deployment
+
+### Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Import project in Vercel
+3. Set up a Neon PostgreSQL database
+4. Add environment variables in Vercel:
+   - `DATABASE_URL` - Your Neon PostgreSQL connection string
+   - `NEXTAUTH_SECRET` - A secure random string
+   - `NEXTAUTH_URL` - Your production URL
+   - `RESEND_API_KEY` - For contact form emails (optional)
+   - `CONTACT_EMAIL` - Your email address
+5. Deploy!
+
+### Database Migration to PostgreSQL
+
+To switch from SQLite to PostgreSQL:
+
+1. Update `prisma/schema.prisma`:
+   - Change `provider = "sqlite"` to `provider = "postgresql"`
+   - Add back `@db.Text` and `String[]` types
+
+2. Update `.env`:
+   - Set `DATABASE_URL` to your PostgreSQL connection string
+
+3. Run migrations:
+```bash
+npx prisma generate
+npx prisma db push
+npm run db:seed
+```
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── (routes)/           # Route group for public pages
+│   │   ├── home/
+│   │   ├── about/
+│   │   ├── services/
+│   │   ├── portfolio/
+│   │   ├── contact/
+│   │   ├── resume/
+│   │   ├── certificates/
+│   │   ├── blog/
+│   │   └── admin/
+│   ├── api/                # API routes
+│   ├── layout.tsx          # Root layout
+│   └── globals.css         # Global styles
+├── components/
+│   ├── common/             # Reusable components
+│   ├── layout/             # Header, Footer
+│   └── sections/           # Page sections
+├── lib/
+│   ├── prisma.ts           # Prisma client
+│   └── auth.ts             # Auth utilities
+└── types/                  # TypeScript types
+```
+
+## License
+
+MIT

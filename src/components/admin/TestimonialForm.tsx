@@ -5,7 +5,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { FaSave } from "react-icons/fa";
+import { useRef } from "react";
+import { FaSave, FaUpload } from "react-icons/fa";
 
 const testimonialSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -62,6 +63,33 @@ export default function TestimonialForm({
       ...(initialValues as Partial<TestimonialFormData>),
     },
   });
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const size = 256;
+        const scale = Math.min(1, size / Math.max(img.width, img.height));
+        canvas.width = Math.max(1, Math.round(img.width * scale));
+        canvas.height = Math.max(1, Math.round(img.height * scale));
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+        setValue("avatar", dataUrl, { shouldDirty: true, shouldValidate: true });
+      };
+      img.src = String(reader.result);
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  };
 
   const handleFormSubmit = async (data: TestimonialFormData) => {
     await onSubmit({
@@ -139,23 +167,43 @@ export default function TestimonialForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-2">Avatar</label>
-        <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-9 gap-3 mb-4">
+        <label className="block text-sm font-medium mb-2">
+          Avatar <span className="text-dark-500">(optional)</span>
+        </label>
+
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="btn-outline text-sm py-2 px-4 inline-flex items-center gap-2"
+          >
+            <FaUpload className="w-4 h-4" />
+            Upload from computer
+          </button>
           <button
             type="button"
             onClick={() => setValue("avatar", "")}
-            className={`flex flex-col items-center gap-1.5 rounded-lg p-2 border transition-all ${
+            className={`text-sm py-2 px-4 rounded-lg border transition-all inline-flex items-center gap-2 ${
               !watch("avatar")
-                ? "border-brand-500 bg-brand-500/10"
-                : "border-dark-700 hover:border-dark-500"
+                ? "border-brand-500 bg-brand-500/10 text-brand-400"
+                : "border-dark-700 text-dark-300 hover:border-dark-500"
             }`}
           >
-            <span className="w-11 h-11 rounded-full bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center text-white text-xs font-bold">
+            <span className="w-5 h-5 rounded-full bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center text-white text-[8px] font-bold">
               AB
             </span>
-            <span className="text-[10px] text-dark-400">Initials</span>
+            Use initials
           </button>
+        </div>
 
+        <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3 mb-4">
           {AVATARS.map((path) => (
             <button
               key={path}

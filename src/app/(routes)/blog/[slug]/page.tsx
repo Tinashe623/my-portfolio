@@ -9,11 +9,16 @@ import { findBlogPostBySlug, listPublishedPosts, type BlogPostRow } from "@/lib/
 import { SITE_URL, AUTHOR, SITE_NAME, OG_IMAGE } from "@/lib/site";
 
 
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  const posts = await listPublishedPosts();
-  return posts.map((post) => ({ slug: post.slug }));
+  try {
+    const posts = await listPublishedPosts();
+    return posts.map((post) => ({ slug: post.slug }));
+  } catch (error) {
+    console.error("Failed to generate static params for blog:", error);
+    return [];
+  }
 }
 
 interface PageProps {

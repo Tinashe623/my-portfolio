@@ -4,7 +4,25 @@ import { neonFetch } from "@/lib/neon-fetch";
 
 neonConfig.fetchFunction = neonFetch;
 
-const sql = neon(process.env.DATABASE_URL ?? "", { fullResults: true });
+function createClient() {
+  return neon(process.env.DATABASE_URL ?? "", { fullResults: true });
+}
+
+let neonClient: ReturnType<typeof createClient> | null = null;
+
+function getSql(): ReturnType<typeof createClient> {
+  const url = process.env.DATABASE_URL;
+
+  if (!url) {
+    throw new Error("DATABASE_URL is not configured");
+  }
+
+  if (!neonClient) {
+    neonClient = createClient();
+  }
+
+  return neonClient;
+}
 
 type RowLike = Record<string, unknown>;
 
@@ -282,14 +300,14 @@ function quotedColumns(fields: Array<[string, WriteValue]>) {
 // ---- projects ----
 
 export async function listProjects(): Promise<ProjectRow[]> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${PROJECT_KEYS.map((k) => `"${k}"`).join(", ")} from "projects" order by "createdAt" desc`
   );
   return (await rowsOf(res)).map(projectFrom);
 }
 
 export async function findProject(id: string): Promise<ProjectRow | null> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${PROJECT_KEYS.map((k) => `"${k}"`).join(", ")} from "projects" where "id" = $1 limit 1`,
     [id]
   );
@@ -298,7 +316,7 @@ export async function findProject(id: string): Promise<ProjectRow | null> {
 }
 
 export async function findProjectBySlug(slug: string): Promise<ProjectRow | null> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${PROJECT_KEYS.map((k) => `"${k}"`).join(", ")} from "projects" where "slug" = $1 limit 1`,
     [slug]
   );
@@ -318,7 +336,7 @@ export async function createProject(
   const id = typeof data.id === "string" ? data.id : randomUUID();
   const idFields: Array<[string, WriteValue]> = [["id", id]];
   const cols = [...idFields, ...fields];
-  const res = await sql.query(
+  const res = await getSql().query(
     `insert into "projects" (${quotedColumns(cols)}) values (${placeholders(cols)}) returning *`,
     paramValues(cols)
   );
@@ -333,7 +351,7 @@ export async function updateProject(
   const writable = writableFields(data, PROJECT_KEYS, {});
   const fields = [...writable, ["updatedAt", new Date().toISOString()] as [string, WriteValue]];
   const sets = fields.map((f, i) => (paramFor(f).cast ? `"${f[0]}" = $${i + 1}::text[]` : `"${f[0]}" = $${i + 1}`)).join(", ");
-  const res = await sql.query(
+  const res = await getSql().query(
     `update "projects" set ${sets} where "id" = $${fields.length + 1} returning *`,
     [...paramValues(fields), id]
   );
@@ -342,7 +360,7 @@ export async function updateProject(
 }
 
 export async function deleteProject(id: string): Promise<boolean> {
-  const res = await sql.query(`delete from "projects" where "id" = $1`, [id]);
+  const res = await getSql().query(`delete from "projects" where "id" = $1`, [id]);
   const rows = await rowsOf(res);
   return rows.length > 0;
 }
@@ -350,21 +368,21 @@ export async function deleteProject(id: string): Promise<boolean> {
 // ---- blog posts ----
 
 export async function listPublishedPosts(): Promise<BlogPostRow[]> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${BLOG_KEYS.map((k) => `"${k}"`).join(", ")} from "blog_posts" where "published" = true order by "publishedAt" desc`
   );
   return (await rowsOf(res)).map(blogFrom);
 }
 
 export async function listAllPosts(): Promise<BlogPostRow[]> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${BLOG_KEYS.map((k) => `"${k}"`).join(", ")} from "blog_posts" order by "updatedAt" desc`
   );
   return (await rowsOf(res)).map(blogFrom);
 }
 
 export async function findBlogPostBySlug(slug: string): Promise<BlogPostRow | null> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${BLOG_KEYS.map((k) => `"${k}"`).join(", ")} from "blog_posts" where "slug" = $1 and "published" = true limit 1`,
     [slug]
   );
@@ -373,7 +391,7 @@ export async function findBlogPostBySlug(slug: string): Promise<BlogPostRow | nu
 }
 
 export async function findBlogPost(id: string): Promise<BlogPostRow | null> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${BLOG_KEYS.map((k) => `"${k}"`).join(", ")} from "blog_posts" where "id" = $1 limit 1`,
     [id]
   );
@@ -404,7 +422,7 @@ export async function createBlogPost(
   const id = typeof data.id === "string" ? data.id : randomUUID();
   const idFields: Array<[string, WriteValue]> = [["id", id]];
   const cols = [...idFields, ...fields];
-  const res = await sql.query(
+  const res = await getSql().query(
     `insert into "blog_posts" (${quotedColumns(cols)}) values (${placeholders(cols)}) returning *`,
     paramValues(cols)
   );
@@ -431,7 +449,7 @@ export async function updateBlogPost(
   const writable = writableFields({ ...data, publishedAt }, BLOG_KEYS, {});
   const fields = [...writable, ["updatedAt", new Date().toISOString()] as [string, WriteValue]];
   const sets = fields.map((f, i) => (paramFor(f).cast ? `"${f[0]}" = $${i + 1}::text[]` : `"${f[0]}" = $${i + 1}`)).join(", ");
-  const res = await sql.query(
+  const res = await getSql().query(
     `update "blog_posts" set ${sets} where "id" = $${fields.length + 1} returning *`,
     [...paramValues(fields), id]
   );
@@ -440,7 +458,7 @@ export async function updateBlogPost(
 }
 
 export async function deleteBlogPost(id: string): Promise<boolean> {
-  const res = await sql.query(`delete from "blog_posts" where "id" = $1`, [id]);
+  const res = await getSql().query(`delete from "blog_posts" where "id" = $1`, [id]);
   const rows = await rowsOf(res);
   return rows.length > 0;
 }
@@ -448,7 +466,7 @@ export async function deleteBlogPost(id: string): Promise<boolean> {
 // ---- messages ----
 
 export async function listMessages(): Promise<MessageRow[]> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${MESSAGE_KEYS.map((k) => `"${k}"`).join(", ")} from "messages" order by "createdAt" desc`
   );
   return (await rowsOf(res)).map(messageFrom);
@@ -470,7 +488,7 @@ export async function createMessage(data: {
     ["replied", false],
     ["createdAt", new Date().toISOString()],
   ];
-  const res = await sql.query(
+  const res = await getSql().query(
     `insert into "messages" (${quotedColumns(fields)}) values (${placeholders(fields)}) returning *`,
     paramValues(fields)
   );
@@ -479,7 +497,7 @@ export async function createMessage(data: {
 }
 
 export async function deleteMessage(id: string): Promise<boolean> {
-  const res = await sql.query(`delete from "messages" where "id" = $1`, [id]);
+  const res = await getSql().query(`delete from "messages" where "id" = $1`, [id]);
   const rows = await rowsOf(res);
   return rows.length > 0;
 }
@@ -493,7 +511,7 @@ export async function updateMessage(
   if (typeof data.replied === "boolean") set.push(["replied", data.replied]);
   if (set.length === 0) return findMessage(id);
 
-  const res = await sql.query(
+  const res = await getSql().query(
     `update "messages" set ${set
       .map((f, i) => `"${f[0]}" = $${i + 1}`)
       .join(", ")} where "id" = $${set.length + 1} returning *`,
@@ -504,7 +522,7 @@ export async function updateMessage(
 }
 
 export async function findMessage(id: string): Promise<MessageRow | null> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${MESSAGE_KEYS.map((k) => `"${k}"`).join(", ")} from "messages" where "id" = $1 limit 1`,
     [id]
   );
@@ -515,14 +533,14 @@ export async function findMessage(id: string): Promise<MessageRow | null> {
 // ---- certificates ----
 
 export async function listCertificates(): Promise<CertificateRow[]> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${CERTIFICATE_KEYS.map((k) => `"${k}"`).join(", ")} from "certificates" order by "issueDate" desc`
   );
   return (await rowsOf(res)).map(certificateFrom);
 }
 
 export async function findCertificate(id: string): Promise<CertificateRow | null> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${CERTIFICATE_KEYS.map((k) => `"${k}"`).join(", ")} from "certificates" where "id" = $1 limit 1`,
     [id]
   );
@@ -540,7 +558,7 @@ export async function createCertificate(
   const id = typeof data.id === "string" ? data.id : randomUUID();
   const idFields: Array<[string, WriteValue]> = [["id", id]];
   const cols = [...idFields, ...fields];
-  const res = await sql.query(
+  const res = await getSql().query(
     `insert into "certificates" (${quotedColumns(cols)}) values (${placeholders(cols)}) returning *`,
     paramValues(cols)
   );
@@ -553,7 +571,7 @@ export async function updateCertificate(
   data: Record<string, unknown>
 ): Promise<CertificateRow | null> {
   const writable = writableFields(data, CERTIFICATE_KEYS, {});
-  const res = await sql.query(
+  const res = await getSql().query(
     `update "certificates" set ${writable
       .map((f, i) =>
         paramFor(f).cast
@@ -568,7 +586,7 @@ export async function updateCertificate(
 }
 
 export async function deleteCertificate(id: string): Promise<boolean> {
-  const res = await sql.query(`delete from "certificates" where "id" = $1`, [id]);
+  const res = await getSql().query(`delete from "certificates" where "id" = $1`, [id]);
   const rows = await rowsOf(res);
   return rows.length > 0;
 }
@@ -576,14 +594,14 @@ export async function deleteCertificate(id: string): Promise<boolean> {
 // ---- skills ----
 
 export async function listSkills(): Promise<SkillRow[]> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${SKILL_KEYS.map((k) => `"${k}"`).join(", ")} from "skills" order by "order" asc, "name" asc`
   );
   return (await rowsOf(res)).map(skillFrom);
 }
 
 export async function findSkill(id: string): Promise<SkillRow | null> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${SKILL_KEYS.map((k) => `"${k}"`).join(", ")} from "skills" where "id" = $1 limit 1`,
     [id]
   );
@@ -602,7 +620,7 @@ export async function createSkill(
   const id = typeof data.id === "string" ? data.id : randomUUID();
   const idFields: Array<[string, WriteValue]> = [["id", id]];
   const cols = [...idFields, ...fields];
-  const res = await sql.query(
+  const res = await getSql().query(
     `insert into "skills" (${quotedColumns(cols)}) values (${placeholders(cols)}) returning *`,
     paramValues(cols)
   );
@@ -615,7 +633,7 @@ export async function updateSkill(
   data: Record<string, unknown>
 ): Promise<SkillRow | null> {
   const writable = writableFields(data, SKILL_KEYS, {});
-  const res = await sql.query(
+  const res = await getSql().query(
     `update "skills" set ${writable
       .map((f, i) =>
         paramFor(f).cast
@@ -630,7 +648,7 @@ export async function updateSkill(
 }
 
 export async function deleteSkill(id: string): Promise<boolean> {
-  const res = await sql.query(`delete from "skills" where "id" = $1`, [id]);
+  const res = await getSql().query(`delete from "skills" where "id" = $1`, [id]);
   const rows = await rowsOf(res);
   return rows.length > 0;
 }
@@ -638,14 +656,14 @@ export async function deleteSkill(id: string): Promise<boolean> {
 // ---- testimonials ----
 
 export async function listTestimonials(): Promise<TestimonialRow[]> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${TESTIMONIAL_KEYS.map((k) => `"${k}"`).join(", ")} from "testimonials" order by "featured" desc, "createdAt" desc`
   );
   return (await rowsOf(res)).map(testimonialFrom);
 }
 
 export async function findTestimonial(id: string): Promise<TestimonialRow | null> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${TESTIMONIAL_KEYS.map((k) => `"${k}"`).join(", ")} from "testimonials" where "id" = $1 limit 1`,
     [id]
   );
@@ -664,7 +682,7 @@ export async function createTestimonial(
   const id = typeof data.id === "string" ? data.id : randomUUID();
   const idFields: Array<[string, WriteValue]> = [["id", id]];
   const cols = [...idFields, ...fields];
-  const res = await sql.query(
+  const res = await getSql().query(
     `insert into "testimonials" (${quotedColumns(cols)}) values (${placeholders(cols)}) returning *`,
     paramValues(cols)
   );
@@ -677,7 +695,7 @@ export async function updateTestimonial(
   data: Record<string, unknown>
 ): Promise<TestimonialRow | null> {
   const writable = writableFields(data, TESTIMONIAL_KEYS, {});
-  const res = await sql.query(
+  const res = await getSql().query(
     `update "testimonials" set ${writable
       .map((f, i) =>
         paramFor(f).cast
@@ -692,7 +710,7 @@ export async function updateTestimonial(
 }
 
 export async function deleteTestimonial(id: string): Promise<boolean> {
-  const res = await sql.query(`delete from "testimonials" where "id" = $1`, [id]);
+  const res = await getSql().query(`delete from "testimonials" where "id" = $1`, [id]);
   const rows = await rowsOf(res);
   return rows.length > 0;
 }
@@ -700,7 +718,7 @@ export async function deleteTestimonial(id: string): Promise<boolean> {
 // ---- admin ----
 
 export async function findAdminByEmail(email: string): Promise<AdminRow | null> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select ${ADMIN_KEYS.map((k) => `"${k}"`).join(", ")} from "admins" where "email" = $1 limit 1`,
     [email]
   );
@@ -711,7 +729,7 @@ export async function findAdminByEmail(email: string): Promise<AdminRow | null> 
 // ---- counts ----
 
 async function countRows(table: string, where?: string): Promise<number> {
-  const res = await sql.query(
+  const res = await getSql().query(
     `select count(*)::int as n from "${table}"${where ? ` where ${where}` : ""}`
   );
   const rows = await rowsOf(res);

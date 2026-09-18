@@ -9,11 +9,16 @@ import { findProjectBySlug, listProjects, type ProjectRow } from "@/lib/db";
 import { SITE_URL, AUTHOR, SITE_NAME, OG_IMAGE } from "@/lib/site";
 
 
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  const projects = await listProjects();
-  return projects.map((project) => ({ slug: project.slug }));
+  try {
+    const projects = await listProjects();
+    return projects.map((project) => ({ slug: project.slug }));
+  } catch (error) {
+    console.error("Failed to generate static params for portfolio:", error);
+    return [];
+  }
 }
 
 interface PageProps {

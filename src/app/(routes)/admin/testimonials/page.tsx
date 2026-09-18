@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable @next/next/no-img-element -- admin preview of testimonial avatars */
+
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -16,6 +18,7 @@ interface Testimonial {
   role: string;
   company: string;
   content: string;
+  avatar: string | null;
   rating: number;
   featured: boolean;
   createdAt: string;
@@ -110,6 +113,23 @@ export default function AdminTestimonialsPage() {
                 <div className="flex items-start justify-between gap-4 flex-wrap">
                   <div className="flex-grow min-w-[200px]">
                     <div className="flex items-center gap-3 mb-2 flex-wrap">
+                      {t.avatar ? (
+                        <img
+                          src={t.avatar}
+                          alt={t.name}
+                          className="w-8 h-8 rounded-full object-cover border border-dark-700"
+                        />
+                      ) : (
+                        <span className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center text-white text-[10px] font-bold">
+                          {t.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .filter(Boolean)
+                            .slice(0, 2)
+                            .join("")
+                            .toUpperCase()}
+                        </span>
+                      )}
                       <h3 className="font-semibold">{t.name}</h3>
                       {t.featured && (
                         <span className="text-xs px-2 py-1 rounded-full bg-brand-500/10 text-brand-400">

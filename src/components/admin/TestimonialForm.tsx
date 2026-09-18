@@ -26,6 +26,17 @@ interface TestimonialFormProps {
   onSubmit: (payload: Record<string, unknown>) => Promise<void>;
 }
 
+const AVATARS = [
+  "/images/avatars/avatar-1.svg",
+  "/images/avatars/avatar-2.svg",
+  "/images/avatars/avatar-3.svg",
+  "/images/avatars/avatar-4.svg",
+  "/images/avatars/avatar-5.svg",
+  "/images/avatars/avatar-6.svg",
+  "/images/avatars/avatar-7.svg",
+  "/images/avatars/avatar-8.svg",
+];
+
 const inputClass = (hasError: boolean) =>
   `w-full px-4 py-3 rounded-lg bg-dark-800 border ${
     hasError ? "border-red-500" : "border-dark-700"
@@ -41,6 +52,7 @@ export default function TestimonialForm({
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<TestimonialFormData>({
     resolver: zodResolver(testimonialSchema),
@@ -127,8 +139,48 @@ export default function TestimonialForm({
       </div>
 
       <div>
+        <label className="block text-sm font-medium mb-2">Avatar</label>
+        <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-9 gap-3 mb-4">
+          <button
+            type="button"
+            onClick={() => setValue("avatar", "")}
+            className={`flex flex-col items-center gap-1.5 rounded-lg p-2 border transition-all ${
+              !watch("avatar")
+                ? "border-brand-500 bg-brand-500/10"
+                : "border-dark-700 hover:border-dark-500"
+            }`}
+          >
+            <span className="w-11 h-11 rounded-full bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center text-white text-xs font-bold">
+              AB
+            </span>
+            <span className="text-[10px] text-dark-400">Initials</span>
+          </button>
+
+          {AVATARS.map((path) => (
+            <button
+              key={path}
+              type="button"
+              onClick={() => setValue("avatar", path)}
+              className={`flex flex-col items-center gap-1.5 rounded-lg p-2 border transition-all ${
+                watch("avatar") === path
+                  ? "border-brand-500 bg-brand-500/10"
+                  : "border-dark-700 hover:border-dark-500"
+              }`}
+            >
+              <img
+                src={path}
+                alt="Avatar option"
+                className="w-11 h-11 rounded-full object-cover"
+              />
+              <span className={`text-[10px] ${watch("avatar") === path ? "text-brand-400" : "text-dark-400"}`}>
+                {`#${path.match(/avatar-(\d+)/)?.[1] ?? path}`}
+              </span>
+            </button>
+          ))}
+        </div>
+
         <label htmlFor="avatar" className="block text-sm font-medium mb-2">
-          Avatar URL (optional)
+          Custom image URL (optional)
         </label>
         <input
           id="avatar"
@@ -137,7 +189,7 @@ export default function TestimonialForm({
           className={inputClass(false)}
           placeholder="https://..."
         />
-        {watch("avatar") && (
+        {watch("avatar") && !AVATARS.includes(watch("avatar") ?? "") && (
           <img
             src={watch("avatar") || ""}
             alt="Avatar preview"

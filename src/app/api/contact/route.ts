@@ -16,7 +16,21 @@ const contactSchema = z.object({
   website: z.string().max(100).optional(),
 });
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let resend: Resend | null = null;
+
+function getResend(): Resend {
+  const apiKey = process.env.RESEND_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is not configured");
+  }
+
+  if (!resend) {
+    resend = new Resend(apiKey);
+  }
+
+  return resend;
+}
 
 function escapeHtml(value: string): string {
   return value
@@ -113,24 +127,26 @@ export async function POST(request: Request) {
       message,
     });
 
-    try {
-      const contactEmail = process.env.CONTACT_EMAIL || "tinashemundieta36@gmail.com";
-      await resend.emails.send({
-        from: "Portfolio Contact <onboarding@resend.dev>",
-        to: [contactEmail],
-        replyTo: email,
-        subject: subject || "New Contact Form Message",
-        html: `
-          <h2>New message from your portfolio</h2>
-          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-          <p><strong>Subject:</strong> ${escapeHtml(subject || "No subject")}</p>
-          <p><strong>Message:</strong></p>
-          <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
-        `,
-      });
-    } catch (emailError) {
-      console.error("Error sending email:", emailError);
+    if (process.env.RESEND_API_KEY) {
+      try {
+        const contactEmail = process.env.CONTACT_EMAIL || "tinashemundieta36@gmail.com";
+        await getResend().emails.send({
+          from: "Portfolio Contact <onboarding@resend.dev>",
+          to: [contactEmail],
+          replyTo: email,
+          subject: subject || "New Contact Form Message",
+          html: `
+            <h2>New message from your portfolio</h2>
+            <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+            <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+            <p><strong>Subject:</strong> ${escapeHtml(subject || "No subject")}</p>
+            <p><strong>Message:</strong></p>
+            <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
+          `,
+        });
+      } catch (emailError) {
+        console.error("Error sending email:", emailError);
+      }
     }
 
     return NextResponse.json(

@@ -42,7 +42,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`px-2.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   pathname === link.href
                     ? "text-brand-400 bg-brand-500/10"
                     : "text-dark-400 hover:text-dark-100 hover:bg-white/5"
@@ -53,38 +53,42 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center space-x-4">
-            <a
-              href="https://github.com/Tinashe623"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-dark-400 hover:text-dark-100 transition-colors p-2.5 -m-2.5"
-              aria-label="GitHub"
-            >
-              <FaGithub className="w-5 h-5" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/tinashe-mundieta-041715302/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-dark-400 hover:text-dark-100 transition-colors p-2.5 -m-2.5"
-              aria-label="LinkedIn"
-            >
-              <FaLinkedin className="w-5 h-5" />
-            </a>
-            <a
-              href="https://wa.me/263779941427"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-dark-400 hover:text-dark-100 transition-colors p-2.5 -m-2.5"
-              aria-label="WhatsApp"
-            >
-              <FaWhatsapp className="w-5 h-5" />
-            </a>
+          <div className="hidden lg:flex items-center space-x-3">
+            <div className="hidden lg:flex items-center space-x-1.5">
+              <a
+                href="https://github.com/Tinashe623"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-dark-400 hover:text-dark-100 transition-colors p-1.5 -m-1.5"
+                aria-label="GitHub"
+              >
+                <FaGithub className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/tinashe-mundieta-041715302/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-dark-400 hover:text-dark-100 transition-colors p-1.5 -m-1.5"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin className="w-4 h-4" />
+              </a>
+              <a
+                href="https://wa.me/263779941427"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-dark-400 hover:text-dark-100 transition-colors p-1.5 -m-1.5"
+                aria-label="WhatsApp"
+              >
+                <FaWhatsapp className="w-4 h-4" />
+              </a>
+            </div>
+
+            <span className="h-6 w-px bg-white/10" aria-hidden="true" />
 
             <Link
               href="/admin"
-              className="relative inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all duration-300"
+              className="relative inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap"
               style={{
                 background: "linear-gradient(135deg, #6366f1, #4f46e5)",
               }}

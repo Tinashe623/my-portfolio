@@ -53,34 +53,34 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center space-x-3">
-            <div className="hidden lg:flex items-center space-x-1.5">
+          <div className="hidden lg:flex items-center space-x-4">
+            <div className="hidden lg:flex items-center space-x-3">
               <a
                 href="https://github.com/Tinashe623"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-dark-400 hover:text-dark-100 transition-colors p-1.5 -m-1.5"
+                className="text-dark-400 hover:text-dark-100 transition-colors p-2"
                 aria-label="GitHub"
               >
-                <FaGithub className="w-4 h-4" />
+                <FaGithub className="w-5 h-5" />
               </a>
               <a
                 href="https://www.linkedin.com/in/tinashe-mundieta-041715302/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-dark-400 hover:text-dark-100 transition-colors p-1.5 -m-1.5"
+                className="text-dark-400 hover:text-dark-100 transition-colors p-2"
                 aria-label="LinkedIn"
               >
-                <FaLinkedin className="w-4 h-4" />
+                <FaLinkedin className="w-5 h-5" />
               </a>
               <a
                 href="https://wa.me/263779941427"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-dark-400 hover:text-dark-100 transition-colors p-1.5 -m-1.5"
+                className="text-dark-400 hover:text-dark-100 transition-colors p-2"
                 aria-label="WhatsApp"
               >
-                <FaWhatsapp className="w-4 h-4" />
+                <FaWhatsapp className="w-5 h-5" />
               </a>
             </div>
 

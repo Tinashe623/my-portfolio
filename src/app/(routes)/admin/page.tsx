@@ -4,9 +4,12 @@ import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
+  FaAward,
   FaEnvelope,
   FaProjectDiagram,
   FaNewspaper,
+  FaQuoteLeft,
+  FaTools,
   FaArrowRight,
 } from "react-icons/fa";
 import GlassCard from "@/components/common/GlassCard";
@@ -20,6 +23,9 @@ interface AdminStats {
   drafts: number;
   messages: number;
   unread: number;
+  certificates: number;
+  skills: number;
+  testimonials: number;
 }
 
 interface Message {
@@ -93,6 +99,27 @@ export default function AdminDashboard() {
       icon: FaNewspaper,
       color: "text-green-400",
       href: "/admin/blog",
+    },
+    {
+      label: "Testimonials",
+      value: stats?.testimonials,
+      icon: FaQuoteLeft,
+      color: "text-yellow-400",
+      href: "/admin/testimonials",
+    },
+    {
+      label: "Certificates",
+      value: stats?.certificates,
+      icon: FaAward,
+      color: "text-purple-400",
+      href: "/admin/certificates",
+    },
+    {
+      label: "Skills",
+      value: stats?.skills,
+      icon: FaTools,
+      color: "text-cyan-400",
+      href: "/admin/skills",
     },
   ];
 
@@ -238,6 +265,20 @@ export default function AdminDashboard() {
               </h3>
               <p className="text-dark-400 text-sm">
                 Draft a new blog article to share with your audience
+              </p>
+            </GlassCard>
+          </Link>
+
+          <Link href="/admin/testimonials/new" className="block group">
+            <GlassCard className="p-6 h-full cursor-pointer group">
+              <div className="text-3xl mb-4 text-yellow-400">
+                <FaQuoteLeft />
+              </div>
+              <h3 className="text-xl font-bold mb-2 group-hover:text-yellow-400 transition-colors">
+                Add a Testimonial
+              </h3>
+              <p className="text-dark-400 text-sm">
+                Share praise from a client or colleague
               </p>
             </GlassCard>
           </Link>

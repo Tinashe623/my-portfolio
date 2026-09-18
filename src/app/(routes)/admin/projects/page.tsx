@@ -3,16 +3,18 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { FaPlus, FaEdit, FaTrash, FaArrowLeft } from "react-icons/fa";
+import { FaPlus, FaEdit, FaTrash, FaExternalLinkAlt } from "react-icons/fa";
 import GlassCard from "@/components/common/GlassCard";
 import GradientHeading from "@/components/common/GradientHeading";
 import SkeletonLoader from "@/components/common/SkeletonLoader";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
+import { useToast } from "@/components/common/Toast";
 
 interface Project {
   id: string;
   title: string;
   slug: string;
+  description: string;
   category: string;
   status: string;
   featured: boolean;
@@ -20,6 +22,7 @@ interface Project {
 }
 
 export default function AdminProjectsPage() {
+  const { success: toastSuccess, error: toastError } = useToast();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -42,12 +45,13 @@ export default function AdminProjectsPage() {
 
       if (response.ok) {
         setProjects((prev) => prev.filter((p) => p.id !== deleteTargetId));
+        toastSuccess("Project deleted successfully");
       } else {
         const result = await response.json();
-        alert(result.error || "Failed to delete project");
+        toastError(result.error || "Failed to delete project");
       }
     } catch {
-      alert("An error occurred. Please try again.");
+      toastError("An error occurred. Please try again.");
     } finally {
       setDeletingId(null);
       setDeleteTargetId(null);
@@ -76,10 +80,6 @@ export default function AdminProjectsPage() {
           <p className="mt-2 text-dark-400">Add, edit, or remove portfolio projects</p>
         </motion.div>
         <div className="flex gap-4">
-          <Link href="/admin" className="btn-outline text-sm py-2 px-4 flex items-center gap-2">
-            <FaArrowLeft className="w-4 h-4" />
-            Dashboard
-          </Link>
           <Link href="/admin/projects/new" className="btn-primary text-sm py-2 px-4 flex items-center gap-2">
             <FaPlus className="w-4 h-4" />
             New Project
@@ -120,9 +120,18 @@ export default function AdminProjectsPage() {
                 </div>
                 <h3 className="text-lg font-bold mb-2">{project.title}</h3>
                 <p className="text-dark-400 text-sm mb-4 flex-grow line-clamp-2">
-                  {project.slug}
+                  {project.description || project.slug}
                 </p>
                 <div className="flex gap-2">
+                  <Link
+                    href={`/portfolio/${project.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-outline text-xs py-1 px-3 flex items-center gap-1"
+                  >
+                    <FaExternalLinkAlt className="w-3 h-3" />
+                    View
+                  </Link>
                   <Link
                     href={`/admin/projects/${project.id}`}
                     className="btn-outline text-xs py-1 px-3 flex items-center gap-1"

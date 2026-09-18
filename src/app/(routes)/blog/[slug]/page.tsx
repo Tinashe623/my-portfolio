@@ -1,77 +1,110 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import type { Metadata } from "next";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import Image from "next/image";
+import { notFound } from "next/navigation";
 import GlassCard from "@/components/common/GlassCard";
-import GradientHeading from "@/components/common/GradientHeading";
+import JsonLd from "@/components/seo/JsonLd";
 import { FaCalendar, FaTag, FaArrowLeft } from "react-icons/fa";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { findBlogPostBySlug, listPublishedPosts, type BlogPostRow } from "@/lib/db";
+import { SITE_URL, AUTHOR, SITE_NAME, OG_IMAGE } from "@/lib/site";
 
-interface BlogPost {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  coverImage?: string;
-  tags: string[];
-  published: boolean;
-  publishedAt?: string;
-  createdAt: string;
+
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  const posts = await listPublishedPosts();
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
-export default function BlogPostPage() {
-  const params = useParams();
-  const slug = params.slug as string;
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [loading, setLoading] = useState(true);
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
 
-  useEffect(() => {
-    fetch(`/api/blog/slug/${slug}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setPost(data.post || null);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <div className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto">
-          <LoadingSpinner size="lg" variant="glass" label="Loading article..." />
-        </div>
-      </div>
-    );
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  let post: BlogPostRow | null = null;
+  try {
+    post = await findBlogPostBySlug(slug);
+  } catch (error) {
+    console.error("Failed to load post for metadata:", error);
   }
 
   if (!post) {
-    return (
-      <div className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center">
-          <GradientHeading>Article Not Found</GradientHeading>
-          <p className="mt-4 text-dark-400">The article you are looking for does not exist.</p>
-          <Link href="/blog" className="btn-primary mt-8 inline-flex items-center gap-2">
-            <FaArrowLeft className="w-4 h-4" />
-            Back to Blog
-          </Link>
-        </div>
-      </div>
-    );
+    return { title: "Article Not Found" };
   }
+
+  const description = post.excerpt ?? post.content.slice(0, 160);
+
+  return {
+    title: post.title,
+    description,
+    alternates: { canonical: `${SITE_URL}/blog/${post.slug}` },
+    openGraph: {
+      title: post.title,
+      description,
+      type: "article",
+      url: `${SITE_URL}/blog/${post.slug}`,
+      siteName: SITE_NAME,
+      images: post.coverImage
+        ? [{ url: post.coverImage, alt: post.title }]
+        : [{ url: OG_IMAGE, width: 1200, height: 630, alt: post.title }],
+      publishedTime: post.publishedAt ?? undefined,
+      tags: post.tags,
+    },
+    twitter: {
+      title: post.title,
+      description,
+      images: post.coverImage ? [post.coverImage] : [OG_IMAGE],
+    },
+  };
+}
+
+export default async function BlogPostPage({ params }: PageProps) {
+  const { slug } = await params;
+  let post: BlogPostRow | null = null;
+  try {
+    post = await findBlogPostBySlug(slug);
+  } catch (error) {
+    console.error("Failed to load post:", error);
+  }
+
+  if (!post) {
+    notFound();
+  }
+
+  const articleUrl = `${SITE_URL}/blog/${post.slug}`;
+  const articleDescription = post.excerpt ?? post.content.slice(0, 160);
+
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: articleDescription,
+    url: articleUrl,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": articleUrl,
+    },
+    image: post.coverImage ?? undefined,
+    datePublished: post.publishedAt ?? post.createdAt,
+    dateModified: post.updatedAt,
+    author: {
+      "@type": "Person",
+      name: AUTHOR,
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+    },
+    keywords: post.tags.join(", "),
+  };
 
   return (
     <div className="py-20 px-4 sm:px-6 lg:px-8">
+      <JsonLd data={blogPostingSchema} />
       <div className="max-w-3xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-8"
-        >
+        <div className="mb-8">
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 text-dark-400 hover:text-brand-400 transition-colors"
@@ -79,20 +112,19 @@ export default function BlogPostPage() {
             <FaArrowLeft className="w-4 h-4" />
             Back to Blog
           </Link>
-        </motion.div>
+        </div>
 
-        <motion.article
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
+        <article>
           <GlassCard className="overflow-hidden">
             {post.coverImage && (
               <div className="relative h-64 md:h-80 bg-dark-800 overflow-hidden">
-                <img
+                <Image
                   src={post.coverImage}
                   alt={post.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 768px"
+                  className="object-cover"
+                  priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark-900/60 to-transparent" />
               </div>
@@ -118,8 +150,9 @@ export default function BlogPostPage() {
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-xs px-3 py-1 rounded-full bg-brand-500/10 text-brand-400"
+                    className="text-xs px-3 py-1 rounded-full bg-brand-500/10 text-brand-400 flex items-center gap-1"
                   >
+                    <FaTag className="w-3 h-3" />
                     {tag}
                   </span>
                 ))}
@@ -134,7 +167,7 @@ export default function BlogPostPage() {
               </div>
             </div>
           </GlassCard>
-        </motion.article>
+        </article>
       </div>
     </div>
   );

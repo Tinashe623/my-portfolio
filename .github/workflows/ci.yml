@@ -2,62 +2,96 @@ name: CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
-    branches: [main, master]
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
-    
-    env:
-      CI: true
-      # Force Node.js 24 for JavaScript actions (future-proof)
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
-          persist-credentials: false
-          fetch-depth: 0
+          node-version: 20
+          cache: npm
 
-      - name: Setup Node.js 20.x
-        uses: actions/setup-node@v5
-        with:
-          node-version: '20.x'
-          cache: 'npm'
-          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Install dependencies (including dev)
-        run: |
-          npm config set fund false
-          npm config set audit false
-          npm ci --include=dev
-          # Verify ESLint is installed
-          test -x node_modules/.bin/eslint || (echo "ESLint binary missing" && exit 1)
+      - name: Generate Prisma client
+        run: npx prisma generate
 
-      - name: Run linting
+      - name: Run ESLint
         run: npm run lint
 
-      - name: Run tests
-        run: npm run test -- --run
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-      - name: Build project
-        env:
-          NODE_ENV: production
-        run: npm run build
-
-      - name: Verify build output
-        run: |
-          test -d dist || exit 1
-          test -f dist/index.html || exit 1
-          echo "✅ Build artifacts verified"
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v5
-        if: always()
+      - uses: actions/setup-node@v4
         with:
-          name: dist-build
-          path: dist/
-          retention-days: 7
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Typecheck
+        run: npm run typecheck
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: myportfolio
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/myportfolio
+      NEXTAUTH_SECRET: ci-insecure-secret-do-not-use-in-production
+      ADMIN_EMAIL: admin@example.com
+      ADMIN_PASSWORD: ci-only-random-admin-password-7f3k9x
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Apply database migrations
+        run: npx prisma migrate deploy
+
+      - name: Seed database
+        run: npm run db:seed
+
+      - name: Build
+        run: npm run build

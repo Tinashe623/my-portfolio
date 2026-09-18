@@ -6,11 +6,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { FaArrowLeft, FaSave } from "react-icons/fa";
 import GlassCard from "@/components/common/GlassCard";
 import GradientHeading from "@/components/common/GradientHeading";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { useToast } from "@/components/common/Toast";
 
 const blogSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -25,20 +26,10 @@ const blogSchema = z.object({
 
 type BlogFormData = z.infer<typeof blogSchema>;
 
-interface BlogPost {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string | null;
-  content: string;
-  coverImage: string | null;
-  tags: string;
-  published: boolean;
-  publishedAt: string | null;
-}
-
 export default function EditBlogPage() {
   const params = useParams();
+  const router = useRouter();
+  const toast = useToast().success;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -89,7 +80,8 @@ export default function EditBlogPage() {
       });
 
       if (response.ok) {
-        window.location.href = "/admin/blog";
+        toast("Blog post saved successfully");
+        router.push("/admin/blog");
       } else {
         const result = await response.json();
         setError(result.error || "Failed to update blog post");

@@ -1,49 +1,45 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import GlassCard from "@/components/common/GlassCard";
 import GradientHeading from "@/components/common/GradientHeading";
+import JsonLd from "@/components/seo/JsonLd";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { listProjects, type ProjectRow } from "@/lib/db";
+import { SITE_URL, SITE_NAME, OG_IMAGE } from "@/lib/site";
 
-interface Project {
-  id: string;
-  title: string;
-  slug: string;
-  description: string;
-  image?: string;
-  tags: string[];
-  category: string;
-  status: string;
-  featured: boolean;
-  liveUrl?: string;
-  codeUrl?: string;
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Portfolio",
+    description:
+      "A selection of frontend and full-stack projects showcasing expertise in React, TypeScript, Next.js, Prisma, and PostgreSQL.",
+    alternates: { canonical: `${SITE_URL}/portfolio` },
+    openGraph: {
+      title: "Portfolio",
+      description:
+        "A selection of frontend and full-stack projects showcasing expertise in React, TypeScript, Next.js, Prisma, and PostgreSQL.",
+      url: `${SITE_URL}/portfolio`,
+      siteName: SITE_NAME,
+      type: "website",
+      images: [OG_IMAGE],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Portfolio | Tinashe Mundieta",
+      description:
+        "A selection of frontend and full-stack projects showcasing expertise in React, TypeScript, Next.js, Prisma, and PostgreSQL.",
+      images: [OG_IMAGE],
+    },
+  };
 }
 
-export default function PortfolioPage() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("/api/projects")
-      .then((res) => res.json())
-      .then((data) => {
-        setProjects(data.projects || []);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <LoadingSpinner size="lg" variant="glass" label="Loading projects..." />
-        </div>
-      </div>
-    );
+export default async function PortfolioPage() {
+  let projects: ProjectRow[] = [];
+  try {
+    projects = await listProjects();
+  } catch (error) {
+    console.error("Failed to load projects:", error);
   }
 
   if (projects.length === 0) {
@@ -57,32 +53,40 @@ export default function PortfolioPage() {
     );
   }
 
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Portfolio | Tinashe Mundieta",
+    url: `${SITE_URL}/portfolio`,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: projects.map((project, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: project.title,
+        url: `${SITE_URL}/portfolio/${project.slug}`,
+      })),
+    },
+  };
+
   return (
     <div className="py-20 px-4 sm:px-6 lg:px-8">
+      <JsonLd data={collectionSchema} />
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <GradientHeading>Portfolio</GradientHeading>
           <p className="mt-4 text-dark-400 max-w-2xl mx-auto text-balance">
             A selection of frontend and full-stack projects showcasing my expertise
             in React, TypeScript, Next.js, Prisma, and PostgreSQL.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
+          {projects.map((project) => (
+            <GlassCard
               key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="overflow-hidden h-full flex flex-col group"
             >
-              <GlassCard className="overflow-hidden h-full flex flex-col group">
                 <Link href={`/portfolio/${project.slug}`} className="block">
                   <div className="relative h-48 bg-dark-800 overflow-hidden">
                     {project.slug === "personal-portfolio" ? (
@@ -116,10 +120,12 @@ export default function PortfolioPage() {
                         </div>
                       </div>
                     ) : project.image ? (
-                      <img
+                      <Image
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                     ) : (
                       <div className="project-placeholder">
@@ -213,24 +219,17 @@ export default function PortfolioPage() {
                   </div>
                 </div>
               </GlassCard>
-            </motion.div>
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mt-16 text-center"
-        >
+        <div className="mt-16 text-center">
           <p className="text-dark-400 mb-6">
             Interested in working together? Let&apos;s discuss your project.
           </p>
           <Link href="/contact" className="btn-primary">
             Start a Project
           </Link>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

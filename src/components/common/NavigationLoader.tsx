@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function NavigationLoader() {
   const pathname = usePathname();

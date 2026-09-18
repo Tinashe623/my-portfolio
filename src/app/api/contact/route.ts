@@ -1,24 +1,46 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
+import { listMessages, createMessage, deleteMessage } from "@/lib/db";
 import { Resend } from "resend";
+import { z } from "zod";
+import { getCurrentAdmin } from "@/lib/auth";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
+
+const CONTACT_LIMIT = 3;
+const CONTACT_WINDOW_MS = 60 * 60 * 1000;
+
+const contactSchema = z.object({
+  name: z.string().min(2).max(100),
+  email: z.string().email().max(200),
+  subject: z.string().max(200).optional(),
+  message: z.string().min(10).max(5000),
+  website: z.string().max(100).optional(),
+});
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+async function requireAdminApi() {
+  const admin = await getCurrentAdmin();
+  return admin;
+}
+
 export async function GET() {
+  const admin = await requireAdminApi();
+
+  if (!admin) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
-    const messages = await prisma.message.findMany({
-      orderBy: { createdAt: "desc" },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        subject: true,
-        message: true,
-        read: true,
-        replied: true,
-        createdAt: true,
-      },
-    });
+    const messages = await listMessages();
 
     return NextResponse.json({ messages });
   } catch (error) {
@@ -31,24 +53,64 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  let body: unknown;
+
   try {
-    const body = await request.json();
-    const { name, email, subject, message } = body;
+    body = await request.json();
+  } catch {
+    return NextResponse.json(
+      { error: "Invalid JSON body" },
+      { status: 400 }
+    );
+  }
 
-    if (!name || !email || !message) {
-      return NextResponse.json(
-        { error: "Name, email, and message are required" },
-        { status: 400 }
-      );
-    }
+  const parsed = contactSchema.safeParse(body);
 
-    const newMessage = await prisma.message.create({
-      data: {
-        name,
-        email,
-        subject: subject || "No subject",
-        message,
-      },
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: "Invalid input", details: parsed.error.flatten().fieldErrors },
+      { status: 400 }
+    );
+  }
+
+  const { name, email, subject, message, website } = parsed.data;
+
+  if (website) {
+    return NextResponse.json(
+      { message: "Message sent successfully" },
+      { status: 201 }
+    );
+  }
+
+  const ip = getClientIp(request);
+  const ipLimit = rateLimit(`contact:ip:${ip}`, CONTACT_LIMIT, CONTACT_WINDOW_MS);
+
+  if (!ipLimit.allowed) {
+    return NextResponse.json(
+      { error: "Too many messages from this IP. Please try again later." },
+      { status: 429, headers: { "Retry-After": String(ipLimit.retryAfterSec) } }
+    );
+  }
+
+  const emailLimit = rateLimit(
+    `contact:email:${email.toLowerCase()}`,
+    CONTACT_LIMIT,
+    CONTACT_WINDOW_MS
+  );
+
+  if (!emailLimit.allowed) {
+    return NextResponse.json(
+      { error: "Too many messages from this address. Please try again later." },
+      { status: 429, headers: { "Retry-After": String(emailLimit.retryAfterSec) } }
+    );
+  }
+
+  try {
+    const newMessage = await createMessage({
+      name,
+      email,
+      subject: subject || "No subject",
+      message,
     });
 
     try {
@@ -60,11 +122,11 @@ export async function POST(request: Request) {
         subject: subject || "New Contact Form Message",
         html: `
           <h2>New message from your portfolio</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Subject:</strong> ${subject || "No subject"}</p>
+          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+          <p><strong>Subject:</strong> ${escapeHtml(subject || "No subject")}</p>
           <p><strong>Message:</strong></p>
-          <p>${message.replace(/\n/g, "<br>")}</p>
+          <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
         `,
       });
     } catch (emailError) {
@@ -85,6 +147,12 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const admin = await requireAdminApi();
+
+  if (!admin) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const body = await request.json();
     const { id } = body;
@@ -96,9 +164,7 @@ export async function DELETE(request: Request) {
       );
     }
 
-    await prisma.message.delete({
-      where: { id },
-    });
+    await deleteMessage(id);
 
     return NextResponse.json({ message: "Message deleted successfully" });
   } catch (error) {

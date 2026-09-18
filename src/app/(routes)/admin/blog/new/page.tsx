@@ -1,14 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FaArrowLeft, FaSave } from "react-icons/fa";
 import GlassCard from "@/components/common/GlassCard";
 import GradientHeading from "@/components/common/GradientHeading";
+import { useToast } from "@/components/common/Toast";
 
 const blogSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -24,6 +26,8 @@ const blogSchema = z.object({
 type BlogFormData = z.infer<typeof blogSchema>;
 
 export default function NewBlogPage() {
+  const router = useRouter();
+  const toast = useToast().success;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,7 +35,6 @@ export default function NewBlogPage() {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<BlogFormData>({
     resolver: zodResolver(blogSchema),
     defaultValues: {
@@ -57,8 +60,8 @@ export default function NewBlogPage() {
       });
 
       if (response.ok) {
-        reset();
-        window.location.href = "/admin/blog";
+        toast("Blog post created successfully");
+        router.push("/admin/blog");
       } else {
         const result = await response.json();
         setError(result.error || "Failed to create blog post");

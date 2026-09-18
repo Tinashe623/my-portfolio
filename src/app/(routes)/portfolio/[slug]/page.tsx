@@ -1,82 +1,128 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import type { Metadata } from "next";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import Image from "next/image";
+import { notFound } from "next/navigation";
 import GlassCard from "@/components/common/GlassCard";
-import GradientHeading from "@/components/common/GradientHeading";
+import JsonLd from "@/components/seo/JsonLd";
 import { FaExternalLinkAlt, FaGithub, FaArrowLeft } from "react-icons/fa";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { findProjectBySlug, listProjects, type ProjectRow } from "@/lib/db";
+import { SITE_URL, AUTHOR, SITE_NAME, OG_IMAGE } from "@/lib/site";
 
-interface Project {
-  id: string;
-  title: string;
-  slug: string;
-  description: string;
-  content?: string;
-  image?: string;
-  tags: string[];
-  category: string;
-  status: string;
-  featured: boolean;
-  liveUrl?: string;
-  codeUrl?: string;
+
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  const projects = await listProjects();
+  return projects.map((project) => ({ slug: project.slug }));
 }
 
-export default function ProjectPage() {
-  const params = useParams();
-  const slug = params.slug as string;
-  const [project, setProject] = useState<Project | null>(null);
-  const [loading, setLoading] = useState(true);
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
 
-  useEffect(() => {
-    fetch("/api/projects")
-      .then((res) => res.json())
-      .then((data) => {
-        const found = (data.projects || []).find((p: Project) => p.slug === slug);
-        setProject(found || null);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <div className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
-          <LoadingSpinner size="lg" variant="glass" label="Loading project..." />
-        </div>
-      </div>
-    );
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  let project: ProjectRow | null = null;
+  try {
+    project = await findProjectBySlug(slug);
+  } catch (error) {
+    console.error("Failed to load project for metadata:", error);
   }
 
   if (!project) {
-    return (
-      <div className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto text-center">
-          <GradientHeading>Project Not Found</GradientHeading>
-          <p className="mt-4 text-dark-400">The project you are looking for does not exist.</p>
-          <Link href="/portfolio" className="btn-primary mt-8 inline-flex items-center gap-2">
-            <FaArrowLeft className="w-4 h-4" />
-            Back to Portfolio
-          </Link>
-        </div>
-      </div>
-    );
+    return { title: "Project Not Found" };
+  }
+
+  return {
+    title: project.title,
+    description: project.description,
+    alternates: { canonical: `${SITE_URL}/portfolio/${project.slug}` },
+    openGraph: {
+      title: project.title,
+      description: project.description,
+      type: "article",
+      url: `${SITE_URL}/portfolio/${project.slug}`,
+      siteName: SITE_NAME,
+      images: project.image
+        ? [{ url: project.image, alt: project.title }]
+        : [{ url: OG_IMAGE, width: 1200, height: 630, alt: project.title }],
+      tags: project.tags,
+    },
+    twitter: {
+      title: project.title,
+      description: project.description,
+      images: project.image ? [project.image] : [OG_IMAGE],
+    },
+  };
+}
+
+export default async function ProjectPage({ params }: PageProps) {
+  const { slug } = await params;
+  let project: ProjectRow | null = null;
+  try {
+    project = await findProjectBySlug(slug);
+  } catch (error) {
+    console.error("Failed to load project:", error);
+  }
+
+  if (!project) {
+    notFound();
   }
 
   const longDescription = project.content || project.description;
 
+  const projectUrl = `${SITE_URL}/portfolio/${project.slug}`;
+
+  const projectSchema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    description: longDescription,
+    url: projectUrl,
+    image: project.image ?? undefined,
+    keywords: project.tags.join(", "),
+    dateCreated: project.createdAt,
+    dateModified: project.updatedAt,
+    author: {
+      "@type": "Person",
+      name: AUTHOR,
+      url: SITE_URL,
+    },
+    creator: {
+      "@type": "Person",
+      name: AUTHOR,
+      url: SITE_URL,
+    },
+    provider: {
+      "@type": "Organization",
+      name: SITE_NAME,
+    },
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Portfolio",
+        item: `${SITE_URL}/portfolio`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: project.title,
+        item: projectUrl,
+      },
+    ],
+  };
+
   return (
     <div className="py-20 px-4 sm:px-6 lg:px-8">
+      <JsonLd data={[projectSchema, breadcrumbSchema]} />
       <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-8"
-        >
+        <div className="mb-8">
           <Link
             href="/portfolio"
             className="inline-flex items-center gap-2 text-dark-400 hover:text-brand-400 transition-colors mb-6"
@@ -84,13 +130,9 @@ export default function ProjectPage() {
             <FaArrowLeft className="w-4 h-4" />
             Back to Portfolio
           </Link>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
+        <div>
           <GlassCard className="overflow-hidden">
             <div className="relative h-64 md:h-96 bg-dark-800 overflow-hidden">
               {project.slug === "personal-portfolio" ? (
@@ -124,10 +166,13 @@ export default function ProjectPage() {
                   </div>
                 </div>
               ) : project.image ? (
-                <img
+                <Image
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 1024px"
+                  className="object-cover"
+                  priority
                 />
               ) : (
                 <div className="project-placeholder">
@@ -213,7 +258,7 @@ export default function ProjectPage() {
               </div>
             </div>
           </GlassCard>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

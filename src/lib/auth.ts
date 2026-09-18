@@ -1,10 +1,25 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import jwt from "jsonwebtoken";
+import { jwtVerify } from "jose";
 
-const JWT_SECRET = process.env.NEXTAUTH_SECRET || "your-secret-key";
+export type AdminSession = {
+  token: string;
+  adminId: string;
+  email: string;
+  name: string;
+};
 
-export async function getCurrentAdmin() {
+export function getJwtSecret(): Uint8Array {
+  const secret = process.env.NEXTAUTH_SECRET;
+
+  if (!secret) {
+    throw new Error("NEXTAUTH_SECRET is not configured");
+  }
+
+  return new TextEncoder().encode(secret);
+}
+
+export async function getCurrentAdmin(): Promise<AdminSession | null> {
   const cookieStore = await cookies();
   const adminCookie = cookieStore.get("admin-session");
 
@@ -13,18 +28,15 @@ export async function getCurrentAdmin() {
   }
 
   try {
-    const session = JSON.parse(adminCookie.value);
+    const session = JSON.parse(adminCookie.value) as AdminSession;
 
     if (!session.token) {
       return null;
     }
 
-    const decoded = jwt.verify(session.token, JWT_SECRET) as {
-      adminId: string;
-      email: string;
-    };
+    const { payload } = await jwtVerify(session.token, getJwtSecret());
 
-    if (decoded.adminId !== session.adminId || decoded.email !== session.email) {
+    if (payload.adminId !== session.adminId || payload.email !== session.email) {
       return null;
     }
 
@@ -36,8 +48,10 @@ export async function getCurrentAdmin() {
 
 export async function requireAdmin() {
   const admin = await getCurrentAdmin();
+
   if (!admin) {
     redirect("/admin/login");
   }
+
   return admin;
 }

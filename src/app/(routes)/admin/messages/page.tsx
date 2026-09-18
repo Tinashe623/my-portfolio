@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { FaArrowLeft, FaEnvelope, FaCheck, FaTimes } from "react-icons/fa";
+import { FaEnvelope, FaCheck, FaTimes, FaReply, FaEnvelopeOpen } from "react-icons/fa";
 import GlassCard from "@/components/common/GlassCard";
 import GradientHeading from "@/components/common/GradientHeading";
 import SkeletonLoader from "@/components/common/SkeletonLoader";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
+import { useToast } from "@/components/common/Toast";
 
 interface Message {
   id: string;
@@ -21,11 +21,45 @@ interface Message {
 }
 
 export default function AdminMessagesPage() {
+  const { success: toastSuccess, error: toastError } = useToast();
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [updatingId, setUpdatingId] = useState<string | null>(null);
+
+  const handleUpdate = async (
+    id: string,
+    patch: { read?: boolean; replied?: boolean }
+  ) => {
+    setUpdatingId(id);
+    try {
+      const response = await fetch(`/api/contact/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(patch),
+      });
+
+      if (response.ok) {
+        const { message } = await response.json();
+        setMessages((prev) =>
+          prev.map((m) => (m.id === message.id ? { ...m, ...message } : m))
+        );
+        if (patch.read === true) toastSuccess("Marked as read");
+        if (patch.replied !== undefined) {
+          toastSuccess(patch.replied ? "Marked as replied" : "Marked as not replied");
+        }
+      } else {
+        const result = await response.json();
+        toastError(result.error || "Failed to update message");
+      }
+    } catch {
+      toastError("An error occurred. Please try again.");
+    } finally {
+      setUpdatingId(null);
+    }
+  };
 
   const handleDeleteClick = (id: string) => {
     setDeleteTargetId(id);
@@ -45,12 +79,13 @@ export default function AdminMessagesPage() {
 
       if (response.ok) {
         setMessages((prev) => prev.filter((m) => m.id !== deleteTargetId));
+        toastSuccess("Message deleted successfully");
       } else {
         const result = await response.json();
-        alert(result.error || "Failed to delete message");
+        toastError(result.error || "Failed to delete message");
       }
     } catch {
-      alert("An error occurred. Please try again.");
+      toastError("An error occurred. Please try again.");
     } finally {
       setDeletingId(null);
       setDeleteTargetId(null);
@@ -78,10 +113,6 @@ export default function AdminMessagesPage() {
           <GradientHeading>Contact Messages</GradientHeading>
           <p className="mt-2 text-dark-400">View and manage contact form submissions</p>
         </motion.div>
-        <Link href="/admin" className="btn-outline text-sm py-2 px-4 flex items-center gap-2">
-          <FaArrowLeft className="w-4 h-4" />
-          Dashboard
-        </Link>
       </div>
 
       {loading ? (
@@ -128,7 +159,31 @@ export default function AdminMessagesPage() {
                     <p className="text-sm font-medium mb-2">{message.subject}</p>
                   )}
                   <p className="text-dark-300 text-sm">{message.message}</p>
-                  <div className="mt-4 flex justify-end">
+                  <div className="mt-4 flex flex-wrap items-center justify-end gap-2">
+                    {!message.read && (
+                      <button
+                        onClick={() => handleUpdate(message.id, { read: true })}
+                        disabled={updatingId === message.id}
+                        className="flex items-center gap-1 text-xs py-1 px-3 rounded-lg text-brand-400 hover:text-brand-300 hover:bg-brand-500/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <FaEnvelopeOpen className="w-3 h-3" />
+                        Mark as read
+                      </button>
+                    )}
+                    <button
+                      onClick={() =>
+                        handleUpdate(message.id, { replied: !message.replied })
+                      }
+                      disabled={updatingId === message.id}
+                      className={`flex items-center gap-1 text-xs py-1 px-3 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
+                        message.replied
+                          ? "text-green-400 hover:text-green-300 hover:bg-green-500/10"
+                          : "text-dark-300 hover:text-white hover:bg-white/5"
+                      }`}
+                    >
+                      <FaReply className="w-3 h-3" />
+                      {message.replied ? "Mark not replied" : "Mark replied"}
+                    </button>
                     <button
                       onClick={() => handleDeleteClick(message.id)}
                       disabled={deletingId === message.id}

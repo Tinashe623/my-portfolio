@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
+import { findBlogPostBySlug } from "@/lib/db";
 
 export async function GET(
   request: Request,
@@ -7,9 +7,7 @@ export async function GET(
 ) {
   try {
     const { slug } = await params;
-    const post = await prisma.blogPost.findUnique({
-      where: { slug },
-    });
+    const post = await findBlogPostBySlug(slug);
 
     if (!post) {
       return NextResponse.json(

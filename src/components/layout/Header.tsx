@@ -10,10 +10,8 @@ import {
   FaGithub,
   FaLinkedin,
   FaWhatsapp,
-  FaEnvelope,
   FaLock,
 } from "react-icons/fa";
-import { MdMenuOpen } from "react-icons/md";
 
 const navLinks = [
   { href: "/home", label: "Home" },
@@ -33,13 +31,13 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-md border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <Link href="/home" className="flex items-center space-x-2">
+          <Link href="/home" className="flex items-center space-x-2 p-2 -m-2">
             <span className="text-xl md:text-2xl font-bold font-heading gradient-text">
               TM
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-1">
+          <nav className="hidden lg:flex items-center space-x-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -55,12 +53,12 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-4">
             <a
               href="https://github.com/Tinashe623"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-dark-400 hover:text-dark-100 transition-colors"
+              className="text-dark-400 hover:text-dark-100 transition-colors p-2.5 -m-2.5"
               aria-label="GitHub"
             >
               <FaGithub className="w-5 h-5" />
@@ -69,7 +67,7 @@ export default function Header() {
               href="https://www.linkedin.com/in/tinashe-mundieta-041715302/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-dark-400 hover:text-dark-100 transition-colors"
+              className="text-dark-400 hover:text-dark-100 transition-colors p-2.5 -m-2.5"
               aria-label="LinkedIn"
             >
               <FaLinkedin className="w-5 h-5" />
@@ -78,7 +76,7 @@ export default function Header() {
               href="https://wa.me/263779941427"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-dark-400 hover:text-dark-100 transition-colors"
+              className="text-dark-400 hover:text-dark-100 transition-colors p-2.5 -m-2.5"
               aria-label="WhatsApp"
             >
               <FaWhatsapp className="w-5 h-5" />
@@ -86,27 +84,19 @@ export default function Header() {
 
             <Link
               href="/admin"
-              className="relative group inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all duration-300"
+              className="relative inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all duration-300"
               style={{
                 background: "linear-gradient(135deg, #6366f1, #4f46e5)",
-                boxShadow: "0 0 15px rgba(99, 102, 241, 0.3)",
               }}
             >
-              <span
-                className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{
-                  background: "linear-gradient(135deg, #818cf8, #6366f1)",
-                  boxShadow: "0 0 25px rgba(99, 102, 241, 0.5)",
-                }}
-              />
-              <FaLock className="relative z-10 w-3.5 h-3.5" />
-              <span className="relative z-10">Admin</span>
+              <FaLock className="w-3.5 h-3.5" />
+              <span>Admin</span>
             </Link>
           </div>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg text-dark-400 hover:text-dark-100 hover:bg-white/5 transition-colors"
+            className="lg:hidden p-2 rounded-lg text-dark-400 hover:text-dark-100 hover:bg-white/5 transition-colors"
             aria-label="Toggle menu"
           >
             {isOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
@@ -121,7 +111,7 @@ export default function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden overflow-hidden"
+            className="lg:hidden overflow-hidden"
           >
             <nav className="px-4 py-4 space-y-1 border-t border-white/5">
               {navLinks.map((link) => (

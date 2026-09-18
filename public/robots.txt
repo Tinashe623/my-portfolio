@@ -1,6 +1,0 @@
-# Allow all bots
-User-agent: *
-Allow: /
-
-# Sitemap
-Sitemap: https://tinashe-mundieta.vercel.app/sitemap.xml

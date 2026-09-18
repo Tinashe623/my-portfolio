@@ -1,11 +1,38 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- CommonJS script executed directly by Node */
+
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs");
 
 const prisma = new PrismaClient();
 
+const INSECURE_PASSWORDS = new Set([
+  "secure-password-here",
+  "password",
+  "changeme",
+  "admin123",
+]);
+
 async function main() {
-  const adminEmail = process.env.ADMIN_EMAIL || "admin@example.com";
-  const adminPassword = process.env.ADMIN_PASSWORD || "secure-password-here";
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+
+  if (!adminEmail || !adminPassword) {
+    throw new Error(
+      "ADMIN_EMAIL and ADMIN_PASSWORD are required to seed the admin account. " +
+        "Set them in your .env file (see .env.example), then run `npm run db:seed` again."
+    );
+  }
+
+  if (adminPassword.length < 12) {
+    throw new Error("ADMIN_PASSWORD must be at least 12 characters.");
+  }
+
+  if (INSECURE_PASSWORDS.has(adminPassword.toLowerCase())) {
+    throw new Error(
+      "ADMIN_PASSWORD is a known placeholder. Choose a strong, unique password."
+    );
+  }
+
   const hashedPassword = await bcrypt.hash(adminPassword, 10);
 
   await prisma.admin.upsert({
@@ -95,13 +122,14 @@ async function main() {
     });
   }
 
-  const certificates = [
+const certificates = [
     {
       title: "HTML5 Certified",
       slug: "html5-certified",
       issuer: "W3Schools",
       issueDate: new Date("2024-04-03"),
-      credentialUrl: "https://www.w3schools.com/cert/certificate.aspx",
+      credentialId: "w3html2024",
+      credentialUrl: "https://verify.w3schools.com/1OOV2NTADY",
       tags: ["HTML5", "Frontend"],
     },
     {
@@ -109,7 +137,8 @@ async function main() {
       slug: "css-certified",
       issuer: "W3Schools",
       issueDate: new Date("2024-04-27"),
-      credentialUrl: "https://www.w3schools.com/cert/certificate.aspx",
+      credentialId: "w3css2024",
+      credentialUrl: "https://verify.w3schools.com/1ORGOIOLIT",
       tags: ["CSS3", "Frontend"],
     },
     {
@@ -117,7 +146,8 @@ async function main() {
       slug: "javascript-certified",
       issuer: "W3Schools",
       issueDate: new Date("2024-10-19"),
-      credentialUrl: "https://www.w3schools.com/cert/certificate.aspx",
+      credentialId: "w3js2024",
+      credentialUrl: "https://verify.w3schools.com/1PAT7PQY0O",
       tags: ["JavaScript", "Frontend"],
     },
     {
@@ -125,7 +155,8 @@ async function main() {
       slug: "frontend-development",
       issuer: "W3Schools",
       issueDate: new Date("2024-10-19"),
-      credentialUrl: "https://www.w3schools.com/cert/certificate.aspx",
+      credentialId: "w3frontend2024",
+      credentialUrl: "https://verify.w3schools.com/1PAT7UCLEL",
       tags: ["Frontend", "Full-Stack"],
     },
   ];
@@ -137,15 +168,18 @@ async function main() {
   }
 
   const skills = [
-    { name: "Next.js", category: "frontend", level: "advanced", order: 1 },
-    { name: "React", category: "frontend", level: "advanced", order: 2 },
-    { name: "TypeScript", category: "frontend", level: "advanced", order: 3 },
-    { name: "Node.js", category: "backend", level: "intermediate", order: 4 },
-    { name: "Prisma", category: "database", level: "intermediate", order: 5 },
-    { name: "PostgreSQL", category: "database", level: "intermediate", order: 6 },
-    { name: "Tailwind CSS", category: "frontend", level: "advanced", order: 7 },
-    { name: "Git", category: "tools", level: "intermediate", order: 8 },
-    { name: "Docker", category: "devops", level: "beginner", order: 9 },
+    { name: "Next.js", category: "frontend", level: "advanced", icon: "nextdotjs", order: 1 },
+    { name: "React", category: "frontend", level: "advanced", icon: "react", order: 2 },
+    { name: "TypeScript", category: "frontend", level: "advanced", icon: "typescript", order: 3 },
+    { name: "Node.js", category: "backend", level: "intermediate", icon: "nodejs", order: 4 },
+    { name: "Prisma", category: "database", level: "intermediate", icon: "prisma", order: 5 },
+    { name: "PostgreSQL", category: "database", level: "intermediate", icon: "postgresql", order: 6 },
+    { name: "JavaScript", category: "frontend", level: "advanced", icon: "javascript", order: 7 },
+    { name: "Tailwind CSS", category: "frontend", level: "advanced", icon: "tailwindcss", order: 8 },
+    { name: "Git", category: "tools", level: "intermediate", icon: "git", order: 9 },
+    { name: "Docker", category: "devops", level: "beginner", icon: "docker", order: 10 },
+    { name: "Linux", category: "tools", level: "intermediate", icon: "linux", order: 11 },
+    { name: "Windows", category: "tools", level: "intermediate", icon: "windows", order: 12 },
   ];
 
   for (const skill of skills) {

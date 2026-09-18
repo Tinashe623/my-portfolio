@@ -1,85 +1,82 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import type { Metadata } from "next";
 import Link from "next/link";
 import GlassCard from "@/components/common/GlassCard";
 import GradientHeading from "@/components/common/GradientHeading";
+import JsonLd from "@/components/seo/JsonLd";
 import { FaCalendar, FaTag, FaArrowRight } from "react-icons/fa";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { listPublishedPosts, type BlogPostRow } from "@/lib/db";
+import { SITE_URL, SITE_NAME, OG_IMAGE } from "@/lib/site";
 
-interface BlogPost {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  tags: string[];
-  published: boolean;
-  publishedAt?: string;
-  createdAt: string;
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Blog",
+    description:
+      "Thoughts, tutorials, and insights on full-stack development with Next.js, Prisma, PostgreSQL, and modern web technologies.",
+    alternates: { canonical: `${SITE_URL}/blog` },
+    openGraph: {
+      title: "Blog",
+      description:
+        "Thoughts, tutorials, and insights on full-stack development with Next.js, Prisma, PostgreSQL, and modern web technologies.",
+      url: `${SITE_URL}/blog`,
+      siteName: SITE_NAME,
+      type: "website",
+      images: [OG_IMAGE],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Blog | Tinashe Mundieta",
+      description:
+        "Thoughts, tutorials, and insights on full-stack development with Next.js, Prisma, PostgreSQL, and modern web technologies.",
+      images: [OG_IMAGE],
+    },
+  };
 }
 
-export default function BlogPage() {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("/api/blog")
-      .then((res) => res.json())
-      .then((data) => {
-        setPosts(data.posts || []);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <LoadingSpinner size="lg" variant="glass" label="Loading articles..." />
-        </div>
-      </div>
-    );
+export default async function BlogPage() {
+  let posts: BlogPostRow[] = [];
+  try {
+    posts = await listPublishedPosts();
+  } catch (error) {
+    console.error("Failed to load posts:", error);
   }
 
-  if (posts.length === 0) {
-    return (
-      <div className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto text-center">
-          <GradientHeading className="pb-2">Blog</GradientHeading>
-          <p className="mt-4 text-dark-400">No articles published yet. Check back later!</p>
-        </div>
-      </div>
-    );
-  }
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Blog | Tinashe Mundieta",
+    url: `${SITE_URL}/blog`,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: posts.map((post, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: post.title,
+        url: `${SITE_URL}/blog/${post.slug}`,
+      })),
+    },
+  };
 
   return (
     <div className="py-20 px-4 sm:px-6 lg:px-8">
+      <JsonLd data={collectionSchema} />
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <GradientHeading className="pb-2">Blog</GradientHeading>
           <p className="mt-4 text-dark-400 max-w-2xl mx-auto text-balance">
             Thoughts, tutorials, and insights on full-stack development with Next.js,
             Prisma, PostgreSQL, and modern web technologies.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {posts.map((post, index) => (
-            <motion.div
-              key={post.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <Link href={`/blog/${post.slug}`}>
+        {posts.length === 0 ? (
+          <div className="text-center">
+            <p className="text-dark-400">No articles published yet. Check back later!</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {posts.map((post) => (
+              <Link href={`/blog/${post.slug}`} key={post.id}>
                 <GlassCard className="p-6 md:p-8 h-full flex flex-col group cursor-pointer">
                   <div className="flex items-center gap-4 text-sm text-dark-500 mb-4">
                     {post.publishedAt && (
@@ -119,21 +116,9 @@ export default function BlogPage() {
                   </div>
                 </GlassCard>
               </Link>
-            </motion.div>
-          ))}
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mt-16 text-center"
-        >
-          <p className="text-dark-400">
-            More articles coming soon. Check back later for the latest insights on full-stack development.
-          </p>
-        </motion.div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

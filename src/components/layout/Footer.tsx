@@ -10,7 +10,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <Link href="/home" className="text-2xl font-bold font-heading gradient-text">
+            <Link href="/home" className="text-2xl font-bold font-heading gradient-text p-1 -m-1 inline-block">
               TM
             </Link>
             <p className="mt-4 text-dark-400 text-sm max-w-xs">
@@ -28,7 +28,7 @@ export default function Footer() {
                 <li key={item}>
                   <Link
                     href={`/${item.toLowerCase()}`}
-                    className="text-dark-400 hover:text-brand-400 transition-colors text-sm"
+                    className="text-dark-400 hover:text-brand-400 transition-colors text-sm block py-1"
                   >
                     {item}
                   </Link>
